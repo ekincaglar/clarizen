@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Ekin.Clarizen</id>
+    <version>$version$</version>
+    <title>Clarizen API v2.0</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>http://clarizen.ekin.co/license</licenseUrl>
+    <projectUrl>http://clarizen.ekin.co/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.Net wrapper for Clarizen</description>
+    <releaseNotes>Please see http://clarizen.ekin.co for product details</releaseNotes>
+    <copyright>Copyright 2016-2017, Ekin Caglar</copyright>
+    <tags>clarizen api ekin caglar</tags>
+  </metadata>
+</package>

@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D801CFFD-645B-4F47-B9F0-D39F5A37A153}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ekin.Clarizen</RootNamespace>
+    <AssemblyName>Ekin.Clarizen</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ekin.Encryption, Version=1.0.1.30044, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ekin.Encryption.1.0.1.30044\lib\net452\Ekin.Encryption.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ekin.Log, Version=1.0.8.23914, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ekin.Log.1.0.8.23914\lib\net452\Ekin.Log.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ekin.Rest, Version=1.1.3.24698, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ekin.Rest.1.1.3.24698\lib\net452\Ekin.Rest.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="LICENSE" />
+    <Content Include="README.md" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Applications\installApplication.cs" />
+    <Compile Include="Applications\getApplicationStatus.cs" />
+    <Compile Include="Applications\Request\getApplicationStatus.cs" />
+    <Compile Include="Applications\Request\installApplication.cs" />
+    <Compile Include="Applications\Result\getApplicationStatus.cs" />
+    <Compile Include="Authentication\getSessionInfo.cs" />
+    <Compile Include="Authentication\logout.cs" />
+    <Compile Include="Authentication\Request\getSessionInfo.cs" />
+    <Compile Include="Authentication\Request\login.cs" />
+    <Compile Include="Authentication\Request\getServerDefinition.cs" />
+    <Compile Include="Authentication\Request\loginOptions.cs" />
+    <Compile Include="Authentication\Result\getServerDefinition.cs" />
+    <Compile Include="Authentication\Result\getSessionInfo.cs" />
+    <Compile Include="Authentication\Result\login.cs" />
+    <Compile Include="Authentication\login.cs" />
+    <Compile Include="Bulk\execute.cs" />
+    <Compile Include="Bulk\Request\execute.cs" />
+    <Compile Include="Bulk\Result\execute.cs" />
+    <Compile Include="Common\action.cs" />
+    <Compile Include="Common\Currency.cs" />
+    <Compile Include="Common\Duration.cs" />
+    <Compile Include="Common\entityId.cs" />
+    <Compile Include="Common\newsFeedMode.cs" />
+    <Compile Include="Common\postFeedItem.cs" />
+    <Compile Include="Common\replyFeedItem.cs" />
+    <Compile Include="Common\timesheetStateEnum.cs" />
+    <Compile Include="Common\storageType.cs" />
+    <Compile Include="Common\dayInformation.cs" />
+    <Compile Include="Common\entity.cs" />
+    <Compile Include="Common\entityDescription.cs" />
+    <Compile Include="Common\entityRelationsDescription.cs" />
+    <Compile Include="Common\error.cs" />
+    <Compile Include="Common\fieldAggregation.cs" />
+    <Compile Include="Common\fieldDescription.cs" />
+    <Compile Include="Common\fieldValue.cs" />
+    <Compile Include="Common\Day.cs" />
+    <Compile Include="Common\fileInformation.cs" />
+    <Compile Include="Common\operator.cs" />
+    <Compile Include="Common\orderBy.cs" />
+    <Compile Include="Common\paging.cs" />
+    <Compile Include="Common\parameters.cs" />
+    <Compile Include="Common\recipient.cs" />
+    <Compile Include="Common\relation.cs" />
+    <Compile Include="Common\relationDescription.cs" />
+    <Compile Include="Common\request.cs" />
+    <Compile Include="Common\requestMethod.cs" />
+    <Compile Include="Common\response.cs" />
+    <Compile Include="Data\changeState.cs" />
+    <Compile Include="Data\countQuery.cs" />
+    <Compile Include="Data\aggregateQuery.cs" />
+    <Compile Include="Data\timesheetQuery.cs" />
+    <Compile Include="Data\expenseQuery.cs" />
+    <Compile Include="Data\Queries\timesheetQuery.cs" />
+    <Compile Include="Data\Queries\expenseQuery.cs" />
+    <Compile Include="Data\repliesQuery.cs" />
+    <Compile Include="Data\entityFeedQuery.cs" />
+    <Compile Include="Data\newsFeedQuery.cs" />
+    <Compile Include="Data\groupsQuery.cs" />
+    <Compile Include="Data\getCalendarInfo.cs" />
+    <Compile Include="Data\Queries\repliesQuery.cs" />
+    <Compile Include="Data\Queries\entityFeedQuery.cs" />
+    <Compile Include="Data\Queries\newsFeedQuery.cs" />
+    <Compile Include="Data\Queries\groupsQuery.cs" />
+    <Compile Include="Data\Request\getCalendarInfo.cs" />
+    <Compile Include="Data\Result\timesheetQuery.cs" />
+    <Compile Include="Data\Result\expenseQuery.cs" />
+    <Compile Include="Data\Result\repliesQuery.cs" />
+    <Compile Include="Data\Result\entityFeedQuery.cs" />
+    <Compile Include="Data\Result\newsFeedQuery.cs" />
+    <Compile Include="Data\Result\groupsQuery.cs" />
+    <Compile Include="Data\Result\getCalendarInfo.cs" />
+    <Compile Include="Data\retrieveMultiple.cs" />
+    <Compile Include="Data\executeCustomAction.cs" />
+    <Compile Include="Data\lifecycle.cs" />
+    <Compile Include="Data\Request\createDiscussion.cs" />
+    <Compile Include="Data\createFromTemplate.cs" />
+    <Compile Include="Data\createAndRetrieve.cs" />
+    <Compile Include="Data\createDiscussion.cs" />
+    <Compile Include="Data\Request\executeCustomAction.cs" />
+    <Compile Include="Data\Request\getTemplateDescriptions.cs" />
+    <Compile Include="Data\Request\lifecycle.cs" />
+    <Compile Include="Data\Request\retrieveMultiple.cs" />
+    <Compile Include="Data\Result\createDiscussion.cs" />
+    <Compile Include="Data\Result\executeCustomAction.cs" />
+    <Compile Include="Data\Result\getTemplateDescriptions.cs" />
+    <Compile Include="Data\getTemplateDescriptions.cs" />
+    <Compile Include="Data\Result\retrieveMultiple.cs" />
+    <Compile Include="Data\search.cs" />
+    <Compile Include="Data\relationQuery.cs" />
+    <Compile Include="Data\Queries\aggregateQuery.cs" />
+    <Compile Include="Data\Queries\Conditions\compare.cs" />
+    <Compile Include="Data\Queries\Conditions\Or.cs" />
+    <Compile Include="Data\Queries\Conditions\Not.cs" />
+    <Compile Include="Data\Queries\Conditions\And.cs" />
+    <Compile Include="Data\Queries\Conditions\cZQLCondition.cs" />
+    <Compile Include="Data\Queries\Expressions\queryExpression.cs" />
+    <Compile Include="Data\Queries\Expressions\fieldExpression.cs" />
+    <Compile Include="Data\Queries\Expressions\constantListExpression.cs" />
+    <Compile Include="Data\Queries\Expressions\constantExpression.cs" />
+    <Compile Include="Data\Queries\relationQuery.cs" />
+    <Compile Include="Data\Request\changeState.cs" />
+    <Compile Include="Data\Queries\findUserQuery.cs" />
+    <Compile Include="Data\Request\countQuery.cs" />
+    <Compile Include="Data\Request\createAndRetrieve.cs" />
+    <Compile Include="Data\Request\createFromTemplate.cs" />
+    <Compile Include="Data\Request\search.cs" />
+    <Compile Include="Data\Result\countQuery.cs" />
+    <Compile Include="Data\Result\aggregateQuery.cs" />
+    <Compile Include="Data\Result\createAndRetrieve.cs" />
+    <Compile Include="Data\Result\createFromTemplate.cs" />
+    <Compile Include="Data\Result\search.cs" />
+    <Compile Include="Data\Result\relationQuery.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Files\updateImage.cs" />
+    <Compile Include="Files\getUploadUrl.cs" />
+    <Compile Include="Files\download.cs" />
+    <Compile Include="Files\Request\updateImage.cs" />
+    <Compile Include="Files\Request\upload.cs" />
+    <Compile Include="Files\Result\updateImage.cs" />
+    <Compile Include="Files\upload.cs" />
+    <Compile Include="Files\Request\download.cs" />
+    <Compile Include="Files\Result\download.cs" />
+    <Compile Include="Files\Result\getUploadUrl.cs" />
+    <Compile Include="Interfaces\ICondition.cs" />
+    <Compile Include="Interfaces\IExpression.cs" />
+    <Compile Include="Interfaces\IQuery.cs" />
+    <Compile Include="Interfaces\ISupportBulk.cs" />
+    <Compile Include="Metadata\getSystemSettingsValues.cs" />
+    <Compile Include="Metadata\describeEntityRelations.cs" />
+    <Compile Include="Metadata\describeEntities.cs" />
+    <Compile Include="Metadata\listEntities.cs" />
+    <Compile Include="Data\query.cs" />
+    <Compile Include="Data\objects_delete.cs" />
+    <Compile Include="Data\objects_get.cs" />
+    <Compile Include="Data\entityQuery.cs" />
+    <Compile Include="Data\objects_post.cs" />
+    <Compile Include="Data\objects_put.cs" />
+    <Compile Include="Data\Queries\entityQuery.cs" />
+    <Compile Include="Data\Request\objects_delete.cs" />
+    <Compile Include="Data\Request\objects_get.cs" />
+    <Compile Include="Data\Request\objects_post.cs" />
+    <Compile Include="Data\Request\query.cs" />
+    <Compile Include="Metadata\objects_delete.cs" />
+    <Compile Include="Metadata\objects_put.cs" />
+    <Compile Include="Metadata\Request\objects_delete.cs" />
+    <Compile Include="Metadata\Request\objects_put.cs" />
+    <Compile Include="Metadata\Result\objects_put.cs" />
+    <Compile Include="Metadata\setSystemSettingsValues.cs" />
+    <Compile Include="Metadata\Request\describeEntityRelations.cs" />
+    <Compile Include="Metadata\Request\describeEntities.cs" />
+    <Compile Include="Metadata\Request\getSystemSettingsValues.cs" />
+    <Compile Include="Metadata\Request\setSystemSettingsValues.cs" />
+    <Compile Include="Metadata\Result\describeEntityRelations.cs" />
+    <Compile Include="Metadata\Result\describeEntities.cs" />
+    <Compile Include="Metadata\Result\getSystemSettingsValues.cs" />
+    <Compile Include="Metadata\Result\listEntities.cs" />
+    <Compile Include="Data\Result\query.cs" />
+    <Compile Include="Data\Result\entityQuery.cs" />
+    <Compile Include="Data\Result\objects_put.cs" />
+    <Compile Include="API.cs" />
+    <Compile Include="Interfaces\IClarizenQuery.cs" />
+    <Compile Include="Metadata\describeMetadata.cs" />
+    <Compile Include="Metadata\Request\describeMetadata.cs" />
+    <Compile Include="Metadata\Result\describeMetadata.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query.cs" />
+    <Compile Include="Authentication\getServerDefinition.cs" />
+    <Compile Include="Result.cs" />
+    <Compile Include="Utils\appLogin.cs" />
+    <Compile Include="Utils\Request\sendEMail.cs" />
+    <Compile Include="Utils\sendEMail.cs" />
+    <Compile Include="Utils\Result\appLogin.cs" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58206</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:54832/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

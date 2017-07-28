@@ -1,0 +1,49 @@
+﻿First time setup:
+
+1. Register and get API Key from https://www.nuget.org/account
+
+2. Download nuget.exe from https://nuget.org/downloads
+
+3. Put it in PATH variable (Win + Break > Advanced System Settings > Environment Variables)
+
+--------------------------------------------------------------------------------------
+
+Project setup:
+
+1. Command Prompt
+		d:
+		cd D:\code\Ekin\Ekin.Rest
+		nuget spec
+
+2. Edit Clarizen.API.V2_0.nuspec file:
+		<?xml version="1.0"?>
+		<package >
+		  <metadata>
+			<id>Ekin.Rest</id>
+			<version>$version$</version>
+			<title>$title$</title>
+			<authors>$author$</authors>
+			<owners>$author$</owners>
+			<licenseUrl>http://rest.ekin.co/license</licenseUrl>
+			<projectUrl>http://rest.ekin.co/</projectUrl>
+			<requireLicenseAcceptance>false</requireLicenseAcceptance>
+			<description>$description$</description>
+			<releaseNotes>See http://rest.ekin.co/ for usage details</releaseNotes>
+			<copyright>Copyright 2016</copyright>
+		  </metadata>
+		</package>
+
+--------------------------------------------------------------------------------------
+
+Publish:
+
+Command prompt (to D:\code\Ekin\Ekin.Rest)
+
+Update the releaseNotes node in Ekin.Rest.nuspec
+	
+nuget pack Ekin.Rest.csproj
+
+nuget push Ekin.Rest.1.0.0.34792.nupkg 4ef99d3c-34fb-423a-929f-ae2a97f34aa4 -Source https://www.nuget.org/api/v2/package
+
+
+

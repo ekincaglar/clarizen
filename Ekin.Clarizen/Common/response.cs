@@ -1,0 +1,53 @@
+﻿using Ekin.Clarizen.Interfaces;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace Ekin.Clarizen
+{
+    public class response
+    {
+        /// <summary>
+        /// Status code (200 for OK, 500 for error)
+        /// </summary>
+        public int statusCode { get; set; }
+        /// <summary>
+        /// Response body as a JSON string
+        /// </summary>
+        public dynamic body { get; set; }
+
+        #region Type Casting
+
+        [JsonIgnore]
+        public string BodyType { get; set; }
+
+        public void CastBody(Type type)
+        {
+            try
+            {
+                body = (body as JObject).ToObject(type);
+                BodyType = type.FullName;
+            }
+            catch
+            {
+                // body & BodyType are unchanged
+            }
+        }
+
+        public void CastBodyToError()
+        {
+            CastBody(typeof(error));
+        }
+
+        private string SerializeBody()
+        {
+            return JsonConvert.SerializeObject(body);
+        }
+
+        #endregion
+
+    }
+}
