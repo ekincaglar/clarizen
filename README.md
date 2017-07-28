@@ -5,6 +5,45 @@ Shortcuts:
 * Clarizen's API documentation: http://usermanual.clarizen.com/rest-api-guide
 * Nuget package: https://www.nuget.org/packages/Ekin.Clarizen/
 
+Table of Contents:
+- [.Net Wrapper for Clarizen API v2.0](#net-wrapper-for-clarizen-api-v20)
+  * [Getting Started](#getting-started)
+    + [1. Install Ekin.Clarizen Nuget package](#1-install-ekinclarizen-nuget-package)
+    + [2. Test login](#2-test-login)
+  * [Code Structure](#code-structure)
+    + [If you are familiar with the Clarizen API structure...](#if-you-are-familiar-with-the-clarizen-api-structure)
+    + [API helper class](#api-helper-class)
+- [Code Samples](#code-samples)
+  * [Authentication Examples](#authentication-examples)
+    + [Login](#login)
+    + [GetSessionInfo](#getsessioninfo)
+  * [CRUD & Data Examples](#crud---data-examples)
+    + [CreateAndRetrieve](#createandretrieve)
+    + [GetTemplateDescriptions](#gettemplatedescriptions)
+    + [CreateFromTemplate](#createfromtemplate)
+    + [ChangeState](#changestate)
+    + [CreateDiscussion](#creatediscussion)
+  * [Query Examples](#query-examples)
+    + [CZQL](#czql)
+    + [Count](#count)
+    + [EntityQuery](#entityquery)
+    + [AggregateQuery](#aggregatequery)
+    + [GroupsQuery](#groupsquery)
+    + [NewsFeedQuery](#newsfeedquery)
+    + [EntityFeedQuery](#entityfeedquery)
+    + [RepliesQuery](#repliesquery)
+    + [GetCalendarInfo](#getcalendarinfo)
+    + [Search](#search)
+  * [Bulk Example](#bulk-example)
+  * [Utils Examples](#utils-examples)
+  * [SendEmail](#sendemail)
+  * [Metadata Examples](#metadata-examples)
+    + [DescribeMetadata](#describemetadata)
+    + [GetAllEntities](#getallentities)
+    + [GetAllEntityRelations](#getallentityrelations)
+
+
+
 ## Getting Started
 
 ### 1. Install Ekin.Clarizen Nuget package
@@ -109,7 +148,7 @@ namespace ClarizenSamples.Metadata
 
 The API class has the following functions:
 
-```
+```csharp
 Login(string username, string password)
 Logout()
 GetSessionInfo()
