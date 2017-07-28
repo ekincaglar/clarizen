@@ -6,11 +6,11 @@
     <title>Clarizen API v2.0</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>http://clarizen.ekin.co/license</licenseUrl>
-    <projectUrl>http://clarizen.ekin.co/</projectUrl>
+    <licenseUrl>https://github.com/ekincaglar/clarizen/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ekincaglar/clarizen</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>.Net wrapper for Clarizen</description>
-    <releaseNotes>Please see http://clarizen.ekin.co for product details</releaseNotes>
+    <releaseNotes>Please see https://github.com/ekincaglar/clarizen for product details</releaseNotes>
     <copyright>Copyright 2016-2017, Ekin Caglar</copyright>
     <tags>clarizen api ekin caglar</tags>
   </metadata>
