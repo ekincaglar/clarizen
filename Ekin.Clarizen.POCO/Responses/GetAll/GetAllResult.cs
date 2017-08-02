@@ -5,12 +5,12 @@ using System.Web;
 
 namespace Ekin.Clarizen
 {
-    public class Result
+    public class GetAllResult
     {
         public object Data { get; set; }
         public List<error> Errors { get; set; }
 
-        public Result()
+        public GetAllResult()
         {
             this.Errors = new List<error>() { };
         }

@@ -357,11 +357,11 @@ namespace Ekin.Clarizen
         /// <param name="entityName"></param>
         /// <param name="pocoObject"></param>
         /// <returns></returns>
-        public Result GetAll(string entityName, Type pocoObject, ICondition condition = null)
+        public GetAllResult GetAll(string entityName, Type pocoObject, ICondition condition = null)
         {
             Type listType = typeof(List<>).MakeGenericType(new[] { pocoObject });
             System.Collections.IList list = (System.Collections.IList)Activator.CreateInstance(listType);
-            Result result = new Result() {
+            GetAllResult result = new GetAllResult() {
                 Errors = new List<error>() { } };
             paging paging = new paging();
             paging.limit = 500;
