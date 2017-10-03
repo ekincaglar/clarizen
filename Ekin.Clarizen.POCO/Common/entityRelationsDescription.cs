@@ -10,6 +10,8 @@ namespace Ekin.Clarizen
         public string typeName { get; set; }
         public relationDescription[] relations { get; set; }
 
+        public entityRelationsDescription() { }
+
         public void SortRelations()
         {
             Array.Sort(relations, delegate (relationDescription x, relationDescription y) { return x.name.CompareTo(y.name); });

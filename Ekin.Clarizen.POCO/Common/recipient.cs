@@ -22,6 +22,8 @@ namespace Ekin.Clarizen
 
         public enum CZRecipientType { To, CC }
 
+        public recipient() { }
+
         public recipient(CZRecipientType recipientType, string eMail, string clarizenUserId)
         {
             this.recipientType = (recipientType == CZRecipientType.CC ? "CC" : "To");

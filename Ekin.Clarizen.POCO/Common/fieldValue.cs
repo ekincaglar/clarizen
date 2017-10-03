@@ -10,6 +10,8 @@ namespace Ekin.Clarizen
         public string fieldName { get; set; }
         public string value { get; set; }
 
+        public fieldValue() { }
+
         public fieldValue(string fieldName, string value)
         {
             this.fieldName = fieldName;

@@ -17,6 +17,8 @@ namespace Ekin.Clarizen
         public bool disabled { get; set; }
         public relationDescription[] relations { get; set; }
 
+        public entityDescription() { }
+
         public void SortFields()
         {
             Array.Sort(fields, delegate (fieldDescription x, fieldDescription y) { return x.name.CompareTo(y.name); });

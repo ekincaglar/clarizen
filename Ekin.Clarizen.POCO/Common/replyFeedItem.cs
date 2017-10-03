@@ -30,6 +30,8 @@ namespace Ekin.Clarizen
         public string bodyMarkup { get; set; }
         public string summary { get; set; }
 
+        public replyFeedItem() { }
+
         //public replyFeedItem(dynamic message, bool likedByMe, dynamic[] relatedEntities, dynamic[] notify, dynamic[] topics, string bodyMarkup, string summary)
         //{
         //    this.message = message;

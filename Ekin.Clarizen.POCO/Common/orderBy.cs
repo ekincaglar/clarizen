@@ -13,6 +13,8 @@ namespace Ekin.Clarizen
         /// </summary>
         public string order { get; set; }
 
+        public orderBy() { }
+
         public orderBy(string fieldName, string order)
         {
             this.fieldName = fieldName;

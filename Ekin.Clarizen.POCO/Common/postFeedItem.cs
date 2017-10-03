@@ -38,6 +38,8 @@ namespace Ekin.Clarizen
         /// </summary>
         public replyFeedItem[] latestReplies { get; set; }
 
+        public postFeedItem() { }
+
         //public postFeedItem(dynamic message, string bodyMarkup, string summary, bool pinned, bool likedByMe, dynamic[] relatedEntities, dynamic[] notify, dynamic[] topics, replyFeedItem[] latestReplies)
         //{
         //    this.message = message;

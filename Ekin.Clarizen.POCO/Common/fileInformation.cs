@@ -13,6 +13,8 @@ namespace Ekin.Clarizen
         public string subType { get; set; }
         public string extendedInfo { get; set; }
 
+        public fileInformation() { }
+
         public fileInformation(storageType storage, string url, string fileName, string subType, string extendedInfo)
         {
             this.storage = storage.ToEnumString();

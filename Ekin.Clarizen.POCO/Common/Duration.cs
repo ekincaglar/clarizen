@@ -22,6 +22,8 @@ namespace Ekin.Clarizen
         /// </summary>
         public string DurationType { get; set; }
 
+        public Duration() { }
+
         public Duration(string unit, double value, string durationType, int roundToDecimalPlaces = 2)
         {
             Unit = unit;

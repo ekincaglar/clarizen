@@ -19,5 +19,7 @@ namespace Ekin.Clarizen
         /// When a query results is returned, indicates whether there are more records to fetch for this query
         /// </summary>
         public bool hasMore { get; set; }
+
+        public paging() { }
     }
 }

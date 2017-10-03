@@ -14,5 +14,7 @@ namespace Ekin.Clarizen
         public string linkTypeName { get; set; }
         public string relatedTypeName { get; set; }
         public string sourceFieldName { get; set; }
+
+        public relationDescription() { }
     }
 }

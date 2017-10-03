@@ -23,6 +23,8 @@ namespace Ekin.Clarizen
         /// </summary>
         public string alias { get; set; }
 
+        public fieldAggregation() { }
+
         public fieldAggregation(string function, string fieldName, string alias)
         {
             this.function = function;

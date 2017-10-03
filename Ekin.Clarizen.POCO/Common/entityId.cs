@@ -7,10 +7,7 @@ namespace Ekin.Clarizen
     {
         public string id { get; set; }
 
-        public EntityId()
-        {
-
-        }
+        public EntityId() { }
 
         public EntityId(string Id)
         {

@@ -34,6 +34,8 @@ namespace Ekin.Clarizen
             }
         }
 
+        public error() { }
+
         public error(string errorCode, string message)
         {
             this.errorCode = errorCode;

@@ -15,6 +15,8 @@ namespace Ekin.Clarizen
         /// </summary>
         public object objectFields { get; set; }
 
+        public parameters() { }
+
         public parameters(object objectFields)
         {
             this.objectFields = objectFields;

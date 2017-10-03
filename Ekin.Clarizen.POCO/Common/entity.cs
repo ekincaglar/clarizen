@@ -13,5 +13,7 @@ namespace Ekin.Clarizen
         /// </summary>
         public string id { get; set; }
         public dynamic objectFields { get; set; }
+
+        public entity() { }
     }
 }

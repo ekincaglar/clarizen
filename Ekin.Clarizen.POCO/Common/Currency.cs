@@ -10,6 +10,8 @@ namespace Ekin.Clarizen
         public double value { get; set; }
         public string currency { get; set; }
 
+        public Currency() { }
+
         public Currency(double value, string currency)
         {
             this.value = value;

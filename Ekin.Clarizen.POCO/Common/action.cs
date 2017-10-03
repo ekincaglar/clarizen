@@ -27,6 +27,8 @@ namespace Ekin.Clarizen
         /// </summary>
         public string body { get; set; }
 
+        public action() { }
+
         public action (string url, string method, string headers, string body)
         {
             this.url = url;

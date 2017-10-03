@@ -29,6 +29,8 @@ namespace Ekin.Clarizen
         /// </summary>
         public bool fromLink { get; set; }
 
+        public relation() { }
+
         public relation(string name, string[] fields, ICondition where, orderBy[] orders, bool fromLink)
         {
             this.name = name;

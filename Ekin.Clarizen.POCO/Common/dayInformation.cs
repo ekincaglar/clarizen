@@ -24,6 +24,8 @@ namespace Ekin.Clarizen
         /// </summary>
         public double endHour { get; set; }
 
+        public dayInformation() { }
+
         public dayInformation(bool isWorkingDay, double totalWorkingHours, double startHour, double endHour)
         {
             this.isWorkingDay = isWorkingDay;

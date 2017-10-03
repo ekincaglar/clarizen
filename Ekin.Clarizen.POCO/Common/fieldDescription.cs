@@ -39,5 +39,7 @@ namespace Ekin.Clarizen
         public bool sortable { get; set; }
         public int maxLength { get; set; }
         public string[] flags { get; set; }
+
+        public fieldDescription() { }
     }
 }
