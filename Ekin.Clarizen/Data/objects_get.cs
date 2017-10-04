@@ -15,7 +15,7 @@ namespace Ekin.Clarizen.Data
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public objects_get(string serverLocation, string sessionId, Request.objects_get request, bool isBulk = false)
+        public objects_get(string serverLocation, string sessionId, Request.objects_get request, bool isBulk = false, bool returnRawResponse = false)
         {
             if (request == null || String.IsNullOrEmpty(request.id))
             {
@@ -27,7 +27,8 @@ namespace Ekin.Clarizen.Data
             // Set the URL
             string url = (isBulk ? String.Empty : serverLocation) + "/data/objects" +
                          (request.id.Substring(0, 1) != "/" ? "/" : "") + request.id +
-                         (request.fields != null ? "?" + request.fields.ToQueryString() : String.Empty);
+                         //(request.fields != null ? "?" + request.fields.ToQueryString() : String.Empty);
+                         (request.fields != null ? "?fields=" + GetFieldList(request.fields) : String.Empty);
 
             if (isBulk)
             {
@@ -49,7 +50,14 @@ namespace Ekin.Clarizen.Data
             {
                 try
                 {
-                    this.Data = JsonConvert.DeserializeObject(response.Content);
+                    if (returnRawResponse)
+                    {
+                        this.Data = response.Content;
+                    }
+                    else
+                    {
+                        this.Data = JsonConvert.DeserializeObject(response.Content);
+                    }
                     this.IsCalledSuccessfully = true;
                 }
                 catch (Exception ex)
@@ -63,6 +71,23 @@ namespace Ekin.Clarizen.Data
                 this.IsCalledSuccessfully = false;
                 this.Error = response.InternalError.GetFormattedErrorMessage();
             }
+        }
+
+        private string GetFieldList(string[] fields)
+        {
+            string ret = string.Empty;
+            if (fields != null)
+            {
+                foreach (string field in fields)
+                {
+                    if (!string.IsNullOrWhiteSpace(ret))
+                    {
+                        ret += ",";
+                    }
+                    ret += field;
+                }
+            }
+            return ret;
         }
 
     }

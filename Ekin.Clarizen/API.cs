@@ -269,7 +269,36 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.objects_get GetObject(string id)
         {
-            return GetObject(id, null);
+            return GetObject(id: id, fields: null);
+        }
+
+        /// <summary>
+        /// Read an entity in Clarizen
+        /// </summary>
+        /// <param name="id">Entity Id of the object to get</param>
+        /// <param name="pocoObject">Return type of the operation</param>
+        /// <returns></returns>
+        public dynamic GetObject(string id, Type pocoObject)
+        {
+            string[] fields = pocoObject.GetPropertyList();
+            Data.objects_get objects = new Data.objects_get(serverLocation, sessionId, new Data.Request.objects_get(id, fields), isBulk, true);
+            if (isBulk) bulkRequests.Add(objects.BulkRequest);
+            else { Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", objects.Error); TotalAPICallsMadeInCurrentSession++; }
+            if (objects.IsCalledSuccessfully) {
+                try
+                {
+                    Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(objects.Data);
+                    return obj.ToObject(pocoObject);
+                }
+                catch(Exception ex)
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
