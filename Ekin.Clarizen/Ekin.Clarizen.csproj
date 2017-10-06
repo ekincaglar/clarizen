@@ -43,8 +43,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ekin.Clarizen.POCO, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ekin.Clarizen.POCO.1.0.1\lib\net452\Ekin.Clarizen.POCO.dll</HintPath>
+    <Reference Include="Ekin.Clarizen.POCO, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ekin.Clarizen.POCO.1.2.1\lib\net452\Ekin.Clarizen.POCO.dll</HintPath>
     </Reference>
     <Reference Include="Ekin.Encryption, Version=1.0.1.30044, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Ekin.Encryption.1.0.1.30044\lib\net452\Ekin.Encryption.dll</HintPath>
@@ -103,6 +103,7 @@
     <Compile Include="Data\changeState.cs" />
     <Compile Include="Data\countQuery.cs" />
     <Compile Include="Data\aggregateQuery.cs" />
+    <Compile Include="Data\getCalendarExceptions.cs" />
     <Compile Include="Data\timesheetQuery.cs" />
     <Compile Include="Data\expenseQuery.cs" />
     <Compile Include="Data\repliesQuery.cs" />

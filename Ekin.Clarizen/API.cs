@@ -883,6 +883,14 @@ namespace Ekin.Clarizen
             return op;
         }
 
+        public Data.getCalendarExceptions GetCalendarExceptions(string id, DateTime fromDate, DateTime toDate)
+        {
+            Data.getCalendarExceptions op = new Data.getCalendarExceptions(serverLocation, sessionId, new Data.Request.getCalendarExceptions(id, fromDate, toDate), isBulk);
+            if (isBulk) bulkRequests.Add(op.BulkRequest);
+            else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetCalendarExceptions", "GetCalendarExceptions call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
+            return op;
+        }
+
         #endregion
 
         #region CZQL
