@@ -45,6 +45,22 @@ namespace Ekin.Clarizen
             Logs = new LogFactory();
         }
 
+        /// <summary>
+        /// When the API class is initiated as static, to use Bulk queries you need to clone it after calling Login().
+        /// </summary>
+        /// <returns></returns>
+        public API Clone()
+        {
+            return new API
+            {
+                sessionId = this.sessionId,
+                isSandbox = this.isSandbox,
+                serverLocation = this.serverLocation,
+                username = this.username,
+                password = this.password
+            };
+        }
+
         #region Authentication methods
 
         /// <summary>
