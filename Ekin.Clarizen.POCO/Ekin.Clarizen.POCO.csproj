@@ -44,8 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\exceptionDate.cs" />
+    <Compile Include="Common\every.cs" />
+    <Compile Include="Common\repeat.cs" />
+    <Compile Include="Common\calendarException.cs" />
     <Compile Include="Requests\Applications\getApplicationStatus.cs" />
     <Compile Include="Requests\Applications\installApplication.cs" />
+    <Compile Include="Requests\Data\getCalendarExceptions.cs" />
     <Compile Include="Responses\Applications\getApplicationStatus.cs" />
     <Compile Include="Requests\Authentication\getServerDefinition.cs" />
     <Compile Include="Requests\Authentication\getSessionInfo.cs" />
@@ -128,6 +133,7 @@
     <Compile Include="Responses\Data\entityQuery.cs" />
     <Compile Include="Responses\Data\executeCustomAction.cs" />
     <Compile Include="Responses\Data\expenseQuery.cs" />
+    <Compile Include="Responses\Data\getCalendarExceptions.cs" />
     <Compile Include="Responses\Data\getCalendarInfo.cs" />
     <Compile Include="Responses\Data\getTemplateDescriptions.cs" />
     <Compile Include="Responses\Data\groupsQuery.cs" />

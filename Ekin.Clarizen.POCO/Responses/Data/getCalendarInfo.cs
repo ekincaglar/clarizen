@@ -11,5 +11,7 @@ namespace Ekin.Clarizen.Data.Result
         public dayInformation[] weekDayInformation { get; set; }
         public dayInformation defaultWorkingDay { get; set; }
         public int workingDaysPerMonth { get; set; }
+
+        public getCalendarInfo() { }
     }
 }
