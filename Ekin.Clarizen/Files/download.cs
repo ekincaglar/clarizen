@@ -25,9 +25,9 @@ namespace Ekin.Clarizen.Files
             }
 
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/files/download" +
+            string url = (isBulk ? String.Empty : serverLocation) + "/files/download?documentId=" +
                          (request.documentId.Substring(0, 1) != "/" ? "/" : "") + request.documentId +
-                         (request.redirect ? "?" + request.redirect.ToQueryString() : String.Empty);
+                         (request.redirect ? "&" + request.redirect.ToQueryString() : String.Empty);
 
             if (isBulk)
             {
