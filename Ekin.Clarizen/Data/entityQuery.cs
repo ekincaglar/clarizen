@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json.Serialization;
 
 namespace Ekin.Clarizen.Data
 {
@@ -38,7 +39,11 @@ namespace Ekin.Clarizen.Data
             {
                 try
                 {
-                    this.Data = JsonConvert.DeserializeObject<Result.entityQuery>(response.Content);
+                    this.Data = JsonConvert.DeserializeObject<Result.entityQuery>(response.Content, new JsonSerializerSettings()
+                    {
+                        Error = HandleDeserializationError
+                    });
+
                     this.IsCalledSuccessfully = true;
                 }
                 catch (Exception ex)
@@ -56,6 +61,12 @@ namespace Ekin.Clarizen.Data
             {
                 this.IsCalledSuccessfully = false;
             }
+        }
+
+        public void HandleDeserializationError(object sender, ErrorEventArgs errorArgs)
+        {
+            var currentError = errorArgs.ErrorContext.Error.Message;
+            errorArgs.ErrorContext.Handled = true;
         }
 
     }
