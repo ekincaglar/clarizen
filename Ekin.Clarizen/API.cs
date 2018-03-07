@@ -3,8 +3,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using Ekin.Log;
+using Newtonsoft.Json.Linq;
 
 namespace Ekin.Clarizen
 {
@@ -18,6 +20,7 @@ namespace Ekin.Clarizen
 
         #region Public properties
 
+        public bool removeInvalidFieldsFromJsonResult { get; set; }
         public string username { get; set; }
         public string password { get; set; }
 
@@ -300,13 +303,15 @@ namespace Ekin.Clarizen
             Data.objects_get objects = new Data.objects_get(serverLocation, sessionId, new Data.Request.objects_get(id, fields), isBulk, true);
             if (isBulk) bulkRequests.Add(objects.BulkRequest);
             else { Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", objects.Error); TotalAPICallsMadeInCurrentSession++; }
-            if (objects.IsCalledSuccessfully) {
+            if (objects.IsCalledSuccessfully)
+            {
                 try
                 {
                     Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(objects.Data);
+                    RemoveInvalidFields(obj);
                     return obj.ToObject(pocoObject);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return null;
                 }
@@ -406,8 +411,10 @@ namespace Ekin.Clarizen
         {
             Type listType = typeof(List<>).MakeGenericType(new[] { pocoObject });
             System.Collections.IList list = (System.Collections.IList)Activator.CreateInstance(listType);
-            GetAllResult result = new GetAllResult() {
-                Errors = new List<error>() { } };
+            GetAllResult result = new GetAllResult()
+            {
+                Errors = new List<error>() { }
+            };
             paging paging = new paging();
             paging.limit = 500;
             bool hasMore = true;
@@ -422,6 +429,7 @@ namespace Ekin.Clarizen
                 {
                     foreach (Newtonsoft.Json.Linq.JObject obj in entityQuery.Data.entities)
                     {
+                        RemoveInvalidFields(obj);
                         list.Add(obj.ToObject(pocoObject));
                     }
                     paging = entityQuery.Data.paging;
@@ -435,6 +443,27 @@ namespace Ekin.Clarizen
             }
             result.Data = list;
             return result;
+        }
+
+        private void RemoveInvalidFields(JObject obj)
+        {
+            if (removeInvalidFieldsFromJsonResult)
+            {
+                //ignore the fields which have isError text as a value
+                if (obj.Properties().Any(i => i.Value != null && i.Value.ToString().Contains("isError")))
+                {
+                    var allProperties = obj.Properties().ToList();
+                    var count = allProperties?.Count();
+                    for (int i = 0; i < count; i++)
+                    {
+                        var property = allProperties[i];
+                        if (property.Value != null && property.Value.ToString().Contains("isError"))
+                        {
+                            obj.Property(property.Name).Remove();
+                        }
+                    }
+                }
+            }
         }
 
         #endregion
