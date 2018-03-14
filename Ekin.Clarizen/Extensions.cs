@@ -32,6 +32,42 @@ namespace Ekin.Clarizen
             return ret.ToArray();
         }
 
+        /// <summary>
+        /// Compares the values of two Clarizen entities with an option to ignore the ID field. Properties decorated with [JsonIgnore] are ommitted from comparison.
+        /// </summary>
+        /// <param name="obj">Base object</param>
+        /// <param name="target">Target object to compare the base object to</param>
+        /// <param name="IncludeIdField">When ommitted the value of the ID property is not compared</param>
+        /// <returns></returns>
+        public static bool IsEntitySameAs(this object obj, object target, bool IncludeIdField = false)
+        {
+            if (target == null || target.GetType() != obj.GetType()) return false;
+
+            PropertyInfo[] propInfos = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            if (propInfos.Length > 0)
+            {
+                foreach (PropertyInfo propInfo in propInfos)
+                {
+                    object value1 = propInfo.GetValue(obj, null);
+                    object value2 = propInfo.GetValue(target, null);
+
+                    if ((object.ReferenceEquals(value1, null) ^ object.ReferenceEquals(value2, null)))
+                    {
+                        return false;
+                    }
+
+                    if (propInfo.GetCustomAttribute(typeof(Newtonsoft.Json.JsonIgnoreAttribute)) == null &&
+                        (IncludeIdField || propInfo.Name.ToLower() != "id") &&
+                        value1 != null && !value1.Equals(value2))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         public static string GetFormattedErrorMessage(this object Error) {
             if (Error is WebException)
             {
