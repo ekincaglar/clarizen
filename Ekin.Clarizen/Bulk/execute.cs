@@ -21,6 +21,12 @@ namespace Ekin.Clarizen.Bulk
             System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
             headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", sessionId));
 
+            // Set the CallOptions header
+            if (request.batch != null)
+            {
+                headers.Add("CallOptions", string.Format("Batch={0}", ((bool)request.batch) ? "true" : "false"));
+            }
+
             // Call the API
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers);
             restClient.ErrorType = typeof(error);

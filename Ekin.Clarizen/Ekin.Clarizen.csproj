@@ -43,8 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ekin.Clarizen.POCO, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ekin.Clarizen.POCO.1.2.1\lib\net452\Ekin.Clarizen.POCO.dll</HintPath>
+    <Reference Include="Ekin.Clarizen.POCO, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ekin.Clarizen.POCO.1.3.0\lib\net452\Ekin.Clarizen.POCO.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Ekin.Encryption, Version=1.0.1.30044, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Ekin.Encryption.1.0.1.30044\lib\net452\Ekin.Encryption.dll</HintPath>
