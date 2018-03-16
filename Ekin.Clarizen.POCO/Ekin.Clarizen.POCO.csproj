@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\EntityIdConverter.cs" />
     <Compile Include="Common\exceptionDate.cs" />
     <Compile Include="Common\every.cs" />
     <Compile Include="Common\repeat.cs" />
