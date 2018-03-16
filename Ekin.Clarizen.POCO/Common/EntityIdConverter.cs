@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Ekin.Clarizen.POCO.Common
+namespace Ekin.Clarizen
 {
     public class EntityIdConverter : JsonConverter
     {

@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>.Net wrapper for Clarizen</description>
     <releaseNotes>Please see https://github.com/ekincaglar/clarizen for product details</releaseNotes>
-    <copyright>Copyright 2016-2017, Ekin Caglar</copyright>
+    <copyright>Copyright 2016-2018, Ekin Caglar</copyright>
     <tags>clarizen api ekin caglar</tags>
   </metadata>
 </package>
