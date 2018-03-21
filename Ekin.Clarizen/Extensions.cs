@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Web;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace Ekin.Clarizen
 {
@@ -68,6 +70,30 @@ namespace Ekin.Clarizen
             return true;
         }
 
+        public static List<Variance> Diff<T>(this T val1, T val2, bool IncludeIdField = false, bool IncludeJsonIgnoreAttributes = false)
+        {
+            List<Variance> variances = new List<Variance>();
+            PropertyInfo[] propInfos = val1.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            if (propInfos.Length > 0)
+            {
+                foreach (PropertyInfo propInfo in propInfos)
+                {
+                    Variance v = new Variance();
+                    v.Prop = propInfo.Name;
+                    v.valA = propInfo.GetValue(val1);
+                    v.valB = propInfo.GetValue(val2);
+                    if ((object.ReferenceEquals(v.valA, null) ^ object.ReferenceEquals(v.valB, null)) ||
+                        ((IncludeJsonIgnoreAttributes || propInfo.GetCustomAttribute(typeof(Newtonsoft.Json.JsonIgnoreAttribute)) != null) &&
+                        (IncludeIdField || propInfo.Name.ToLower() != "id") &&
+                        v.valA != null && !v.valA.Equals(v.valB)))
+                    {
+                        variances.Add(v);
+                    }
+                }
+            }
+            return variances;
+        }
+
         public static string GetFormattedErrorMessage(this object Error) {
             if (Error is WebException)
             {
@@ -94,5 +120,80 @@ namespace Ekin.Clarizen
             }
             return 0;
         }
+        /// <summary>
+        /// Serializes an object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="serializableObject"></param>
+        /// <param name="fileName"></param>
+        public static bool SerializeObject<T>(T serializableObject, string fileName)
+        {
+            if (serializableObject == null) { return false; }
+
+            try
+            {
+                string output = JsonConvert.SerializeObject(serializableObject, Newtonsoft.Json.Formatting.Indented, new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+                File.WriteAllText(fileName, output);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Deserializes an xml file into an object list
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static T DeSerializeObject<T>(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName)) { return default(T); }
+
+            try
+            {
+                string input = File.ReadAllText(fileName);
+                return JsonConvert.DeserializeObject<T>(input);
+            }
+            catch (Exception ex)
+            {
+                return default(T);
+            }
+        }
+
+        /// <summary>
+        /// Perform a deep Copy of the object, using Json as a serialisation method. NOTE: Private members are not cloned using this method.
+        /// </summary>
+        /// <typeparam name="T">The type of object being copied.</typeparam>
+        /// <param name="source">The object instance to copy.</param>
+        /// <returns>The copied object.</returns>
+        public static T Clone<T>(this T source)
+        {
+            // Don't serialize a null object, simply return the default for that object
+            if (Object.ReferenceEquals(source, null))
+            {
+                return default(T);
+            }
+
+            // initialize inner objects individually
+            // for example in default constructor some list property initialized with some values,
+            // but in 'source' these items are cleaned -
+            // without ObjectCreationHandling.Replace default constructor values will be added to result
+            var deserializeSettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
+
+            return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source), deserializeSettings);
+        }
+    }
+
+    public class Variance
+    {
+        public string Prop { get; set; }
+        public object valA { get; set; }
+        public object valB { get; set; }
     }
 }
