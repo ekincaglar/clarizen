@@ -40,36 +40,5 @@ namespace Ekin.Clarizen
     }
 
 
-    public class EntityIdConverter : JsonConverter
-    {
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            if (value is EntityId)
-            {
-                writer.WriteValue(((EntityId)value).id);
-            }
-            else
-            {
-                writer.WriteValue(value.ToString());
-            }
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            if (objectType == typeof(EntityId))
-            {
-                return serializer.Deserialize<EntityId>(reader);
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override bool CanConvert(Type objectType)
-        {
-            return true;
-        }
-    }
 }

@@ -955,12 +955,12 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="transactional"></param>
         /// <returns></returns>
-        public Bulk.execute CommitBulkService(bool transactional = false)
+        public Bulk.execute CommitBulkService(bool transactional = false, bool? batch = null)
         {
             Logs.Assert(isBulk, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service not started");
             if (isBulk)
             {
-                Bulk.execute bulkService = new Bulk.execute(serverLocation, sessionId, new Bulk.Request.execute(bulkRequests, transactional));
+                Bulk.execute bulkService = new Bulk.execute(serverLocation, sessionId, new Bulk.Request.execute(bulkRequests, transactional, batch));
                 Logs.Assert(bulkService.IsCalledSuccessfully, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service error", bulkService.Error);
                 TotalAPICallsMadeInCurrentSession++;
                 if (bulkService.IsCalledSuccessfully)

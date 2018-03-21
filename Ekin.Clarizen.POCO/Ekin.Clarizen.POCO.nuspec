@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>Please see https://github.com/ekincaglar/clarizen for product details</releaseNotes>
-    <copyright>Copyright 2017, Ekin Caglar</copyright>
+    <copyright>Copyright 2017-2018, Ekin Caglar</copyright>
     <tags>clarizen api poco ekin caglar</tags>
   </metadata>
 </package>
