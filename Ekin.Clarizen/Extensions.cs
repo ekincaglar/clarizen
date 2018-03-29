@@ -94,6 +94,31 @@ namespace Ekin.Clarizen
             return variances;
         }
 
+        /// <summary>
+        /// Generates tree of items from item list
+        /// </summary>
+        /// 
+        /// <typeparam name="T">Type of item in collection</typeparam>
+        /// <typeparam name="K">Type of parent_id</typeparam>
+        /// 
+        /// <param name="collection">Collection of items</param>
+        /// <param name="id_selector">Function extracting item's id</param>
+        /// <param name="parent_id_selector">Function extracting item's parent_id</param>
+        /// <param name="root_id">Root element id</param>
+        /// 
+        /// <returns>Tree of items</returns>
+        public static IEnumerable<TreeItem<T>> GenerateTree<T, K>(this IEnumerable<T> collection, Func<T, K> id_selector, Func<T, K> parent_id_selector, K root_id = default(K))
+        {
+            foreach (var c in collection.Where(c => parent_id_selector(c) != null && parent_id_selector(c).Equals(root_id)))
+            {
+                yield return new TreeItem<T>
+                {
+                    Item = c,
+                    Children = collection.GenerateTree(id_selector, parent_id_selector, id_selector(c))
+                };
+            }
+        }
+
         public static string GetFormattedErrorMessage(this object Error) {
             if (Error is WebException)
             {
@@ -188,6 +213,25 @@ namespace Ekin.Clarizen
 
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source), deserializeSettings);
         }
+
+
+        public static IEnumerable<TSource> Duplicates<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector)
+        {
+            var grouped = source.GroupBy(selector);
+            var moreThen1 = grouped.Where(i => i.IsMultiple());
+            return moreThen1.SelectMany(i => i);
+        }
+
+        public static IEnumerable<TSource> Duplicates<TSource, TKey>(this IEnumerable<TSource> source)
+        {
+            return source.Duplicates(i => i);
+        }
+
+        public static bool IsMultiple<T>(this IEnumerable<T> source)
+        {
+            var enumerator = source.GetEnumerator();
+            return enumerator.MoveNext() && enumerator.MoveNext();
+        }
     }
 
     public class Variance
@@ -195,5 +239,11 @@ namespace Ekin.Clarizen
         public string Prop { get; set; }
         public object valA { get; set; }
         public object valB { get; set; }
+    }
+
+    public class TreeItem<T>
+    {
+        public T Item { get; set; }
+        public IEnumerable<TreeItem<T>> Children { get; set; }
     }
 }
