@@ -954,8 +954,10 @@ namespace Ekin.Clarizen
         /// Executes all the calls in the buffer in a single Clarizen bulk API call.
         /// </summary>
         /// <param name="transactional"></param>
+        /// <param name="batch"></param>
+        /// <param name="includeRequestsInResponses">Embed requests in responses so that when there is an error in a bulk operation you can look into the request that caused it</param>
         /// <returns></returns>
-        public Bulk.execute CommitBulkService(bool transactional = false, bool? batch = null)
+        public Bulk.execute CommitBulkService(bool transactional = false, bool? batch = null, bool? includeRequestsInResponses = null)
         {
             Logs.Assert(isBulk, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service not started");
             if (isBulk)
@@ -965,10 +967,18 @@ namespace Ekin.Clarizen
                 TotalAPICallsMadeInCurrentSession++;
                 if (bulkService.IsCalledSuccessfully)
                     for (int n = 0; n < bulkService.Data.responses.Length; n++)
+                    {
                         if (bulkService.Data.responses[n].statusCode == 200)
                             bulkService.Data.responses[n].CastBody(bulkRequests[n].resultType);
                         else
                             bulkService.Data.responses[n].CastBodyToError();
+
+                        if (includeRequestsInResponses.GetValueOrDefault(false))
+                        {
+                            // For every request in the payload Clarizen returns a response so their indexes must match
+                            bulkService.Data.responses[n].request = bulkRequests[n];
+                        }
+                    }
                 return bulkService;
             }
             return null;
