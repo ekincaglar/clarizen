@@ -19,6 +19,11 @@ namespace Ekin.Clarizen
         /// </summary>
         public dynamic body { get; set; }
 
+        /// <summary>
+        /// There is an option to embed requests in responses so that when there is an error in a bulk operation you can look into the request that caused it
+        /// </summary>
+        public request request { get; set; }
+
         #region Type Casting
 
         [JsonIgnore]
