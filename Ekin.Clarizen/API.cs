@@ -407,7 +407,7 @@ namespace Ekin.Clarizen
         /// <param name="entityName"></param>
         /// <param name="pocoObject"></param>
         /// <returns></returns>
-        public GetAllResult GetAll(string entityName, Type pocoObject, ICondition condition = null)
+        public GetAllResult GetAll(string entityName, Type pocoObject, ICondition condition = null, int? pageSize = null)
         {
             Type listType = typeof(List<>).MakeGenericType(new[] { pocoObject });
             System.Collections.IList list = (System.Collections.IList)Activator.CreateInstance(listType);
@@ -416,7 +416,7 @@ namespace Ekin.Clarizen
                 Errors = new List<error>() { }
             };
             paging paging = new paging();
-            paging.limit = 500;
+            paging.limit = pageSize.GetValueOrDefault(0) > 0 ? pageSize.GetValueOrDefault(0) : 1000;
             bool hasMore = true;
             while (hasMore)
             {
