@@ -445,6 +445,47 @@ namespace Ekin.Clarizen
             return result;
         }
 
+        /// <summary>
+        /// Executes a query and returns all results recursively
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="pocoObject"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public GetAllResult GetAll(Interfaces.IClarizenQuery query, Type pocoObject, int? pageSize = null)
+        {
+            Type listType = typeof(List<>).MakeGenericType(new[] { pocoObject });
+            System.Collections.IList list = (System.Collections.IList)Activator.CreateInstance(listType);
+            GetAllResult result = new GetAllResult()
+            {
+                Errors = new List<error>() { }
+            };
+            paging paging = new paging();
+            paging.limit = pageSize.GetValueOrDefault(0) > 0 ? pageSize.GetValueOrDefault(0) : 1000;
+            bool hasMore = true;
+            while (hasMore)
+            {
+                Data.query Query = new Data.query(serverLocation, sessionId, new Data.Request.query(query.ToCZQL()), false);
+                if (Query.IsCalledSuccessfully)
+                {
+                    foreach (Newtonsoft.Json.Linq.JObject obj in Query.Data.entities)
+                    {
+                        RemoveInvalidFields(obj);
+                        list.Add(obj.ToObject(pocoObject));
+                    }
+                    paging = Query.Data.paging;
+                    hasMore = Query.Data.paging.hasMore;
+                }
+                else
+                {
+                    result.Errors.Add(new error("", "Query failed with error: " + Query.Error));
+                    hasMore = false;
+                }
+            }
+            result.Data = list;
+            return result;
+        }
+
         private void RemoveInvalidFields(JObject obj)
         {
             if (removeInvalidFieldsFromJsonResult)
