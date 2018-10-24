@@ -445,6 +445,41 @@ namespace Ekin.Clarizen
             return result;
         }
 
+        public GetAllResult GetAllByFields(string entityName, string[] fields, ICondition condition = null, int? pageSize = null)
+        {
+            List<dynamic> list = new List<dynamic>();
+            GetAllResult result = new GetAllResult()
+            {
+                Errors = new List<error>() { }
+            };
+            paging paging = new paging();
+            paging.limit = pageSize.GetValueOrDefault(0) > 0 ? pageSize.GetValueOrDefault(0) : 5000;
+            bool hasMore = true;
+            while (hasMore)
+            {
+                Ekin.Clarizen.Data.Queries.entityQuery request = new Ekin.Clarizen.Data.Queries.entityQuery(entityName, fields, null, null, null, false, false, paging);
+                if (condition != null)
+                    request.where = condition;
+                Ekin.Clarizen.Data.entityQuery entityQuery = EntityQuery(request);
+                if (entityQuery.IsCalledSuccessfully)
+                {
+                    foreach (Newtonsoft.Json.Linq.JObject obj in entityQuery.Data.entities)
+                    {
+                        list.Add(obj);
+                    }
+                    paging = entityQuery.Data.paging;
+                    hasMore = entityQuery.Data.paging.hasMore;
+                }
+                else
+                {
+                    result.Errors.Add(new error("", "Entity query failed with error: " + entityQuery.Error));
+                    hasMore = false;
+                }
+            }
+            result.Data = list;
+            return result;
+        }
+
         private void RemoveInvalidFields(JObject obj)
         {
             if (removeInvalidFieldsFromJsonResult)
