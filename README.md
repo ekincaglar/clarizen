@@ -577,14 +577,14 @@ namespace ClarizenSamples.Data
                                        .From("Task")
                                        .Where(String.Format("DueDate<{0} AND State<>\"{1}\"", yesterday, newState));
 
-            Clarizen.API.V2_0.Data.query CZQuery = ClarizenAPI.ExecuteQuery(query);
+            Ekin.Clarizen.Data.query CZQuery = ClarizenAPI.ExecuteQuery(query);
             if (CZQuery.IsCalledSuccessfully)
             {
                 if (CZQuery.Data.entities.Length > 0)
                 {
                     // Next, change the state of those tasks to Completed
                     // Note that this does not work for tasks in multiple projects
-                    Clarizen.API.V2_0.Data.changeState cs = ClarizenAPI.ChangeState(CZQuery.Data.GetEntityIds(), newState);
+                    Ekin.Clarizen.Data.changeState cs = ClarizenAPI.ChangeState(CZQuery.Data.GetEntityIds(), newState);
                     if (cs.IsCalledSuccessfully)
                     {
                         Console.WriteLine("{0} tasks set to {1}", CZQuery.Data.entities.Length, newState);
@@ -649,7 +649,7 @@ namespace ClarizenSamples.Data
 
             string parentTaskId = "/Task/4batkam0jt4xn0l3cdx4y8ueg4";
             DiscussionPost discussionPost = new DiscussionPost("/DiscussionPost", "This discussion is created by API", parentTaskId, "Integration Tool");
-            Clarizen.API.V2_0.Data.createDiscussion op = ClarizenAPI.CreateDiscussion(discussionPost);
+            Ekin.Clarizen.Data.createDiscussion op = ClarizenAPI.CreateDiscussion(discussionPost);
             if (op.IsCalledSuccessfully)
                 Console.WriteLine("Discussion created successfully");
             else
@@ -738,7 +738,7 @@ namespace ClarizenSamples.Queries
             //query.where = new cZQLCondition(@"DisplayName LIKE ""%ekin%""");
 
             // Run the Count method with the query created above
-            Clarizen.API.V2_0.Data.countQuery count = ClarizenAPI.Count(query);
+            Ekin.Clarizen.Data.countQuery count = ClarizenAPI.Count(query);
             if (count.IsCalledSuccessfully)
                 Console.WriteLine("{0} user(s) found with the display name {1}", count.Data.count, searchTerm);
             else
@@ -854,7 +854,7 @@ namespace ClarizenSamples.Queries
                                    new fieldAggregation[] { new fieldAggregation("Count", "Name", "Cnt") },
                                    new string[] { "State" },
                                    new orderBy[] { new orderBy("Cnt", "Descending") });
-            Clarizen.API.V2_0.Data.aggregateQuery aggregateQuery = ClarizenAPI.AggregateQuery(query);
+            Ekin.Clarizen.Data.aggregateQuery aggregateQuery = ClarizenAPI.AggregateQuery(query);
             if (aggregateQuery.IsCalledSuccessfully)
             {
                 Console.WriteLine("{0} entities found", aggregateQuery.Data.entities.Length);
@@ -1053,7 +1053,7 @@ namespace ClarizenSamples.Queries
             getCalendarInfo search = ClarizenAPI.GetCalendarInfo(userId);
             if (search.IsCalledSuccessfully)
             {
-                Clarizen.API.V2_0.Data.Result.getCalendarInfo result = (Clarizen.API.V2_0.Data.Result.getCalendarInfo)search.Data;
+                Ekin.Clarizen.Data.Result.getCalendarInfo result = (Ekin.Clarizen.Data.Result.getCalendarInfo)search.Data;
                 Console.WriteLine("Week Starts On: {0}", result.weekStartsOn);
                 Console.WriteLine("Weekday information:");
                 foreach (dayInformation info in result.weekDayInformation)
@@ -1151,10 +1151,10 @@ namespace ClarizenSamples.Bulk
                         //
                         switch (res.BodyType)
                         {
-                            case "Clarizen.API.V2_0.Metadata.Result.describeMetadata":
+                            case "Ekin.Clarizen.Metadata.Result.describeMetadata":
                                 WriteEntityFields(res.body.entityDescriptions[0]);
                                 break;
-                            case "Clarizen.API.V2_0.Metadata.Result.describeEntityRelations":
+                            case "Ekin.Clarizen.Metadata.Result.describeEntityRelations":
                                 WriteEntityRelationsDescription(res.body.entityRelations);
                                 break;
                         }
@@ -1226,7 +1226,7 @@ namespace ClarizenSamples.Utils
             string subject = "Hello world";
             string body = "This is an email test from the API";
             string relatedEntityId = String.Empty;
-            Clarizen.API.V2_0.Utils.Request.sendEMail.CZAccessType accessType = Clarizen.API.V2_0.Utils.Request.sendEMail.CZAccessType.Public;
+            Ekin.Clarizen.Utils.Request.sendEMail.CZAccessType accessType = Ekin.Clarizen.Utils.Request.sendEMail.CZAccessType.Public;
 
             // Send the email
             sendEMail util = ClarizenAPI.SendEmail(recipients, subject, body, relatedEntityId, accessType);
