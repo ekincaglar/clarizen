@@ -465,7 +465,7 @@ namespace Ekin.Clarizen
             bool hasMore = true;
             while (hasMore)
             {
-                Data.query Query = new Data.query(serverLocation, sessionId, new Data.Request.query(query.ToCZQL()), false);
+                Data.query Query = new Data.query(serverLocation, sessionId, new Data.Request.query(query.ToCZQL(), paging), false);
                 if (Query.IsCalledSuccessfully)
                 {
                     foreach (Newtonsoft.Json.Linq.JObject obj in Query.Data.entities)
