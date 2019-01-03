@@ -17,7 +17,7 @@ namespace Ekin.Clarizen.Data
 
         public entityQuery(string serverLocation, string sessionId, Queries.entityQuery request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/entityQuery";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/entityQuery";
 
             if (isBulk)
             {

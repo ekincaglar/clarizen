@@ -25,7 +25,7 @@ namespace Ekin.Clarizen.Data
 
             // Set the URL
             string url = string.Format("{0}?{1}fromDate={2:yyyy-MM-dd}&toDate={3:yyyy-MM-dd}",
-                (isBulk ? String.Empty : serverLocation) + "/data/getCalendarExceptions?",
+                (isBulk ? string.Empty : serverLocation) + "/data/getCalendarExceptions?",
                 string.IsNullOrWhiteSpace(request.entityId) ? "" : "entityId=" + request.entityId + "&",
                 request.fromDate,
                 request.toDate);

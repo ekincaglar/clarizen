@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public createDiscussion(string serverLocation, string sessionId, Request.createDiscussion request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/createDiscussion";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/createDiscussion";
 
             if (isBulk)
             {

@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public getTemplateDescriptions(string serverLocation, string sessionId, Request.getTemplateDescriptions request, bool isBulk = false)
         {
-            if (request == null || String.IsNullOrWhiteSpace(request.typeName))
+            if (request == null || string.IsNullOrWhiteSpace(request.typeName))
             {
                 IsCalledSuccessfully = false;
                 this.Error = "Type name must be provided";
@@ -24,7 +24,7 @@ namespace Ekin.Clarizen.Data
             }
 
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/getTemplateDescriptions?typeName=" + request.typeName;
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/getTemplateDescriptions?typeName=" + request.typeName;
 
             if (isBulk)
             {

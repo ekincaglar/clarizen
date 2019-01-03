@@ -18,7 +18,7 @@ namespace Ekin.Clarizen.Metadata
         public getSystemSettingsValues(string serverLocation, string sessionId, Request.getSystemSettingsValues request, bool isBulk = false)
         {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/metadata/getSystemSettingsValues?" + request.ToQueryString();
+            string url = (isBulk ? string.Empty : serverLocation) + "/metadata/getSystemSettingsValues?" + request.ToQueryString();
 
             if (isBulk)
             {

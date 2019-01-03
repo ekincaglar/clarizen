@@ -17,7 +17,7 @@ namespace Ekin.Clarizen.Utils
         public appLogin(string serverLocation, string sessionId, bool isBulk = false)
         {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/utils/appLogin";
+            string url = (isBulk ? string.Empty : serverLocation) + "/utils/appLogin";
 
             if (isBulk)
             {

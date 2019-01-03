@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public executeCustomAction(string serverLocation, string sessionId, Request.executeCustomAction request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/executeCustomAction";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/executeCustomAction";
 
             if (isBulk)
             {

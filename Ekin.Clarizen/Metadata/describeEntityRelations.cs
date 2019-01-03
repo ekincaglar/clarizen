@@ -17,7 +17,7 @@ namespace Ekin.Clarizen.Metadata
         public describeEntityRelations(string serverLocation, string sessionId, Request.describeEntityRelations request, bool isBulk = false)
         {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/metadata/describeEntityRelations";
+            string url = (isBulk ? string.Empty : serverLocation) + "/metadata/describeEntityRelations";
 
             if (isBulk)
             {

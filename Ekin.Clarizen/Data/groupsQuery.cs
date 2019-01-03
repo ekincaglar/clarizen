@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public groupsQuery(string serverLocation, string sessionId, Queries.groupsQuery request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/groupsQuery";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/groupsQuery";
 
             if (isBulk)
             {

@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public relationQuery(string serverLocation, string sessionId, Queries.relationQuery request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/relationQuery";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/relationQuery";
 
             if (isBulk)
             {

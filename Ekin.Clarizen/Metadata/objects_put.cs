@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Metadata
 
         public objects_put(string serverLocation, string sessionId, Request.objects_put request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/metadata/objects";
+            string url = (isBulk ? string.Empty : serverLocation) + "/metadata/objects";
 
             if (isBulk)
             {

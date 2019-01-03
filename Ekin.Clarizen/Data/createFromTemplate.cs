@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public createFromTemplate(string serverLocation, string sessionId, Request.createFromTemplate request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/createFromTemplate";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/createFromTemplate";
 
             if (isBulk)
             {

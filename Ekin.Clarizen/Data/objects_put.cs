@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public objects_put(string serverLocation, string sessionId, string id, object obj, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/objects" +
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/objects" +
                          (id.Substring(0, 1) != "/" ? "/" : "") + id;
 
             if (isBulk)

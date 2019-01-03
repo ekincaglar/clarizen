@@ -15,7 +15,7 @@ namespace Ekin.Clarizen.Data
 
         public changeState(string serverLocation, string sessionId, Request.changeState request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/changeState";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/changeState";
 
             if (isBulk)
             {

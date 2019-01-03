@@ -15,7 +15,7 @@ namespace Ekin.Clarizen.Files
 
         public upload(string serverLocation, string sessionId, Request.upload request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/files/upload";
+            string url = (isBulk ? string.Empty : serverLocation) + "/files/upload";
 
             if (isBulk)
             {

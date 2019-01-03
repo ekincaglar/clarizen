@@ -17,7 +17,7 @@ namespace Ekin.Clarizen.Metadata
         public listEntities(string serverLocation, string sessionId, bool isBulk = false)
         {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/metadata/listEntities";
+            string url = (isBulk ? string.Empty : serverLocation) + "/metadata/listEntities";
 
             if (isBulk)
             {

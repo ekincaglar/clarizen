@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public createAndRetrieve(string serverLocation, string sessionId, Request.createAndRetrieve request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/createAndRetrieve";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/createAndRetrieve";
 
             if (isBulk)
             {

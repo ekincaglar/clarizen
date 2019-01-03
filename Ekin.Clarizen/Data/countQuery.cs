@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public countQuery(string serverLocation, string sessionId, Request.countQuery request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/countQuery";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/countQuery";
 
             if (isBulk)
             {
