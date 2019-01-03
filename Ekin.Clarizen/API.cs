@@ -970,12 +970,22 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public Data.query ExecuteQuery(Interfaces.IClarizenQuery query)
+        public Data.query ExecuteQuery(Data.Request.query query)
         {
-            Data.query CZQuery = new Data.query(serverLocation, sessionId, new Data.Request.query(query.ToCZQL()), isBulk);
+            Data.query CZQuery = new Data.query(serverLocation, sessionId, query, isBulk);
             if (isBulk) bulkRequests.Add(CZQuery.BulkRequest);
             else { Logs.Assert(CZQuery.IsCalledSuccessfully, "Ekin.Clarizen.API", "ExecuteQuery", "query call failed", CZQuery.Error); TotalAPICallsMadeInCurrentSession++; }
             return CZQuery;
+        }
+
+        /// <summary>
+        /// Executes a Clarizen Query Language (CZQL) query. Visit https://api.clarizen.com/V2.0/services/data/Query for more information.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public Data.query ExecuteQuery(Interfaces.IClarizenQuery query)
+        {
+            return ExecuteQuery(new Data.Request.query(query.ToCZQL()));
         }
 
         #endregion
