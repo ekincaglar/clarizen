@@ -13,11 +13,10 @@ namespace Ekin.Clarizen
     /// <summary>
     /// .Net wrapper for the Clarizen API v2.0 located at https://api.clarizen.com/V2.0/services
     /// Developed by Ekin Caglar - ekin@caglar.com
-    /// October 2016 - February 2017
+    /// October 2016 - January 2018
     /// </summary>
     public class API
     {
-
         #region Public properties
 
         public bool removeInvalidFieldsFromJsonResult { get; set; }
@@ -31,6 +30,8 @@ namespace Ekin.Clarizen
         public int TotalAPICallsMadeInCurrentSession { get; set; }
 
         public LogFactory Logs { get; set; }
+
+        public BulkOperations Bulk { get; private set; }
 
         private bool isBulk { get; set; }
         private List<request> bulkRequests { get; set; }
@@ -46,6 +47,7 @@ namespace Ekin.Clarizen
         {
             TotalAPICallsMadeInCurrentSession = 0;
             Logs = new LogFactory();
+            Bulk = new BulkOperations(this);
         }
 
         /// <summary>
@@ -54,13 +56,14 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public API Clone()
         {
-            return new API
+            return new API()
             {
                 sessionId = this.sessionId,
                 isSandbox = this.isSandbox,
                 serverLocation = this.serverLocation,
                 username = this.username,
                 password = this.password
+                // We don't copy Logs or Bulk in the clone
             };
         }
 

@@ -100,6 +100,7 @@
     <Compile Include="Authentication\getSessionInfo.cs" />
     <Compile Include="Authentication\logout.cs" />
     <Compile Include="Authentication\login.cs" />
+    <Compile Include="BulkOperations.cs" />
     <Compile Include="Bulk\execute.cs" />
     <Compile Include="Data\changeState.cs" />
     <Compile Include="Data\countQuery.cs" />
