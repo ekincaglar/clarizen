@@ -32,6 +32,7 @@ namespace Ekin.Clarizen
         public LogFactory Logs { get; set; }
 
         public BulkOperations Bulk { get; private set; }
+        public FileUploadHelper FileUpload { get; private set; }
 
         private bool isBulk { get; set; }
         private List<request> bulkRequests { get; set; }
@@ -48,6 +49,7 @@ namespace Ekin.Clarizen
             TotalAPICallsMadeInCurrentSession = 0;
             Logs = new LogFactory();
             Bulk = new BulkOperations(this);
+            FileUpload = new FileUploadHelper(this);
         }
 
         /// <summary>
