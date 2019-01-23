@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public newsFeedQuery(string serverLocation, string sessionId, Queries.newsFeedQuery request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/newsFeedQuery";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/newsFeedQuery";
 
             if (isBulk)
             {

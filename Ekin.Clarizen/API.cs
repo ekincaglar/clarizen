@@ -13,11 +13,10 @@ namespace Ekin.Clarizen
     /// <summary>
     /// .Net wrapper for the Clarizen API v2.0 located at https://api.clarizen.com/V2.0/services
     /// Developed by Ekin Caglar - ekin@caglar.com
-    /// October 2016 - February 2017
+    /// October 2016 - January 2018
     /// </summary>
     public class API
     {
-
         #region Public properties
 
         public bool removeInvalidFieldsFromJsonResult { get; set; }
@@ -31,6 +30,9 @@ namespace Ekin.Clarizen
         public int TotalAPICallsMadeInCurrentSession { get; set; }
 
         public LogFactory Logs { get; set; }
+
+        public BulkOperations Bulk { get; private set; }
+        public FileUploadHelper FileUpload { get; private set; }
 
         private bool isBulk { get; set; }
         private List<request> bulkRequests { get; set; }
@@ -46,6 +48,8 @@ namespace Ekin.Clarizen
         {
             TotalAPICallsMadeInCurrentSession = 0;
             Logs = new LogFactory();
+            Bulk = new BulkOperations(this);
+            FileUpload = new FileUploadHelper(this);
         }
 
         /// <summary>
@@ -54,13 +58,14 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public API Clone()
         {
-            return new API
+            return new API()
             {
                 sessionId = this.sessionId,
                 isSandbox = this.isSandbox,
                 serverLocation = this.serverLocation,
                 username = this.username,
                 password = this.password
+                // We don't copy Logs or Bulk in the clone
             };
         }
 
@@ -465,7 +470,7 @@ namespace Ekin.Clarizen
             bool hasMore = true;
             while (hasMore)
             {
-                Data.query Query = new Data.query(serverLocation, sessionId, new Data.Request.query(query.ToCZQL()), false);
+                Data.query Query = new Data.query(serverLocation, sessionId, new Data.Request.query(query.ToCZQL(), paging), false);
                 if (Query.IsCalledSuccessfully)
                 {
                     foreach (Newtonsoft.Json.Linq.JObject obj in Query.Data.entities)
@@ -1005,12 +1010,22 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public Data.query ExecuteQuery(Interfaces.IClarizenQuery query)
+        public Data.query ExecuteQuery(Data.Request.query query)
         {
-            Data.query CZQuery = new Data.query(serverLocation, sessionId, new Data.Request.query(query.ToCZQL()), isBulk);
+            Data.query CZQuery = new Data.query(serverLocation, sessionId, query, isBulk);
             if (isBulk) bulkRequests.Add(CZQuery.BulkRequest);
             else { Logs.Assert(CZQuery.IsCalledSuccessfully, "Ekin.Clarizen.API", "ExecuteQuery", "query call failed", CZQuery.Error); TotalAPICallsMadeInCurrentSession++; }
             return CZQuery;
+        }
+
+        /// <summary>
+        /// Executes a Clarizen Query Language (CZQL) query. Visit https://api.clarizen.com/V2.0/services/data/Query for more information.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        public Data.query ExecuteQuery(Interfaces.IClarizenQuery query)
+        {
+            return ExecuteQuery(new Data.Request.query(query.ToCZQL()));
         }
 
         #endregion

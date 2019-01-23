@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public retrieveMultiple(string serverLocation, string sessionId, Request.retrieveMultiple request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/retrieveMultiple";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/retrieveMultiple";
 
             if (isBulk)
             {

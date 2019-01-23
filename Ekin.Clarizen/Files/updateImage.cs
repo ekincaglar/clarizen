@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Files
 
         public updateImage(string serverLocation, string sessionId, Request.updateImage request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/files/updateImage";
+            string url = (isBulk ? string.Empty : serverLocation) + "/files/updateImage";
 
             if (isBulk)
             {

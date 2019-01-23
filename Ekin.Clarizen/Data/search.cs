@@ -17,7 +17,7 @@ namespace Ekin.Clarizen.Data
 
         public search(string serverLocation, string sessionId, Request.search request, bool isBulk = false)
         {
-            if (request == null || String.IsNullOrWhiteSpace(request.q))
+            if (request == null || string.IsNullOrWhiteSpace(request.q))
             {
                 IsCalledSuccessfully = false;
                 this.Error = "Search query must be provided";
@@ -25,10 +25,10 @@ namespace Ekin.Clarizen.Data
             }
 
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/search?q=" + request.q +
-                         (request.fields != null ? "&" + request.fields.ToQueryString() : String.Empty) +
-                         (!String.IsNullOrWhiteSpace(request.typeName) ? "&" + request.typeName.ToQueryString() : String.Empty) +
-                         (request.paging != null ? "&" + request.paging.ToQueryString() : String.Empty);
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/search?q=" + request.q +
+                         (request.fields != null ? "&" + request.fields.ToQueryString() : string.Empty) +
+                         (!string.IsNullOrWhiteSpace(request.typeName) ? "&" + request.typeName.ToQueryString() : string.Empty) +
+                         (request.paging != null ? "&" + request.paging.ToQueryString() : string.Empty);
 
             if (isBulk)
             {

@@ -15,7 +15,7 @@ namespace Ekin.Clarizen.Data
 
         public lifecycle(string serverLocation, string sessionId, Request.lifecycle request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/lifecycle";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/lifecycle";
 
             if (isBulk)
             {

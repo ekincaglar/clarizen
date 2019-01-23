@@ -24,7 +24,7 @@ namespace Ekin.Clarizen.Data
             }
 
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/getCalendarInfo?userId=" + request.id;
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/getCalendarInfo?userId=" + request.id;
 
             if (isBulk)
             {

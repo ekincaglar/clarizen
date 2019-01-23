@@ -23,7 +23,7 @@ namespace Ekin.Clarizen.Metadata
             }
 
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/metadata/objects" +
+            string url = (isBulk ? string.Empty : serverLocation) + "/metadata/objects" +
                          (request.id.Substring(0, 1) != "/" ? "/" : "") + request.id;
 
             if (isBulk)

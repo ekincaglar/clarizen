@@ -15,7 +15,7 @@ namespace Ekin.Clarizen.Utils
 
         public sendEMail(string serverLocation, string sessionId, Request.sendEMail request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/utils/sendEMail";
+            string url = (isBulk ? string.Empty : serverLocation) + "/utils/sendEMail";
 
             if (isBulk)
             {

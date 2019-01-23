@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public timesheetQuery(string serverLocation, string sessionId, Queries.timesheetQuery request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/timesheetQuery";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/timesheetQuery";
 
             if (isBulk)
             {

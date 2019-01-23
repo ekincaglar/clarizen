@@ -15,7 +15,7 @@ namespace Ekin.Clarizen.Applications
 
         public installApplication(string serverLocation, string sessionId, Request.installApplication request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/applications/installApplication";
+            string url = (isBulk ? string.Empty : serverLocation) + "/applications/installApplication";
 
             if (isBulk)
             {

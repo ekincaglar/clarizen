@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public repliesQuery(string serverLocation, string sessionId, Queries.repliesQuery request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/repliesQuery";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/repliesQuery";
 
             if (isBulk)
             {

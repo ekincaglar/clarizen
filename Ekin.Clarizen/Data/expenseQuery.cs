@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
 
         public expenseQuery(string serverLocation, string sessionId, Queries.expenseQuery request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/expenseQuery";
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/expenseQuery";
 
             if (isBulk)
             {

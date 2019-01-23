@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Applications
 
         public getApplicationStatus(string serverLocation, string sessionId, Request.getApplicationStatus request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/applications/getApplicationStatus";
+            string url = (isBulk ? string.Empty : serverLocation) + "/applications/getApplicationStatus";
 
             if (isBulk)
             {

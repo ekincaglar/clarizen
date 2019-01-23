@@ -17,7 +17,7 @@ namespace Ekin.Clarizen.Metadata
 
         public describeMetadata(string serverLocation, string sessionId, Request.describeMetadata request, bool isBulk = false) {
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/metadata/describeMetadata" + (request != null ? "?" + request.ToQueryString() : String.Empty);
+            string url = (isBulk ? string.Empty : serverLocation) + "/metadata/describeMetadata" + (request != null ? "?" + request.ToQueryString() : string.Empty);
 
             if (isBulk)
             {

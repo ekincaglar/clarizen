@@ -25,10 +25,10 @@ namespace Ekin.Clarizen.Data
             }
 
             // Set the URL
-            string url = (isBulk ? String.Empty : serverLocation) + "/data/objects" +
+            string url = (isBulk ? string.Empty : serverLocation) + "/data/objects" +
                          (request.id.Substring(0, 1) != "/" ? "/" : "") + request.id +
-                         //(request.fields != null ? "?" + request.fields.ToQueryString() : String.Empty);
-                         (request.fields != null ? "?fields=" + GetFieldList(request.fields) : String.Empty);
+                         //(request.fields != null ? "?" + request.fields.ToQueryString() : string.Empty);
+                         (request.fields != null ? "?fields=" + GetFieldList(request.fields) : string.Empty);
 
             if (isBulk)
             {
