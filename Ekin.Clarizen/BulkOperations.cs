@@ -32,7 +32,8 @@ namespace Ekin.Clarizen
 
         internal int APIBulkCallCount = 0;
         internal bool _isBulkTransactional = false;
-        internal bool? _batch = null;
+        internal bool _batch = false;
+        internal bool _includeRequestsInResponse = false;
 
         public BulkOperations(API ClarizenAPI)
         {
@@ -51,14 +52,14 @@ namespace Ekin.Clarizen
         {
             bool result = true;
             DateTime startTime = DateTime.Now;
-            Ekin.Clarizen.Bulk.execute bulkService = ClarizenAPI.CommitBulkService(_isBulkTransactional, _batch);
+            Ekin.Clarizen.Bulk.execute bulkService = ClarizenAPI.CommitBulkService(_isBulkTransactional, _batch, _includeRequestsInResponse);
             if (bulkService.IsCalledSuccessfully)
             {
                 foreach (response res in bulkService.Data.responses)
                 {
                     if (res.statusCode != 200)
                     {
-                        Logs.AddError("Ekin.Clarizen.BulkOperations", "CommitBulkService", "Bulk item failed. Error: " + ((error)res.body).formatted);
+                        Logs.AddError("Ekin.Clarizen.BulkOperations", "CommitBulkService", "Bulk item failed. Error: " + ((error)res.body).formatted, res.request);
                         result = false;
                     }
                 }
@@ -87,14 +88,14 @@ namespace Ekin.Clarizen
             DateTime startTime = DateTime.Now;
             hasErrors = false;
 
-            Ekin.Clarizen.Bulk.execute bulkService = ClarizenAPI.CommitBulkService(_isBulkTransactional, _batch);
+            Ekin.Clarizen.Bulk.execute bulkService = ClarizenAPI.CommitBulkService(_isBulkTransactional, _batch, _includeRequestsInResponse);
             if (bulkService.IsCalledSuccessfully)
             {
                 foreach (response res in bulkService.Data.responses)
                 {
                     if (res.statusCode != 200)
                     {
-                        Logs.AddError("Ekin.Clarizen.BulkOperations", "CommitBulkServiceAndGetData", "Bulk item failed. Error: " + ((error)res.body).formatted);
+                        Logs.AddError("Ekin.Clarizen.BulkOperations", "CommitBulkServiceAndGetData", "Bulk item failed. Error: " + ((error)res.body).formatted, res.request);
                         hasErrors = true;
                     }
                     else
@@ -152,12 +153,13 @@ namespace Ekin.Clarizen
         /// <summary>
         /// Starts the bulk service. After this point every operation on API is put in a bulk buffer and not sent to Clarizen until CheckCommit or Close functions are executed.
         /// </summary>
-        /// <param name="IsTransactional"></param>
+        /// <param name="isTransactional"></param>
         /// <param name="batch"></param>
-        public void Start(bool IsTransactional = false, bool? batch = null)
+        public void Start(bool isTransactional = false, bool batch = false, bool includeRequestsInResponse = false)
         {
-            _isBulkTransactional = IsTransactional;
+            _isBulkTransactional = isTransactional;
             _batch = batch;
+            _includeRequestsInResponse = includeRequestsInResponse;
             APIBulkCallCount = 0;
             ClarizenAPI.StartBulkService();
         }
