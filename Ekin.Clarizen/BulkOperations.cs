@@ -59,7 +59,7 @@ namespace Ekin.Clarizen
                 {
                     if (res.statusCode != 200)
                     {
-                        Logs.AddError("Ekin.Clarizen.BulkOperations", "CommitBulkService", "Bulk item failed. Error: " + ((error)res.body).formatted, res.request);
+                        Logs.AddError("Ekin.Clarizen.BulkOperations", "CommitBulkService", "Bulk item failed. Error: " + ((error)res.body).formatted, _includeRequestsInResponse ? res.request : null);
                         result = false;
                     }
                 }
@@ -95,7 +95,7 @@ namespace Ekin.Clarizen
                 {
                     if (res.statusCode != 200)
                     {
-                        Logs.AddError("Ekin.Clarizen.BulkOperations", "CommitBulkServiceAndGetData", "Bulk item failed. Error: " + ((error)res.body).formatted, res.request);
+                        Logs.AddError("Ekin.Clarizen.BulkOperations", "CommitBulkServiceAndGetData", "Bulk item failed. Error: " + ((error)res.body).formatted, _includeRequestsInResponse ? res.request : null);
                         hasErrors = true;
                     }
                     else
@@ -148,7 +148,7 @@ namespace Ekin.Clarizen
 
         #endregion
 
-        #region Bulk Operations (Reset, CheckCommit, Close)
+        #region Bulk Operations (Reset, CheckCommit, ForceCommit, Close)
 
         /// <summary>
         /// Starts the bulk service. After this point every operation on API is put in a bulk buffer and not sent to Clarizen until CheckCommit or Close functions are executed.
@@ -178,7 +178,7 @@ namespace Ekin.Clarizen
             if (APIBulkCallCount >= bulkSize)
             {
                 result = Commit(enableTimeAudit, sleepTime);
-                Start(_isBulkTransactional);
+                Start(_isBulkTransactional, _batch, _includeRequestsInResponse);
             }
             return result;
         }
@@ -200,8 +200,35 @@ namespace Ekin.Clarizen
             if (APIBulkCallCount >= bulkSize)
             {
                 result = Commit<T>(out hasErrors, enableTimeAudit, sleepTime);
-                Start(_isBulkTransactional);
+                Start(_isBulkTransactional, _batch, _includeRequestsInResponse);
             }
+            return result;
+        }
+
+        /// <summary>
+        /// Commits whatever is in the buffer to Clarizen. Ensure that you have less than 1000 items to commit.
+        /// </summary>
+        /// <param name="enableTimeAudit"></param>
+        /// <returns></returns>
+        public bool ForceCommit(bool enableTimeAudit = false)
+        {
+            bool result = Commit(enableTimeAudit);
+            Start(_isBulkTransactional, _batch, _includeRequestsInResponse);
+            return result;
+        }
+
+        /// <summary>
+        /// Commits whatever is in the buffer to Clarizen. Ensure that you have less than 1000 items to commit.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="hasErrors"></param>
+        /// <param name="enableTimeAudit"></param>
+        /// <returns></returns>
+        public List<T> ForceCommit<T>(out bool hasErrors, bool enableTimeAudit = false)
+        {
+            hasErrors = false;
+            List<T> result = Commit<T>(out hasErrors, enableTimeAudit);
+            Start(_isBulkTransactional, _batch, _includeRequestsInResponse);
             return result;
         }
 

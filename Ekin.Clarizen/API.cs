@@ -1057,19 +1057,28 @@ namespace Ekin.Clarizen
                 Logs.Assert(bulkService.IsCalledSuccessfully, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service error", bulkService.Error);
                 TotalAPICallsMadeInCurrentSession++;
                 if (bulkService.IsCalledSuccessfully)
-                    for (int n = 0; n < bulkService.Data.responses.Length; n++)
+                {
+                    if (bulkService.Data.responses?.Length > 0)
                     {
-                        if (bulkService.Data.responses[n].statusCode == 200)
-                            bulkService.Data.responses[n].CastBody(bulkRequests[n].resultType);
-                        else
-                            bulkService.Data.responses[n].CastBodyToError();
-
-                        if (includeRequestsInResponses.GetValueOrDefault(false))
+                        for (int n = 0; n < bulkService.Data.responses.Length; n++)
                         {
-                            // For every request in the payload Clarizen returns a response so their indexes must match
-                            bulkService.Data.responses[n].request = bulkRequests[n];
+                            if (bulkService.Data.responses[n].statusCode == 200)
+                                bulkService.Data.responses[n].CastBody(bulkRequests[n].resultType);
+                            else
+                                bulkService.Data.responses[n].CastBodyToError();
+
+                            if (includeRequestsInResponses.GetValueOrDefault(false))
+                            {
+                                // For every request in the payload Clarizen returns a response so their indexes must match
+                                bulkService.Data.responses[n].request = bulkRequests[n];
+                            }
                         }
                     }
+                    else
+                    {
+                        Logs.AddError("Ekin.Clarizen.API", "CommitBulkService", "Bulk service executed successfully but no response was received from Clarizen");
+                    }
+                }
                 return bulkService;
             }
             return null;
