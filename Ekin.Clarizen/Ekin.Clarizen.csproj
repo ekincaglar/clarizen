@@ -99,8 +99,8 @@
     <Compile Include="Authentication\getSessionInfo.cs" />
     <Compile Include="Authentication\logout.cs" />
     <Compile Include="Authentication\login.cs" />
-    <Compile Include="FileUploadHelper.cs" />
-    <Compile Include="BulkOperations.cs" />
+    <Compile Include="Helpers\FileUploadHelper.cs" />
+    <Compile Include="Helpers\BulkOperations.cs" />
     <Compile Include="Bulk\execute.cs" />
     <Compile Include="Data\changeState.cs" />
     <Compile Include="Data\countQuery.cs" />
@@ -142,7 +142,7 @@
     <Compile Include="Metadata\setSystemSettingsValues.cs" />
     <Compile Include="API.cs" />
     <Compile Include="Metadata\describeMetadata.cs" />
-    <Compile Include="OutboundProperties.cs" />
+    <Compile Include="Helpers\OutboundProperties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Authentication\getServerDefinition.cs" />
     <Compile Include="Utils\appLogin.cs" />
