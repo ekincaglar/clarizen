@@ -146,6 +146,10 @@ namespace Ekin.Clarizen
                     }
                 }
             }
+            else if (prop.PropertyType == typeof(EntityId))
+            {
+                prop.SetValue(entity, (EntityId)value, null);
+            }
         }
 
         #endregion
