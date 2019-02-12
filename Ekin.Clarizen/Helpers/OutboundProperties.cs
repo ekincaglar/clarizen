@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
 using System.Reflection;
+using System.Net;
 
 namespace Ekin.Clarizen
 {
@@ -33,9 +34,9 @@ namespace Ekin.Clarizen
             return result;
         }
 
-        public List<T> Parse(HttpRequest request)
+        public List<T> Parse(HttpWebRequest request)
         {
-            return Parse(request.InputStream);
+            return Parse(request.GetRequestStream());
         }
 
         public List<T> Parse(Stream InputStream)

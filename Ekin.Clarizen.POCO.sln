@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekin.Clarizen.POCO", "Ekin.Clarizen.POCO\Ekin.Clarizen.POCO.csproj", "{2954554E-01E2-40FA-8FBC-5845919950A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekin.Clarizen.POCO.Core", "Ekin.Clarizen.POCO.Core\Ekin.Clarizen.POCO.Core.csproj", "{2C503B8A-118A-4D3C-AFC2-21501A359D41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +17,15 @@ Global
 		{2954554E-01E2-40FA-8FBC-5845919950A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2954554E-01E2-40FA-8FBC-5845919950A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2954554E-01E2-40FA-8FBC-5845919950A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C503B8A-118A-4D3C-AFC2-21501A359D41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C503B8A-118A-4D3C-AFC2-21501A359D41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C503B8A-118A-4D3C-AFC2-21501A359D41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C503B8A-118A-4D3C-AFC2-21501A359D41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {451F3932-E9B3-4FC7-B18E-6A8057FB1894}
 	EndGlobalSection
 EndGlobal

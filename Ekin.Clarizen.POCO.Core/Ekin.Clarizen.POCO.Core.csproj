@@ -1,0 +1,167 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\action.cs" Link="Common\action.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\calendarException.cs" Link="Common\calendarException.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\Currency.cs" Link="Common\Currency.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\Day.cs" Link="Common\Day.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\dayInformation.cs" Link="Common\dayInformation.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\Duration.cs" Link="Common\Duration.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\entity.cs" Link="Common\entity.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\entityDescription.cs" Link="Common\entityDescription.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\entityId.cs" Link="Common\entityId.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\EntityIdConverter.cs" Link="Common\EntityIdConverter.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\entityRelationsDescription.cs" Link="Common\entityRelationsDescription.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\error.cs" Link="Common\error.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\every.cs" Link="Common\every.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\exceptionDate.cs" Link="Common\exceptionDate.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\fieldAggregation.cs" Link="Common\fieldAggregation.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\fieldDescription.cs" Link="Common\fieldDescription.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\fieldValue.cs" Link="Common\fieldValue.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\fileInformation.cs" Link="Common\fileInformation.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\newsFeedMode.cs" Link="Common\newsFeedMode.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\operator.cs" Link="Common\operator.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\orderBy.cs" Link="Common\orderBy.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\paging.cs" Link="Common\paging.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\parameters.cs" Link="Common\parameters.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\postFeedItem.cs" Link="Common\postFeedItem.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\recipient.cs" Link="Common\recipient.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\relation.cs" Link="Common\relation.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\relationDescription.cs" Link="Common\relationDescription.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\repeat.cs" Link="Common\repeat.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\replyFeedItem.cs" Link="Common\replyFeedItem.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\request.cs" Link="Common\request.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\requestMethod.cs" Link="Common\requestMethod.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\response.cs" Link="Common\response.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\storageType.cs" Link="Common\storageType.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\timesheetStateEnum.cs" Link="Common\timesheetStateEnum.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Interfaces\IClarizenQuery.cs" Link="Interfaces\IClarizenQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Interfaces\ICondition.cs" Link="Interfaces\ICondition.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Interfaces\IExpression.cs" Link="Interfaces\IExpression.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Interfaces\IQuery.cs" Link="Interfaces\IQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Interfaces\ISupportBulk.cs" Link="Interfaces\ISupportBulk.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\aggregateQuery.cs" Link="Queries\aggregateQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\Conditions\And.cs" Link="Queries\Conditions\And.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\Conditions\Compare.cs" Link="Queries\Conditions\Compare.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\Conditions\cZQLCondition.cs" Link="Queries\Conditions\cZQLCondition.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\Conditions\Not.cs" Link="Queries\Conditions\Not.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\Conditions\Or.cs" Link="Queries\Conditions\Or.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\entityFeedQuery.cs" Link="Queries\entityFeedQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\entityQuery.cs" Link="Queries\entityQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\expenseQuery.cs" Link="Queries\expenseQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\Expressions\constantExpression.cs" Link="Queries\Expressions\constantExpression.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\Expressions\constantListExpression.cs" Link="Queries\Expressions\constantListExpression.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\Expressions\fieldExpression.cs" Link="Queries\Expressions\fieldExpression.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\Expressions\queryExpression.cs" Link="Queries\Expressions\queryExpression.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\findUserQuery.cs" Link="Queries\findUserQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\groupsQuery.cs" Link="Queries\groupsQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\newsFeedQuery.cs" Link="Queries\newsFeedQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\Query.cs" Link="Queries\Query.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\relationQuery.cs" Link="Queries\relationQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\repliesQuery.cs" Link="Queries\repliesQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Queries\timesheetQuery.cs" Link="Queries\timesheetQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Applications\getApplicationStatus.cs" Link="Requests\Applications\getApplicationStatus.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Applications\installApplication.cs" Link="Requests\Applications\installApplication.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Authentication\getServerDefinition.cs" Link="Requests\Authentication\getServerDefinition.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Authentication\getSessionInfo.cs" Link="Requests\Authentication\getSessionInfo.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Authentication\login.cs" Link="Requests\Authentication\login.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Authentication\loginOptions.cs" Link="Requests\Authentication\loginOptions.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Bulk\execute.cs" Link="Requests\Bulk\execute.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\changeState.cs" Link="Requests\Data\changeState.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\countQuery.cs" Link="Requests\Data\countQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\createAndRetrieve.cs" Link="Requests\Data\createAndRetrieve.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\createDiscussion.cs" Link="Requests\Data\createDiscussion.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\createFromTemplate.cs" Link="Requests\Data\createFromTemplate.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\executeCustomAction.cs" Link="Requests\Data\executeCustomAction.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\getCalendarExceptions.cs" Link="Requests\Data\getCalendarExceptions.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\getCalendarInfo.cs" Link="Requests\Data\getCalendarInfo.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\getTemplateDescriptions.cs" Link="Requests\Data\getTemplateDescriptions.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\lifecycle.cs" Link="Requests\Data\lifecycle.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\objects_delete.cs" Link="Requests\Data\objects_delete.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\objects_get.cs" Link="Requests\Data\objects_get.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\objects_post.cs" Link="Requests\Data\objects_post.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\query.cs" Link="Requests\Data\query.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\retrieveMultiple.cs" Link="Requests\Data\retrieveMultiple.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\search.cs" Link="Requests\Data\search.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Files\download.cs" Link="Requests\Files\download.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Files\updateImage.cs" Link="Requests\Files\updateImage.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Files\upload.cs" Link="Requests\Files\upload.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Metadata\describeEntities.cs" Link="Requests\Metadata\describeEntities.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Metadata\describeEntityRelations.cs" Link="Requests\Metadata\describeEntityRelations.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Metadata\describeMetadata.cs" Link="Requests\Metadata\describeMetadata.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Metadata\getSystemSettingsValues.cs" Link="Requests\Metadata\getSystemSettingsValues.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Metadata\objects_delete.cs" Link="Requests\Metadata\objects_delete.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Metadata\objects_put.cs" Link="Requests\Metadata\objects_put.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Metadata\setSystemSettingsValues.cs" Link="Requests\Metadata\setSystemSettingsValues.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Utils\sendEMail.cs" Link="Requests\Utils\sendEMail.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Applications\getApplicationStatus.cs" Link="Responses\Applications\getApplicationStatus.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Authentication\getServerDefinition.cs" Link="Responses\Authentication\getServerDefinition.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Authentication\getSessionInfo.cs" Link="Responses\Authentication\getSessionInfo.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Authentication\login.cs" Link="Responses\Authentication\login.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Bulk\execute.cs" Link="Responses\Bulk\execute.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\aggregateQuery.cs" Link="Responses\Data\aggregateQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\countQuery.cs" Link="Responses\Data\countQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\createAndRetrieve.cs" Link="Responses\Data\createAndRetrieve.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\createDiscussion.cs" Link="Responses\Data\createDiscussion.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\createFromTemplate.cs" Link="Responses\Data\createFromTemplate.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\entityFeedQuery.cs" Link="Responses\Data\entityFeedQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\entityQuery.cs" Link="Responses\Data\entityQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\executeCustomAction.cs" Link="Responses\Data\executeCustomAction.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\expenseQuery.cs" Link="Responses\Data\expenseQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\getCalendarExceptions.cs" Link="Responses\Data\getCalendarExceptions.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\getCalendarInfo.cs" Link="Responses\Data\getCalendarInfo.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\getTemplateDescriptions.cs" Link="Responses\Data\getTemplateDescriptions.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\groupsQuery.cs" Link="Responses\Data\groupsQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\newsFeedQuery.cs" Link="Responses\Data\newsFeedQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\objects_put.cs" Link="Responses\Data\objects_put.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\query.cs" Link="Responses\Data\query.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\relationQuery.cs" Link="Responses\Data\relationQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\repliesQuery.cs" Link="Responses\Data\repliesQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\retrieveMultiple.cs" Link="Responses\Data\retrieveMultiple.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\search.cs" Link="Responses\Data\search.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\timesheetQuery.cs" Link="Responses\Data\timesheetQuery.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Files\download.cs" Link="Responses\Files\download.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Files\getUploadUrl.cs" Link="Responses\Files\getUploadUrl.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Files\updateImage.cs" Link="Responses\Files\updateImage.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\GetAll\GetAllResult.cs" Link="Responses\GetAll\GetAllResult.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Metadata\describeEntities.cs" Link="Responses\Metadata\describeEntities.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Metadata\describeEntityRelations.cs" Link="Responses\Metadata\describeEntityRelations.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Metadata\describeMetadata.cs" Link="Responses\Metadata\describeMetadata.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Metadata\getSystemSettingsValues.cs" Link="Responses\Metadata\getSystemSettingsValues.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Metadata\listEntities.cs" Link="Responses\Metadata\listEntities.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Metadata\objects_put.cs" Link="Responses\Metadata\objects_put.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Utils\appLogin.cs" Link="Responses\Utils\appLogin.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Properties\" />
+    <Folder Include="Queries\Conditions\" />
+    <Folder Include="Queries\Expressions\" />
+    <Folder Include="Requests\Applications\" />
+    <Folder Include="Requests\Authentication\" />
+    <Folder Include="Requests\Bulk\" />
+    <Folder Include="Requests\Data\" />
+    <Folder Include="Requests\Files\" />
+    <Folder Include="Requests\Metadata\" />
+    <Folder Include="Requests\Utils\" />
+    <Folder Include="Responses\Applications\" />
+    <Folder Include="Responses\Authentication\" />
+    <Folder Include="Responses\Bulk\" />
+    <Folder Include="Responses\Data\" />
+    <Folder Include="Responses\Files\" />
+    <Folder Include="Responses\GetAll\" />
+    <Folder Include="Responses\Metadata\" />
+    <Folder Include="Responses\Utils\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+</Project>
