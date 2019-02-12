@@ -14,6 +14,8 @@ namespace Ekin.Clarizen
 {
     public class OutboundProperties<T> where T : class, new()
     {
+        XNamespace ns = "http://clarizen.com/api";
+
         public LogFactory Logs { get; private set; }
         public string RawRequest { get; private set; }
         public string OrganizationId { get; private set; }
@@ -65,8 +67,6 @@ namespace Ekin.Clarizen
                 }
 
                 // Parse the XML
-                XNamespace ns = "http://clarizen.com/api";
-
                 IEnumerable<XElement> EntitiesElement = xdoc.Descendants(ns + "Entities");
                 if (EntitiesElement != null)
                 {
@@ -79,19 +79,13 @@ namespace Ekin.Clarizen
                         {
                             #region Parse the BaseEntity Id
 
-                            XElement BaseEntityIdElement = BaseEntityElement.Element(ns + "Id");
-                            if (BaseEntityIdElement != null)
+                            EntityId BaseEntity = GetEntityIdFromNode(BaseEntityElement);
+                            if (BaseEntity != null)
                             {
-                                XElement typeName = BaseEntityIdElement.Element(ns + "TypeName");
-                                XElement typeValue = BaseEntityIdElement.Element(ns + "Value");
-                                if (typeName?.Value != null || typeValue?.Value != null)
+                                PropertyInfo BaseEntityProperty = GetPropertyByAttributeValue(properties, "BaseEntityId");
+                                if (BaseEntityProperty != null)
                                 {
-                                    PropertyInfo BaseEntityProperty = GetPropertyByAttributeValue(properties, "BaseEntityId");
-                                    if (BaseEntityProperty != null)
-                                    {
-                                        EntityId BaseEntity = new EntityId($"/{typeName.Value}/{typeValue.Value}");
-                                        BaseEntityProperty.SetValue(entityObj, BaseEntity);
-                                    }
+                                    BaseEntityProperty.SetValue(entityObj, BaseEntity);
                                 }
                             }
 
@@ -118,6 +112,14 @@ namespace Ekin.Clarizen
                                         if (prop == null)
                                         {
                                             Logs.AddError("Ekin.Clarizen.OutboundProperties", "Parse", $"Request XML could not be parsed. Request body: {RawRequest}");
+                                        }
+                                        else if (prop.PropertyType.Equals(typeof(EntityId)))
+                                        {
+                                            EntityId PropertyEntityId = GetEntityIdFromNode(fieldValue);
+                                            if (PropertyEntityId != null)
+                                            {
+                                                prop.SetValueByType(entityObj, PropertyEntityId);
+                                            }
                                         }
                                         else
                                         {
@@ -153,6 +155,23 @@ namespace Ekin.Clarizen
             }
 
             return result;
+        }
+
+        private EntityId GetEntityIdFromNode(XElement BaseEntityElement)
+        {
+            if (BaseEntityElement == null) return null;
+            XElement IdElement = BaseEntityElement.Element(ns + "Id");
+            if (IdElement != null)
+            {
+                XElement typeName = IdElement.Element(ns + "TypeName");
+                XElement typeValue = IdElement.Element(ns + "Value");
+                if (typeName?.Value != null || typeValue?.Value != null)
+                {
+                    return new EntityId($"/{typeName.Value}/{typeValue.Value}");
+                }
+            }
+            Logs.AddError("Ekin.Clarizen.OutboundProperties", "GetEntityIdFromNode", $"{BaseEntityElement.Name} node could not be parsed. Make sure it has Id, Id\\TypeName, Id\\Value nodes.");
+            return null;
         }
 
         private List<string> GetAttributeValues(Type type, string propertyName)
