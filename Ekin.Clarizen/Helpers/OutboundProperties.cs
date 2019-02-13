@@ -35,12 +35,7 @@ namespace Ekin.Clarizen
             }
             return result;
         }
-
-        public List<T> Parse(HttpWebRequest request)
-        {
-            return Parse(request.GetRequestStream());
-        }
-
+        
         public List<T> Parse(Stream InputStream)
         {
             Logs = new LogFactory();
