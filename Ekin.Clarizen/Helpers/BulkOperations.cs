@@ -34,6 +34,7 @@ namespace Ekin.Clarizen
         internal bool _isBulkTransactional = false;
         internal bool _batch = false;
         internal bool _includeRequestsInResponse = false;
+        internal int _timeout = 120000;
 
         public BulkOperations(API ClarizenAPI)
         {
@@ -155,11 +156,12 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="isTransactional"></param>
         /// <param name="batch"></param>
-        public void Start(bool isTransactional = false, bool batch = false, bool includeRequestsInResponse = false)
+        public void Start(bool isTransactional = false, bool batch = false, bool includeRequestsInResponse = false, int timeout = 120000)
         {
             _isBulkTransactional = isTransactional;
             _batch = batch;
             _includeRequestsInResponse = includeRequestsInResponse;
+            _timeout = timeout;
             APIBulkCallCount = 0;
             ClarizenAPI.StartBulkService();
         }
@@ -178,7 +180,7 @@ namespace Ekin.Clarizen
             if (APIBulkCallCount >= bulkSize)
             {
                 result = Commit(enableTimeAudit, sleepTime);
-                Start(_isBulkTransactional, _batch, _includeRequestsInResponse);
+                Start(_isBulkTransactional, _batch, _includeRequestsInResponse, _timeout);
             }
             return result;
         }
@@ -200,7 +202,7 @@ namespace Ekin.Clarizen
             if (APIBulkCallCount >= bulkSize)
             {
                 result = Commit<T>(out hasErrors, enableTimeAudit, sleepTime);
-                Start(_isBulkTransactional, _batch, _includeRequestsInResponse);
+                Start(_isBulkTransactional, _batch, _includeRequestsInResponse, _timeout);
             }
             return result;
         }
@@ -213,7 +215,7 @@ namespace Ekin.Clarizen
         public bool ForceCommit(bool enableTimeAudit = false)
         {
             bool result = Commit(enableTimeAudit);
-            Start(_isBulkTransactional, _batch, _includeRequestsInResponse);
+            Start(_isBulkTransactional, _batch, _includeRequestsInResponse, _timeout);
             return result;
         }
 
@@ -228,7 +230,7 @@ namespace Ekin.Clarizen
         {
             hasErrors = false;
             List<T> result = Commit<T>(out hasErrors, enableTimeAudit);
-            Start(_isBulkTransactional, _batch, _includeRequestsInResponse);
+            Start(_isBulkTransactional, _batch, _includeRequestsInResponse, _timeout);
             return result;
         }
 
