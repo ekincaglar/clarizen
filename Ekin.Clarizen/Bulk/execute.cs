@@ -12,7 +12,7 @@ namespace Ekin.Clarizen.Bulk
         public bool IsCalledSuccessfully { get; set; }
         public string Error { get; set; }
 
-        public execute(string serverLocation, string sessionId, Request.execute request)
+        public execute(string serverLocation, string sessionId, Request.execute request, int? timeout = null)
         {
             // Set the URL
             string url = serverLocation + "/bulk/execute";
@@ -28,7 +28,7 @@ namespace Ekin.Clarizen.Bulk
             }
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers);
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, timeout.GetValueOrDefault(120000));
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Post(request);
 

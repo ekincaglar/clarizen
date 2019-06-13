@@ -1048,12 +1048,12 @@ namespace Ekin.Clarizen
         /// <param name="batch"></param>
         /// <param name="includeRequestsInResponses">Embed requests in responses so that when there is an error in a bulk operation you can look into the request that caused it</param>
         /// <returns></returns>
-        public Bulk.execute CommitBulkService(bool transactional = false, bool? batch = null, bool? includeRequestsInResponses = null)
+        public Bulk.execute CommitBulkService(bool transactional = false, bool? batch = null, bool? includeRequestsInResponses = null, int? timeout = null)
         {
             Logs.Assert(isBulk, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service not started");
             if (isBulk)
             {
-                Bulk.execute bulkService = new Bulk.execute(serverLocation, sessionId, new Bulk.Request.execute(bulkRequests, transactional, batch));
+                Bulk.execute bulkService = new Bulk.execute(serverLocation, sessionId, new Bulk.Request.execute(bulkRequests, transactional, batch, timeout));
                 Logs.Assert(bulkService.IsCalledSuccessfully, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service error", bulkService.Error);
                 TotalAPICallsMadeInCurrentSession++;
                 if (bulkService.IsCalledSuccessfully)
