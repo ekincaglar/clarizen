@@ -53,7 +53,7 @@ namespace Ekin.Clarizen
         {
             bool result = true;
             DateTime startTime = DateTime.Now;
-            Ekin.Clarizen.Bulk.execute bulkService = ClarizenAPI.CommitBulkService(_isBulkTransactional, _batch, _includeRequestsInResponse);
+            Ekin.Clarizen.Bulk.execute bulkService = ClarizenAPI.CommitBulkService(_isBulkTransactional, _batch, _includeRequestsInResponse, _timeout);
             if (bulkService.IsCalledSuccessfully)
             {
                 foreach (response res in bulkService.Data.responses)
@@ -89,7 +89,7 @@ namespace Ekin.Clarizen
             DateTime startTime = DateTime.Now;
             hasErrors = false;
 
-            Ekin.Clarizen.Bulk.execute bulkService = ClarizenAPI.CommitBulkService(_isBulkTransactional, _batch, _includeRequestsInResponse);
+            Ekin.Clarizen.Bulk.execute bulkService = ClarizenAPI.CommitBulkService(_isBulkTransactional, _batch, _includeRequestsInResponse, _timeout);
             if (bulkService.IsCalledSuccessfully)
             {
                 foreach (response res in bulkService.Data.responses)
