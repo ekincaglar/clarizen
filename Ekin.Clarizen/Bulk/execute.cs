@@ -49,7 +49,7 @@ namespace Ekin.Clarizen.Bulk
             else
             {
                 this.IsCalledSuccessfully = false;
-                this.Error = response.InternalError.GetFormattedErrorMessage();
+                this.Error = $"{response.InternalError.GetFormattedErrorMessage()}. Timeout set to {TimeSpan.FromMilliseconds(timeout.GetValueOrDefault(120000)).ToHumanReadableString()}.";
             }
         }
 

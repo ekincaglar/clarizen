@@ -51,8 +51,8 @@
       <HintPath>..\packages\Ekin.Encryption.1.0.1.30044\lib\net452\Ekin.Encryption.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Ekin.Log, Version=2.0.6962.25647, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ekin.Log.2.0.6962.25647\lib\net452\Ekin.Log.dll</HintPath>
+    <Reference Include="Ekin.Log, Version=2.2.7012.27743, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ekin.Log.2.2.7012.27743\lib\net452\Ekin.Log.dll</HintPath>
     </Reference>
     <Reference Include="Ekin.Rest, Version=1.1.3.24698, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Ekin.Rest.1.1.3.24698\lib\net452\Ekin.Rest.dll</HintPath>
