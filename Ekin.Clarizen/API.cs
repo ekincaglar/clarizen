@@ -1053,7 +1053,7 @@ namespace Ekin.Clarizen
             Logs.Assert(isBulk, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service not started");
             if (isBulk)
             {
-                Bulk.execute bulkService = new Bulk.execute(serverLocation, sessionId, new Bulk.Request.execute(bulkRequests, transactional, batch, timeout));
+                Bulk.execute bulkService = new Bulk.execute(serverLocation, sessionId, new Bulk.Request.execute(bulkRequests, transactional, batch), timeout);
                 Logs.Assert(bulkService.IsCalledSuccessfully, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service error", bulkService.Error);
                 TotalAPICallsMadeInCurrentSession++;
                 if (bulkService.IsCalledSuccessfully)
