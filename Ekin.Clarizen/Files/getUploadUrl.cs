@@ -14,12 +14,12 @@ namespace Ekin.Clarizen.Files
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public getUploadUrl(string serverLocation, string sessionId, bool isBulk = false)
+        public getUploadUrl(CallSettings callSettings)
         {
             // Set the URL
-            string url = (isBulk ? string.Empty : serverLocation) + "/files/getUploadUrl";
+            string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/files/getUploadUrl";
 
-            if (isBulk)
+            if (callSettings.isBulk)
             {
                 this.BulkRequest = new request(url, requestMethod.Get, typeof(Result.getUploadUrl));
                 return;
@@ -27,10 +27,10 @@ namespace Ekin.Clarizen.Files
 
             // Set the header for the authenticated user
             System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
-            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", sessionId));
+            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", callSettings.sessionId));
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers);
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault());
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Get();
 

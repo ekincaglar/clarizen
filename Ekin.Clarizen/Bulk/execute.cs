@@ -12,14 +12,14 @@ namespace Ekin.Clarizen.Bulk
         public bool IsCalledSuccessfully { get; set; }
         public string Error { get; set; }
 
-        public execute(string serverLocation, string sessionId, Request.execute request, int? timeout = null)
+        public execute(Request.execute request, CallSettings callSettings)
         {
             // Set the URL
-            string url = serverLocation + "/bulk/execute";
+            string url = callSettings.serverLocation + "/bulk/execute";
 
             // Set the header for the authenticated user
             System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
-            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", sessionId));
+            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", callSettings.sessionId));
 
             // Set the CallOptions header
             if (request.batch != null)
@@ -28,9 +28,9 @@ namespace Ekin.Clarizen.Bulk
             }
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, timeout.GetValueOrDefault(120000));
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(120000));
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Post(request);
+            Ekin.Rest.Response response = restClient.Post(request, callSettings.serializeNullValues);
 
             // Parse Data
             if (response.Status == System.Net.HttpStatusCode.OK)
@@ -49,7 +49,7 @@ namespace Ekin.Clarizen.Bulk
             else
             {
                 this.IsCalledSuccessfully = false;
-                this.Error = $"{response.InternalError.GetFormattedErrorMessage()}. Timeout set to {TimeSpan.FromMilliseconds(timeout.GetValueOrDefault(120000)).ToHumanReadableString()}.";
+                this.Error = $"{response.InternalError.GetFormattedErrorMessage()}. Timeout set to {TimeSpan.FromMilliseconds(callSettings.timeout.GetValueOrDefault(120000)).ToHumanReadableString()}.";
             }
         }
 

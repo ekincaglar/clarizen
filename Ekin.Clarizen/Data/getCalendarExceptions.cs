@@ -14,7 +14,7 @@ namespace Ekin.Clarizen.Data
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public getCalendarExceptions(string serverLocation, string sessionId, Request.getCalendarExceptions request, bool isBulk = false)
+        public getCalendarExceptions(Request.getCalendarExceptions request, CallSettings callSettings)
         {
             if (request == null || request.fromDate == DateTime.MinValue || request.toDate == DateTime.MinValue)
             {
@@ -25,12 +25,12 @@ namespace Ekin.Clarizen.Data
 
             // Set the URL
             string url = string.Format("{0}?{1}fromDate={2:yyyy-MM-dd}&toDate={3:yyyy-MM-dd}",
-                (isBulk ? string.Empty : serverLocation) + "/data/getCalendarExceptions?",
+                (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/getCalendarExceptions?",
                 string.IsNullOrWhiteSpace(request.entityId) ? "" : "entityId=" + request.entityId + "&",
                 request.fromDate,
                 request.toDate);
 
-            if (isBulk)
+            if (callSettings.isBulk)
             {
                 this.BulkRequest = new request(url, requestMethod.Get, typeof(Result.getCalendarExceptions));
                 return;
@@ -38,10 +38,10 @@ namespace Ekin.Clarizen.Data
 
             // Set the header for the authenticated user
             System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
-            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", sessionId));
+            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", callSettings.sessionId));
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers);
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault());
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Get();
 

@@ -14,12 +14,12 @@ namespace Ekin.Clarizen.Data
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public objects_put(string serverLocation, string sessionId, string id, object obj, bool isBulk = false) {
+        public objects_put(string id, object obj, CallSettings callSettings) {
             // Set the URL
-            string url = (isBulk ? string.Empty : serverLocation) + "/data/objects" +
+            string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/objects" +
                          (id.Substring(0, 1) != "/" ? "/" : "") + id;
 
-            if (isBulk)
+            if (callSettings.isBulk)
             {
                 this.BulkRequest = new request(url, requestMethod.Put, obj, typeof(Result.objects_put));
                 return;
@@ -27,10 +27,10 @@ namespace Ekin.Clarizen.Data
 
             // Set the header for the authenticated user
             System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
-            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", sessionId));
+            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", callSettings.sessionId));
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers);
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault());
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Put(obj);
 

@@ -13,11 +13,11 @@ namespace Ekin.Clarizen.Utils
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public sendEMail(string serverLocation, string sessionId, Request.sendEMail request, bool isBulk = false) {
+        public sendEMail(Request.sendEMail request, CallSettings callSettings) {
             // Set the URL
-            string url = (isBulk ? string.Empty : serverLocation) + "/utils/sendEMail";
+            string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/utils/sendEMail";
 
-            if (isBulk)
+            if (callSettings.isBulk)
             {
                 this.BulkRequest = new request(url, requestMethod.Get);
                 return;
@@ -25,12 +25,12 @@ namespace Ekin.Clarizen.Utils
 
             // Set the header for the authenticated user
             System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
-            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", sessionId));
+            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", callSettings.sessionId));
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers);
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault());
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Post(request);
+            Ekin.Rest.Response response = restClient.Post(request, callSettings.serializeNullValues);
 
             // Return result
             if (response.Status == System.Net.HttpStatusCode.OK)

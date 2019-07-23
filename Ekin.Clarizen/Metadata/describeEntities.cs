@@ -15,12 +15,12 @@ namespace Ekin.Clarizen.Metadata
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public describeEntities(string serverLocation, string sessionId, Request.describeEntities request, bool isBulk = false)
+        public describeEntities(Request.describeEntities request, CallSettings callSettings)
         {
             // Set the URL
-            string url = (isBulk ? string.Empty : serverLocation) + "/metadata/describeEntities?" + request.ToQueryString();
+            string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/metadata/describeEntities?" + request.ToQueryString();
 
-            if (isBulk)
+            if (callSettings.isBulk)
             {
                 this.BulkRequest = new request(url, requestMethod.Get, typeof(Result.describeEntities));
                 return;
@@ -28,10 +28,10 @@ namespace Ekin.Clarizen.Metadata
 
             // Set the header for the authenticated user
             System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
-            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", sessionId));
+            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", callSettings.sessionId));
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers);
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault());
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Get();
 

@@ -28,14 +28,17 @@ namespace Ekin.Clarizen
 
         public bool isSandbox { get; set; } = false;
         public int TotalAPICallsMadeInCurrentSession { get; set; }
+        public bool serializeNullValues { get; set; } = false;
 
         public LogFactory Logs { get; set; }
 
         public BulkOperations Bulk { get; private set; }
         public FileUploadHelper FileUpload { get; private set; }
 
-        private bool isBulk { get; set; }
+        public bool isBulk { get; private set; }
         private List<request> bulkRequests { get; set; }
+
+        public int? timeout { get; set; } = 120000;
 
         #endregion
 
@@ -137,9 +140,10 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Metadata.describeMetadata DescribeMetadata(string[] typeNames, string[] flags)
         {
-            Metadata.describeMetadata metadata = new Metadata.describeMetadata(serverLocation, sessionId,
+            Metadata.describeMetadata metadata = new Metadata.describeMetadata(
                 ((typeNames == null && flags == null) ? new Ekin.Clarizen.Metadata.Request.describeMetadata() :
-                                                        new Ekin.Clarizen.Metadata.Request.describeMetadata(typeNames, flags)), isBulk);
+                                                        new Ekin.Clarizen.Metadata.Request.describeMetadata(typeNames, flags)), 
+                CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(metadata.BulkRequest);
             else { Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "DescribeMetadata", "describeMetadata failed", metadata.Error); TotalAPICallsMadeInCurrentSession++; }
             return metadata;
@@ -170,7 +174,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Metadata.listEntities ListEntities()
         {
-            Metadata.listEntities metadata = new Metadata.listEntities(serverLocation, sessionId, isBulk);
+            Metadata.listEntities metadata = new Metadata.listEntities(CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(metadata.BulkRequest);
             else { Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "ListEntities", "listEntities failed", metadata.Error); TotalAPICallsMadeInCurrentSession++; }
             return metadata;
@@ -183,7 +187,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Metadata.describeEntities DescribeEntities(string[] typeNames)
         {
-            Metadata.describeEntities metadata = new Metadata.describeEntities(serverLocation, sessionId, new Metadata.Request.describeEntities(typeNames), isBulk);
+            Metadata.describeEntities metadata = new Metadata.describeEntities(new Metadata.Request.describeEntities(typeNames), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(metadata.BulkRequest);
             else { Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "DescribeEntities", "describeEntities failed", metadata.Error); TotalAPICallsMadeInCurrentSession++; }
             return metadata;
@@ -196,7 +200,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Metadata.describeEntityRelations DescribeEntityRelations(string[] typeNames)
         {
-            Metadata.describeEntityRelations metadata = new Metadata.describeEntityRelations(serverLocation, sessionId, new Metadata.Request.describeEntityRelations(typeNames), isBulk);
+            Metadata.describeEntityRelations metadata = new Metadata.describeEntityRelations(new Metadata.Request.describeEntityRelations(typeNames), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(metadata.BulkRequest);
             else { Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "DescribeEntityRelations", "describeEntityRelations failed", metadata.Error); TotalAPICallsMadeInCurrentSession++; TotalAPICallsMadeInCurrentSession++; }
             return metadata;
@@ -223,7 +227,7 @@ namespace Ekin.Clarizen
         /// </summary>
         public Metadata.objects_put CreateWorkflowRule(Metadata.Request.objects_put request)
         {
-            Metadata.objects_put objects = new Metadata.objects_put(serverLocation, sessionId, request, isBulk);
+            Metadata.objects_put objects = new Metadata.objects_put(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(objects.BulkRequest);
             else { Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "CreateWorkflowRule", "CreateWorkflowRule call failed", objects.Error); TotalAPICallsMadeInCurrentSession++; }
             return objects;
@@ -236,7 +240,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Metadata.objects_delete DeleteWorkflowRule(string id)
         {
-            Metadata.objects_delete objects = new Metadata.objects_delete(serverLocation, sessionId, new Metadata.Request.objects_delete(id), isBulk);
+            Metadata.objects_delete objects = new Metadata.objects_delete(new Metadata.Request.objects_delete(id), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(objects.BulkRequest);
             else { Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "DeleteWorkflowRule", "DeleteWorkflowRule call failed", objects.Error); TotalAPICallsMadeInCurrentSession++; }
             return objects;
@@ -249,7 +253,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Metadata.getSystemSettingsValues GetSystemSettingsValues(string[] settings)
         {
-            Metadata.getSystemSettingsValues metadata = new Metadata.getSystemSettingsValues(serverLocation, sessionId, new Metadata.Request.getSystemSettingsValues(settings), isBulk);
+            Metadata.getSystemSettingsValues metadata = new Metadata.getSystemSettingsValues(new Metadata.Request.getSystemSettingsValues(settings), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(metadata.BulkRequest);
             else { Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetSystemSettingsValues", "getSystemSettingsValues failed", metadata.Error); TotalAPICallsMadeInCurrentSession++; }
             return metadata;
@@ -262,7 +266,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Metadata.setSystemSettingsValues SetSystemSettingsValues(fieldValue[] settings)
         {
-            Metadata.setSystemSettingsValues metadata = new Metadata.setSystemSettingsValues(serverLocation, sessionId, new Metadata.Request.setSystemSettingsValues(settings), isBulk);
+            Metadata.setSystemSettingsValues metadata = new Metadata.setSystemSettingsValues(new Metadata.Request.setSystemSettingsValues(settings), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(metadata.BulkRequest);
             else { Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "SetSystemSettingsValues", "setSystemSettingsValues call failed", metadata.Error); TotalAPICallsMadeInCurrentSession++; }
             return metadata;
@@ -280,7 +284,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.objects_get GetObject(string id, string[] fields)
         {
-            Data.objects_get objects = new Data.objects_get(serverLocation, sessionId, new Data.Request.objects_get(id, fields), isBulk);
+            Data.objects_get objects = new Data.objects_get(new Data.Request.objects_get(id, fields), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(objects.BulkRequest);
             else { Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", objects.Error); TotalAPICallsMadeInCurrentSession++; }
             return objects;
@@ -305,7 +309,7 @@ namespace Ekin.Clarizen
         public dynamic GetObject(string id, Type pocoObject)
         {
             string[] fields = pocoObject.GetPropertyList();
-            Data.objects_get objects = new Data.objects_get(serverLocation, sessionId, new Data.Request.objects_get(id, fields), isBulk, true);
+            Data.objects_get objects = new Data.objects_get(new Data.Request.objects_get(id, fields), CallSettings.GetFromAPI(this), true);
             if (isBulk) bulkRequests.Add(objects.BulkRequest);
             else { Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", objects.Error); TotalAPICallsMadeInCurrentSession++; }
             if (objects.IsCalledSuccessfully)
@@ -335,7 +339,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.objects_put CreateObject(string id, object obj)
         {
-            Data.objects_put objects = new Data.objects_put(serverLocation, sessionId, id, obj, isBulk);
+            Data.objects_put objects = new Data.objects_put(id, obj, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(objects.BulkRequest);
             else { Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "CreateObject", "objects_put call failed", objects.Error); TotalAPICallsMadeInCurrentSession++; }
             return objects;
@@ -349,7 +353,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.objects_post UpdateObject(string id, object obj)
         {
-            Data.objects_post objects = new Data.objects_post(serverLocation, sessionId, id, obj, isBulk);
+            Data.objects_post objects = new Data.objects_post(id, obj, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(objects.BulkRequest);
             else { Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "UpdateObject", "objects_post call failed", objects.Error); TotalAPICallsMadeInCurrentSession++; }
             return objects;
@@ -362,7 +366,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.objects_delete DeleteObject(string id)
         {
-            Data.objects_delete objects = new Data.objects_delete(serverLocation, sessionId, new Ekin.Clarizen.Data.Request.objects_delete(id), isBulk);
+            Data.objects_delete objects = new Data.objects_delete(new Ekin.Clarizen.Data.Request.objects_delete(id), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(objects.BulkRequest);
             else { Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "DeleteObject", "objects_delete call failed", objects.Error); TotalAPICallsMadeInCurrentSession++; }
             return objects;
@@ -376,7 +380,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.createAndRetrieve CreateAndRetrieve(object entity, string[] fields)
         {
-            Data.createAndRetrieve op = new Data.createAndRetrieve(serverLocation, sessionId, new Data.Request.createAndRetrieve(entity, fields), isBulk);
+            Data.createAndRetrieve op = new Data.createAndRetrieve(new Data.Request.createAndRetrieve(entity, fields), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "CreateAndRetrieve", "createAndRetrieve call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -389,7 +393,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.retrieveMultiple RetrieveMultiple(Data.Request.retrieveMultiple request)
         {
-            Data.retrieveMultiple op = new Data.retrieveMultiple(serverLocation, sessionId, request, isBulk);
+            Data.retrieveMultiple op = new Data.retrieveMultiple(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "RetrieveMultiple", "retrieveMultiple call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -470,7 +474,9 @@ namespace Ekin.Clarizen
             bool hasMore = true;
             while (hasMore)
             {
-                Data.query Query = new Data.query(serverLocation, sessionId, new Data.Request.query(query.ToCZQL(), paging), false);
+                CallSettings callSettings = CallSettings.GetFromAPI(this);
+                callSettings.isBulk = false;
+                Data.query Query = new Data.query(new Data.Request.query(query.ToCZQL(), paging), callSettings);
                 if (Query.IsCalledSuccessfully)
                 {
                     foreach (Newtonsoft.Json.Linq.JObject obj in Query.Data.entities)
@@ -558,7 +564,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.countQuery Count(IQuery query)
         {
-            Data.countQuery entities = new Data.countQuery(serverLocation, sessionId, new Data.Request.countQuery(query), isBulk);
+            Data.countQuery entities = new Data.countQuery(new Data.Request.countQuery(query), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(entities.BulkRequest);
             else { Logs.Assert(entities.IsCalledSuccessfully, "Ekin.Clarizen.API", "Count", "countQuery call failed", entities.Error); TotalAPICallsMadeInCurrentSession++; }
             return entities;
@@ -571,7 +577,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.entityQuery EntityQuery(Data.Queries.entityQuery request)
         {
-            Data.entityQuery entities = new Data.entityQuery(serverLocation, sessionId, request, isBulk);
+            Data.entityQuery entities = new Data.entityQuery(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(entities.BulkRequest);
             else { Logs.Assert(entities.IsCalledSuccessfully, "Ekin.Clarizen.API", "EntityQuery", "entityQuery call failed", entities.Error); TotalAPICallsMadeInCurrentSession++; }
             return entities;
@@ -595,7 +601,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.groupsQuery GroupsQuery(Data.Queries.groupsQuery request)
         {
-            Data.groupsQuery entities = new Data.groupsQuery(serverLocation, sessionId, request, isBulk);
+            Data.groupsQuery entities = new Data.groupsQuery(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(entities.BulkRequest);
             else { Logs.Assert(entities.IsCalledSuccessfully, "Ekin.Clarizen.API", "GroupsQuery", "groupsQuery call failed", entities.Error); TotalAPICallsMadeInCurrentSession++; }
             return entities;
@@ -618,7 +624,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.aggregateQuery AggregateQuery(Data.Queries.aggregateQuery request)
         {
-            Data.aggregateQuery op = new Data.aggregateQuery(serverLocation, sessionId, request, isBulk);
+            Data.aggregateQuery op = new Data.aggregateQuery(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "AggregateQuery", "aggregateQuery call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -631,7 +637,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.relationQuery RelationQuery(Data.Queries.relationQuery request)
         {
-            Data.relationQuery op = new Data.relationQuery(serverLocation, sessionId, request, isBulk);
+            Data.relationQuery op = new Data.relationQuery(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "RelationQuery", "relationQuery call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -644,7 +650,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.newsFeedQuery NewsFeedQuery(Data.Queries.newsFeedQuery request)
         {
-            Data.newsFeedQuery op = new Data.newsFeedQuery(serverLocation, sessionId, request, isBulk);
+            Data.newsFeedQuery op = new Data.newsFeedQuery(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "NewsFeedQuery", "newsFeedQuery call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -681,7 +687,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.entityFeedQuery EntityFeedQuery(Data.Queries.entityFeedQuery request)
         {
-            Data.entityFeedQuery op = new Data.entityFeedQuery(serverLocation, sessionId, request, isBulk);
+            Data.entityFeedQuery op = new Data.entityFeedQuery(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "EntityFeedQuery", "entityFeedQuery call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -718,7 +724,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.repliesQuery RepliesQuery(Data.Queries.repliesQuery request)
         {
-            Data.repliesQuery op = new Data.repliesQuery(serverLocation, sessionId, request, isBulk);
+            Data.repliesQuery op = new Data.repliesQuery(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "RepliesQuery", "repliesQuery call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -755,7 +761,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.expenseQuery ExpenseQuery(Data.Queries.expenseQuery request)
         {
-            Data.expenseQuery op = new Data.expenseQuery(serverLocation, sessionId, request, isBulk);
+            Data.expenseQuery op = new Data.expenseQuery(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "ExpenseQuery", "expenseQuery call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -763,7 +769,7 @@ namespace Ekin.Clarizen
 
         public Data.timesheetQuery TimesheetQuery(Data.Queries.timesheetQuery request)
         {
-            Data.timesheetQuery op = new Data.timesheetQuery(serverLocation, sessionId, request, isBulk);
+            Data.timesheetQuery op = new Data.timesheetQuery(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "TimesheetQuery", "timesheetQuery call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -780,7 +786,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.search Search(Data.Request.search request)
         {
-            Data.search entities = new Data.search(serverLocation, sessionId, request, isBulk);
+            Data.search entities = new Data.search(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(entities.BulkRequest);
             else { Logs.Assert(entities.IsCalledSuccessfully, "Ekin.Clarizen.API", "Search", "search call failed", entities.Error); TotalAPICallsMadeInCurrentSession++; }
             return entities;
@@ -885,7 +891,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.createDiscussion CreateDiscussion(Data.Request.createDiscussion request)
         {
-            Data.createDiscussion op = new Data.createDiscussion(serverLocation, sessionId, request, isBulk);
+            Data.createDiscussion op = new Data.createDiscussion(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "CreateDiscussion", "createDiscussion call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -898,7 +904,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.lifecycle Lifecycle(Data.Request.lifecycle request)
         {
-            Data.lifecycle op = new Data.lifecycle(serverLocation, sessionId, request, isBulk);
+            Data.lifecycle op = new Data.lifecycle(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "Lifecycle", "lifecycle call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -923,7 +929,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.changeState ChangeState(string[] ids, string state)
         {
-            Data.changeState objects = new Data.changeState(serverLocation, sessionId, new Data.Request.changeState(ids, state), isBulk);
+            Data.changeState objects = new Data.changeState(new Data.Request.changeState(ids, state), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(objects.BulkRequest);
             else { Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "ChangeState", "changeState call failed", objects.Error); TotalAPICallsMadeInCurrentSession++; }
             return objects;
@@ -936,7 +942,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.executeCustomAction ExecuteCustomAction(Data.Request.executeCustomAction request)
         {
-            Data.executeCustomAction objects = new Data.executeCustomAction(serverLocation, sessionId, request, isBulk);
+            Data.executeCustomAction objects = new Data.executeCustomAction(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(objects.BulkRequest);
             else { Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "ExecuteCustomAction", "executeCustomAction call failed", objects.Error); TotalAPICallsMadeInCurrentSession++; }
             return objects;
@@ -961,7 +967,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.getTemplateDescriptions GetTemplateDescriptions(string typeName)
         {
-            Data.getTemplateDescriptions op = new Data.getTemplateDescriptions(serverLocation, sessionId, new Data.Request.getTemplateDescriptions(typeName), isBulk);
+            Data.getTemplateDescriptions op = new Data.getTemplateDescriptions(new Data.Request.getTemplateDescriptions(typeName), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetTemplateDescriptions", "getTemplateDescriptions call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -974,7 +980,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.createFromTemplate CreateFromTemplate(object entity, string templateName, string parentId)
         {
-            Data.createFromTemplate op = new Data.createFromTemplate(serverLocation, sessionId, new Data.Request.createFromTemplate(entity, templateName, parentId), isBulk);
+            Data.createFromTemplate op = new Data.createFromTemplate(new Data.Request.createFromTemplate(entity, templateName, parentId), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "CreateFromTemplate", "createFromTemplate call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -987,7 +993,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.getCalendarInfo GetCalendarInfo(string id)
         {
-            Data.getCalendarInfo op = new Data.getCalendarInfo(serverLocation, sessionId, new Data.Request.getCalendarInfo(id), isBulk);
+            Data.getCalendarInfo op = new Data.getCalendarInfo(new Data.Request.getCalendarInfo(id), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetCalendarInfo", "getCalendarInfo call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -995,7 +1001,7 @@ namespace Ekin.Clarizen
 
         public Data.getCalendarExceptions GetCalendarExceptions(string id, DateTime fromDate, DateTime toDate)
         {
-            Data.getCalendarExceptions op = new Data.getCalendarExceptions(serverLocation, sessionId, new Data.Request.getCalendarExceptions(id, fromDate, toDate), isBulk);
+            Data.getCalendarExceptions op = new Data.getCalendarExceptions(new Data.Request.getCalendarExceptions(id, fromDate, toDate), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetCalendarExceptions", "GetCalendarExceptions call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -1012,7 +1018,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Data.query ExecuteQuery(Data.Request.query query)
         {
-            Data.query CZQuery = new Data.query(serverLocation, sessionId, query, isBulk);
+            Data.query CZQuery = new Data.query(query, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(CZQuery.BulkRequest);
             else { Logs.Assert(CZQuery.IsCalledSuccessfully, "Ekin.Clarizen.API", "ExecuteQuery", "query call failed", CZQuery.Error); TotalAPICallsMadeInCurrentSession++; }
             return CZQuery;
@@ -1053,7 +1059,9 @@ namespace Ekin.Clarizen
             Logs.Assert(isBulk, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service not started");
             if (isBulk)
             {
-                Bulk.execute bulkService = new Bulk.execute(serverLocation, sessionId, new Bulk.Request.execute(bulkRequests, transactional, batch), timeout);
+                CallSettings callSettings = CallSettings.GetFromAPI(this);
+                callSettings.timeout = timeout;
+                Bulk.execute bulkService = new Bulk.execute(new Bulk.Request.execute(bulkRequests, transactional, batch), callSettings);
                 Logs.Assert(bulkService.IsCalledSuccessfully, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service error", bulkService.Error);
                 TotalAPICallsMadeInCurrentSession++;
                 if (bulkService.IsCalledSuccessfully)
@@ -1103,7 +1111,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Utils.appLogin AppLogin()
         {
-            Utils.appLogin util = new Utils.appLogin(serverLocation, sessionId, isBulk);
+            Utils.appLogin util = new Utils.appLogin(CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(util.BulkRequest);
             else { Logs.Assert(util.IsCalledSuccessfully, "Ekin.Clarizen.API", "AppLogin", "appLogin call failed", util.Error); TotalAPICallsMadeInCurrentSession++; }
             return util;
@@ -1120,7 +1128,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Utils.sendEMail SendEmail(recipient[] recipients, string subject, string body, string relatedEntityId, Utils.Request.sendEMail.CZAccessType accessType)
         {
-            Utils.sendEMail util = new Utils.sendEMail(serverLocation, sessionId, new Utils.Request.sendEMail(recipients, subject, body, relatedEntityId, accessType), isBulk);
+            Utils.sendEMail util = new Utils.sendEMail(new Utils.Request.sendEMail(recipients, subject, body, relatedEntityId, accessType), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(util.BulkRequest);
             else { Logs.Assert(util.IsCalledSuccessfully, "Ekin.Clarizen.API", "SendEmail", "sendEMail call failed", util.Error); TotalAPICallsMadeInCurrentSession++; }
             return util;
@@ -1132,7 +1140,7 @@ namespace Ekin.Clarizen
 
         public Applications.getApplicationStatus GetApplicationStatus(string applicationId)
         {
-            Applications.getApplicationStatus op = new Applications.getApplicationStatus(serverLocation, sessionId, new Applications.Request.getApplicationStatus(applicationId), isBulk);
+            Applications.getApplicationStatus op = new Applications.getApplicationStatus(new Applications.Request.getApplicationStatus(applicationId), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetApplicationStatus", "getApplicationStatus call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -1140,7 +1148,7 @@ namespace Ekin.Clarizen
 
         public Applications.installApplication InstallApplication(string applicationId, bool autoEnable)
         {
-            Applications.installApplication op = new Applications.installApplication(serverLocation, sessionId, new Applications.Request.installApplication(applicationId, autoEnable), isBulk);
+            Applications.installApplication op = new Applications.installApplication(new Applications.Request.installApplication(applicationId, autoEnable), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "InstallApplication", "installApplication call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -1158,7 +1166,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Files.download Download(string documentId, bool redirect)
         {
-            Files.download op = new Files.download(serverLocation, sessionId, new Files.Request.download(documentId, redirect), isBulk);
+            Files.download op = new Files.download(new Files.Request.download(documentId, redirect), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "Download", "download call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -1170,7 +1178,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Files.getUploadUrl GetUploadUrl()
         {
-            Files.getUploadUrl op = new Files.getUploadUrl(serverLocation, sessionId, isBulk);
+            Files.getUploadUrl op = new Files.getUploadUrl(CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetUploadUrl", "getUploadUrl call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -1183,7 +1191,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Files.upload Upload(Files.Request.upload request)
         {
-            Files.upload op = new Files.upload(serverLocation, sessionId, request, isBulk);
+            Files.upload op = new Files.upload(request, CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "Upload", "upload call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
@@ -1219,7 +1227,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public Files.updateImage UpdateImage(string entityId, string uploadUrl, bool reset)
         {
-            Files.updateImage op = new Files.updateImage(serverLocation, sessionId, new Files.Request.updateImage(entityId, uploadUrl, reset), isBulk);
+            Files.updateImage op = new Files.updateImage(new Files.Request.updateImage(entityId, uploadUrl, reset), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "UpdateImage", "updateImage call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;

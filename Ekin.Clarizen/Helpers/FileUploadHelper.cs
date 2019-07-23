@@ -148,7 +148,9 @@ namespace Ekin.Clarizen
             var extendedInfo = "";
             var fileInformation = new fileInformation(storageType.Server, document.id, FileName, subType, extendedInfo);
             var uploadRequest = new Ekin.Clarizen.Files.Request.upload(document.id, fileInformation, uploadUrl);
-            var uploadResult = new Ekin.Clarizen.Files.upload(ClarizenAPI.serverLocation, ClarizenAPI.sessionId, uploadRequest, false);
+            CallSettings callSettings = CallSettings.GetFromAPI(ClarizenAPI);
+            callSettings.isBulk = false;
+            var uploadResult = new Ekin.Clarizen.Files.upload(uploadRequest, callSettings);
             if (!uploadResult.IsCalledSuccessfully)
             {
                 Logs.AddError("Ekin.Clarizen.FileUploadHelper", "Upload", "Document couldn't be uploaded to Clarizen. Error: " + uploadResult.Error);
