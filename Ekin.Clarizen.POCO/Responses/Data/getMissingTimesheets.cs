@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ekin.Clarizen.POCO.Responses.Data
+namespace Ekin.Clarizen.Data.Result
 {
     public class getMissingTimesheets
     {

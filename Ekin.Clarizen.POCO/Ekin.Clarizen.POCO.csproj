@@ -52,6 +52,7 @@
     <Compile Include="Common\calendarException.cs" />
     <Compile Include="Requests\Applications\getApplicationStatus.cs" />
     <Compile Include="Requests\Applications\installApplication.cs" />
+    <Compile Include="Requests\Data\getMissingTimesheets.cs" />
     <Compile Include="Requests\Data\getCalendarExceptions.cs" />
     <Compile Include="Responses\Applications\getApplicationStatus.cs" />
     <Compile Include="Requests\Authentication\getServerDefinition.cs" />
