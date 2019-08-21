@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\dayOfMissingTimesheets.cs" />
     <Compile Include="Common\EntityIdConverter.cs" />
     <Compile Include="Common\exceptionDate.cs" />
     <Compile Include="Common\every.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Responses\Data\expenseQuery.cs" />
     <Compile Include="Responses\Data\getCalendarExceptions.cs" />
     <Compile Include="Responses\Data\getCalendarInfo.cs" />
+    <Compile Include="Responses\Data\getMissingTimesheets.cs" />
     <Compile Include="Responses\Data\getTemplateDescriptions.cs" />
     <Compile Include="Responses\Data\groupsQuery.cs" />
     <Compile Include="Responses\Data\newsFeedQuery.cs" />
