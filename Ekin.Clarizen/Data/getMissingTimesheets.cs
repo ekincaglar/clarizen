@@ -7,32 +7,33 @@ using System.Web;
 
 namespace Ekin.Clarizen.Data
 {
-    public class getCalendarExceptions : ISupportBulk
+    public class getMissingTimesheets : ISupportBulk
     {
-        public Result.getCalendarExceptions Data { get; set; }
+        public Result.getMissingTimesheets Data { get; set; }
         public bool IsCalledSuccessfully { get; set; }
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public getCalendarExceptions(Request.getCalendarExceptions request, CallSettings callSettings)
+        public getMissingTimesheets(Request.getMissingTimesheets request, CallSettings callSettings)
         {
-            if (request == null || request.fromDate == DateTime.MinValue || request.toDate == DateTime.MinValue)
+            if (request == null || string.IsNullOrWhiteSpace(request.user) ||  request.startDate == null || request.endDate == null)
             {
                 IsCalledSuccessfully = false;
-                this.Error = "FromDate and toDate must be provided";
+                this.Error = "user, startDate and endDate parameters must be provided";
                 return;
             }
 
             // Set the URL
-            string url = string.Format("{0}?{1}fromDate={2:yyyy-MM-dd}&toDate={3:yyyy-MM-dd}",
-                (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/getCalendarExceptions?",
-                string.IsNullOrWhiteSpace(request.entityId) ? "" : "entityId=" + request.entityId + "&",
-                request.fromDate,
-                request.toDate);
+            string url = string.Format("{0}?{1}startDate={2:yyyy-MM-dd}&endDate={3:yyyy-MM-dd}{4}",
+                (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/missingTimesheets",
+                string.IsNullOrWhiteSpace(request.user) ? "" : "user=" + request.user + "&",
+                request.startDate,
+                request.endDate,
+                (request.tolerance == null) ? "" : "?tolerance=" + request.tolerance.ToString());
 
             if (callSettings.isBulk)
             {
-                this.BulkRequest = new request(url, requestMethod.Get, typeof(Result.getCalendarExceptions));
+                this.BulkRequest = new request(url, requestMethod.Get, typeof(Result.getMissingTimesheets));
                 return;
             }
 
@@ -50,7 +51,7 @@ namespace Ekin.Clarizen.Data
             {
                 try
                 {
-                    this.Data = JsonConvert.DeserializeObject<Result.getCalendarExceptions>(response.Content);
+                    this.Data = JsonConvert.DeserializeObject<Result.getMissingTimesheets>(response.Content);
                     this.IsCalledSuccessfully = true;
                 }
                 catch (Exception ex)

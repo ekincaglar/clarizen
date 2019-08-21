@@ -13,7 +13,7 @@ namespace Ekin.Clarizen
     /// <summary>
     /// .Net wrapper for the Clarizen API v2.0 located at https://api.clarizen.com/V2.0/services
     /// Developed by Ekin Caglar - ekin@caglar.com
-    /// October 2016 - January 2018
+    /// October 2016 - August 2019
     /// </summary>
     public class API
     {
@@ -1004,6 +1004,21 @@ namespace Ekin.Clarizen
             Data.getCalendarExceptions op = new Data.getCalendarExceptions(new Data.Request.getCalendarExceptions(id, fromDate, toDate), CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(op.BulkRequest);
             else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetCalendarExceptions", "GetCalendarExceptions call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
+            return op;
+        }
+
+        /// <summary>
+        /// Returns the missing timesheets of a user between given dates
+        /// </summary>
+        /// <param name="user">EntityId of the User. If querying a multi-instance environment use /Organization/orgId/User/userId</param>
+        /// <param name="startDate">The start of the date range (inclusive)</param>
+        /// <param name="endDate">The end of the date range (exclusive)</param>
+        /// <returns></returns>
+        public Data.getMissingTimesheets GetMissingTimesheets(string user, DateTime startDate, DateTime endDate)
+        {
+            Data.getMissingTimesheets op = new Data.getMissingTimesheets(new Data.Request.getMissingTimesheets(user, startDate, endDate), CallSettings.GetFromAPI(this));
+            if (isBulk) bulkRequests.Add(op.BulkRequest);
+            else { Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetMissingTimesheets", "GetMissingTimesheets call failed", op.Error); TotalAPICallsMadeInCurrentSession++; }
             return op;
         }
 
