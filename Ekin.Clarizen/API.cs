@@ -124,7 +124,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public bool SetPassword(string userId, string newPassword)
         {
-            Authentication.setPassword op = new Authentication.setPassword(serverLocation, new Authentication.Request.setPassword(userId, newPassword));
+            Authentication.setPassword op = new Authentication.setPassword(new Authentication.Request.setPassword(userId, newPassword), CallSettings.GetFromAPI(this));
             Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "setPassword", op.Error);
             return (op.IsCalledSuccessfully);
         }
