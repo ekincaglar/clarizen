@@ -117,6 +117,19 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
+        /// In a multi-org environment this endpoint allows administrators at the master org to set a password for any user in the system. It changes passwords without sending any email.
+        /// </summary>
+        /// <param name="userId">Fully qualified Id of the user. Example: /Organization/SomeOrgId/User/SomeUserId</param>
+        /// <param name="newPassword">New password for the user. The Password will be checked for complexity and for history. The user will not be required to change the password after login.</param>
+        /// <returns></returns>
+        public bool SetPassword(string userId, string newPassword)
+        {
+            Authentication.setPassword op = new Authentication.setPassword(serverLocation, new Authentication.Request.setPassword(userId, newPassword));
+            Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "setPassword", "New password could not be set");
+            return (op.IsCalledSuccessfully);
+        }
+
+        /// <summary>
         /// Returns information about the current session
         /// </summary>
         /// <returns></returns>
