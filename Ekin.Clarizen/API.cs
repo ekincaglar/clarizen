@@ -429,7 +429,7 @@ namespace Ekin.Clarizen
         /// <param name="entityName"></param>
         /// <param name="pocoObject"></param>
         /// <returns></returns>
-        public GetAllResult GetAll(string entityName, Type pocoObject, ICondition condition = null, int? pageSize = null)
+        public GetAllResult GetAll(string entityName, Type pocoObject, ICondition condition = null, int? pageSize = null, int? sleepTime = null)
         {
             Type listType = typeof(List<>).MakeGenericType(new[] { pocoObject });
             System.Collections.IList list = (System.Collections.IList)Activator.CreateInstance(listType);
@@ -462,6 +462,10 @@ namespace Ekin.Clarizen
                     result.Errors.Add(new error("", "Entity query failed with error: " + entityQuery.Error));
                     hasMore = false;
                 }
+                if (sleepTime.GetValueOrDefault() > 0)
+                {
+                    System.Threading.Thread.Sleep(sleepTime.GetValueOrDefault());
+                }
             }
             result.Data = list;
             return result;
@@ -474,7 +478,7 @@ namespace Ekin.Clarizen
         /// <param name="pocoObject"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public GetAllResult GetAll(Interfaces.IClarizenQuery query, Type pocoObject, int? pageSize = null)
+        public GetAllResult GetAll(Interfaces.IClarizenQuery query, Type pocoObject, int? pageSize = null, int? sleepTime = null)
         {
             Type listType = typeof(List<>).MakeGenericType(new[] { pocoObject });
             System.Collections.IList list = (System.Collections.IList)Activator.CreateInstance(listType);
@@ -505,12 +509,16 @@ namespace Ekin.Clarizen
                     result.Errors.Add(new error("", "Query failed with error: " + Query.Error));
                     hasMore = false;
                 }
+                if (sleepTime.GetValueOrDefault() > 0)
+                {
+                    System.Threading.Thread.Sleep(sleepTime.GetValueOrDefault());
+                }
             }
             result.Data = list;
             return result;
         }
 
-        public GetAllResult GetAllByFields(string entityName, string[] fields, ICondition condition = null, int? pageSize = null)
+        public GetAllResult GetAllByFields(string entityName, string[] fields, ICondition condition = null, int? pageSize = null, int? sleepTime = null)
         {
             List<dynamic> list = new List<dynamic>();
             GetAllResult result = new GetAllResult()
@@ -539,6 +547,10 @@ namespace Ekin.Clarizen
                 {
                     result.Errors.Add(new error("", "Entity query failed with error: " + entityQuery.Error));
                     hasMore = false;
+                }
+                if (sleepTime.GetValueOrDefault() > 0)
+                {
+                    System.Threading.Thread.Sleep(sleepTime.GetValueOrDefault());
                 }
             }
             result.Data = list;

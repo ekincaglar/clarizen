@@ -282,7 +282,7 @@ namespace Ekin.Clarizen
         /// <param name="entityName">Name of the Clarizen entity, e.g. Timesheet, WorkItem, etc.</param>
         /// <param name="customCondition"></param>
         /// <returns></returns>
-        public List<T> GetAll<T>(string entityName, string customCondition = "")
+        public List<T> GetAll<T>(string entityName, string customCondition = "", int sleepTime = 0)
         {
             customCondition = customCondition?.Trim();
             cZQLCondition condition = null;
@@ -290,7 +290,7 @@ namespace Ekin.Clarizen
             {
                 condition = new cZQLCondition(customCondition);
             }
-            GetAllResult result = ClarizenAPI.Clone().GetAll(entityName, typeof(T), condition);
+            GetAllResult result = ClarizenAPI.Clone().GetAll(entityName, typeof(T), condition, sleepTime);
             if (result == null || result.Errors.Any())
             {
                 var detailedMsg = "Error: " + string.Join(System.Environment.NewLine, result.Errors.Select(i => i.message));
@@ -307,9 +307,9 @@ namespace Ekin.Clarizen
         /// <param name="query">Clarizen Query Language (CZQL) query</param>
         /// <param name="pageSize">Default size to be used for pagination</param>
         /// <returns></returns>
-        public List<T> GetAll<T>(Ekin.Clarizen.Interfaces.IClarizenQuery query, int? pageSize = null)
+        public List<T> GetAll<T>(Ekin.Clarizen.Interfaces.IClarizenQuery query, int? pageSize = null, int? sleepTime = null)
         {
-            GetAllResult result = ClarizenAPI.Clone().GetAll(query, typeof(T), pageSize);
+            GetAllResult result = ClarizenAPI.Clone().GetAll(query, typeof(T), pageSize, sleepTime);
             if (result == null || result.Errors.Any())
             {
                 var detailedMsg = "Error: " + string.Join(System.Environment.NewLine, result.Errors.Select(i => i.message));
