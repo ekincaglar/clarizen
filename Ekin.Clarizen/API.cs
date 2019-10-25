@@ -29,6 +29,8 @@ namespace Ekin.Clarizen
         public bool isSandbox { get; set; } = false;
         public int TotalAPICallsMadeInCurrentSession { get; set; }
         public bool serializeNullValues { get; set; } = false;
+        public int retry { get; set; } = 1;
+        public int sleepBetweenRetries { get; set; } = 0;
 
         public LogFactory Logs { get; set; }
 
@@ -67,7 +69,12 @@ namespace Ekin.Clarizen
                 isSandbox = this.isSandbox,
                 serverLocation = this.serverLocation,
                 username = this.username,
-                password = this.password
+                password = this.password,
+                retry = this.retry,
+                sleepBetweenRetries = this.sleepBetweenRetries,
+                serializeNullValues = this.serializeNullValues,
+                timeout = this.timeout,
+                removeInvalidFieldsFromJsonResult = this.removeInvalidFieldsFromJsonResult
                 // We don't copy Logs or Bulk in the clone
             };
         }
@@ -506,7 +513,8 @@ namespace Ekin.Clarizen
                 }
                 else
                 {
-                    result.Errors.Add(new error("", "Query failed with error: " + Query.Error));
+                    string message = "Query failed with error" + (callSettings.retry > 1 ? $" after {callSettings.retry} retries" : "") + ": " + Query.Error;
+                    result.Errors.Add(new error("", message));
                     hasMore = false;
                 }
                 if (sleepTime.GetValueOrDefault() > 0)

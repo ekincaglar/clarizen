@@ -28,7 +28,7 @@ namespace Ekin.Clarizen.Bulk
             }
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(120000));
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(120000), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Post(request, callSettings.serializeNullValues);
 

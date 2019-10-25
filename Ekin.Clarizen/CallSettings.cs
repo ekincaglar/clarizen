@@ -12,6 +12,8 @@ namespace Ekin.Clarizen
         public int? timeout { get; set; } = null;
         public bool isBulk { get; set; } = false;
         public bool serializeNullValues { get; set; } = false;
+        public int retry { get; set; } = 1;
+        public int sleepBetweenRetries { get; set; } = 0;
 
         public CallSettings()
         {
@@ -28,6 +30,8 @@ namespace Ekin.Clarizen
                     sessionId = api.sessionId,
                     isBulk = api.isBulk,
                     serializeNullValues = api.serializeNullValues,
+                    retry = api.retry,
+                    sleepBetweenRetries = api.sleepBetweenRetries,
                     timeout = (timeout != null) ? timeout : api.timeout
                 };
             }

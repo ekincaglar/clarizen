@@ -29,7 +29,7 @@ namespace Ekin.Clarizen.Data
             headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", callSettings.sessionId));
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault());
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Post(request, callSettings.serializeNullValues);
 
