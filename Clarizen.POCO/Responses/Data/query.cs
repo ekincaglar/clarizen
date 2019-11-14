@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using System.Dynamic;
+
 namespace Ekin.Clarizen.Data.Result
 {
     public class query
