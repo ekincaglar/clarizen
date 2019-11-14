@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{60975DCF-7039-4938-960A-8CBB30E2EE59}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Clarizen</RootNamespace>
+    <AssemblyName>Clarizen</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ekin.Encryption, Version=1.0.1.30044, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ekin.Encryption.1.0.1.30044\lib\net452\Ekin.Encryption.dll</HintPath>
+    </Reference>
+    <Reference Include="Ekin.Log, Version=2.2.7012.27743, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ekin.Log.2.2.7012.27743\lib\net452\Ekin.Log.dll</HintPath>
+    </Reference>
+    <Reference Include="Ekin.Rest, Version=1.3.7237.1974, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ekin.Rest.1.3.7237.1974\lib\net452\Ekin.Rest.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API.cs" />
+    <Compile Include="Applications\getApplicationStatus.cs" />
+    <Compile Include="Applications\installApplication.cs" />
+    <Compile Include="Authentication\getServerDefinition.cs" />
+    <Compile Include="Authentication\getSessionInfo.cs" />
+    <Compile Include="Authentication\login.cs" />
+    <Compile Include="Authentication\logout.cs" />
+    <Compile Include="Authentication\setPassword.cs" />
+    <Compile Include="Bulk\execute.cs" />
+    <Compile Include="CallSettings.cs" />
+    <Compile Include="Data\aggregateQuery.cs" />
+    <Compile Include="Data\changeState.cs" />
+    <Compile Include="Data\countQuery.cs" />
+    <Compile Include="Data\createAndRetrieve.cs" />
+    <Compile Include="Data\createDiscussion.cs" />
+    <Compile Include="Data\createFromTemplate.cs" />
+    <Compile Include="Data\entityFeedQuery.cs" />
+    <Compile Include="Data\entityQuery.cs" />
+    <Compile Include="Data\executeCustomAction.cs" />
+    <Compile Include="Data\expenseQuery.cs" />
+    <Compile Include="Data\getCalendarExceptions.cs" />
+    <Compile Include="Data\getCalendarInfo.cs" />
+    <Compile Include="Data\getMissingTimesheets.cs" />
+    <Compile Include="Data\getTemplateDescriptions.cs" />
+    <Compile Include="Data\groupsQuery.cs" />
+    <Compile Include="Data\lifecycle.cs" />
+    <Compile Include="Data\newsFeedQuery.cs" />
+    <Compile Include="Data\objects_delete.cs" />
+    <Compile Include="Data\objects_get.cs" />
+    <Compile Include="Data\objects_post.cs" />
+    <Compile Include="Data\objects_put.cs" />
+    <Compile Include="Data\query.cs" />
+    <Compile Include="Data\relationQuery.cs" />
+    <Compile Include="Data\repliesQuery.cs" />
+    <Compile Include="Data\retrieveMultiple.cs" />
+    <Compile Include="Data\search.cs" />
+    <Compile Include="Data\timesheetQuery.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Files\download.cs" />
+    <Compile Include="Files\getUploadUrl.cs" />
+    <Compile Include="Files\updateImage.cs" />
+    <Compile Include="Files\upload.cs" />
+    <Compile Include="Helpers\BulkOperations.cs" />
+    <Compile Include="Helpers\FileUploadHelper.cs" />
+    <Compile Include="Helpers\OutboundProperties.cs" />
+    <Compile Include="Metadata\describeEntities.cs" />
+    <Compile Include="Metadata\describeEntityRelations.cs" />
+    <Compile Include="Metadata\describeMetadata.cs" />
+    <Compile Include="Metadata\getSystemSettingsValues.cs" />
+    <Compile Include="Metadata\listEntities.cs" />
+    <Compile Include="Metadata\objects_delete.cs" />
+    <Compile Include="Metadata\objects_put.cs" />
+    <Compile Include="Metadata\setSystemSettingsValues.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\appLogin.cs" />
+    <Compile Include="Utils\sendEMail.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Clarizen.POCO\Clarizen.POCO.csproj">
+      <Project>{cfeb734e-9cc7-405a-ad72-6865b5489063}</Project>
+      <Name>Clarizen.POCO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
+  </Target>
+</Project>
