@@ -10,10 +10,6 @@
         public int retry { get; set; } = 1;
         public int sleepBetweenRetries { get; set; } = 0;
 
-        public CallSettings()
-        {
-        }
-
         public static CallSettings GetFromAPI(API api, int? timeout = null)
         {
             if (api != null)
