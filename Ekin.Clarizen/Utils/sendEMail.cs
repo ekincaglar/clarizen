@@ -1,19 +1,16 @@
-﻿using Ekin.Clarizen.Interfaces;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Ekin.Clarizen.Interfaces;
 
 namespace Ekin.Clarizen.Utils
 {
-    public class sendEMail: ISupportBulk
+    public class sendEMail : ISupportBulk
     {
         public bool IsCalledSuccessfully { get; set; }
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public sendEMail(Request.sendEMail request, CallSettings callSettings) {
+        public sendEMail(Request.sendEMail request, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/utils/sendEMail";
 
@@ -47,6 +44,5 @@ namespace Ekin.Clarizen.Utils
                 this.IsCalledSuccessfully = false;
             }
         }
-
     }
 }

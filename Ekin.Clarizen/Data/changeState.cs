@@ -1,9 +1,5 @@
-﻿using Ekin.Clarizen.Interfaces;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Ekin.Clarizen.Interfaces;
 
 namespace Ekin.Clarizen.Data
 {
@@ -13,7 +9,8 @@ namespace Ekin.Clarizen.Data
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public changeState(Request.changeState request, CallSettings callSettings) {
+        public changeState(Request.changeState request, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/changeState";
 
@@ -47,6 +44,5 @@ namespace Ekin.Clarizen.Data
                 this.IsCalledSuccessfully = false;
             }
         }
-
     }
 }

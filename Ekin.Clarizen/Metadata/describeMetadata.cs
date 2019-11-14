@@ -1,10 +1,7 @@
-﻿using Ekin.Clarizen.Interfaces;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Ekin.Clarizen.Interfaces;
 using Ekin.Rest;
+using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Metadata
 {
@@ -15,7 +12,8 @@ namespace Ekin.Clarizen.Metadata
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public describeMetadata(Request.describeMetadata request, CallSettings callSettings) {
+        public describeMetadata(Request.describeMetadata request, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/metadata/describeMetadata" + (request != null ? "?" + request.ToQueryString() : string.Empty);
 

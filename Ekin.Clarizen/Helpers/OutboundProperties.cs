@@ -1,20 +1,18 @@
-﻿using Ekin.Log;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
-using System.Reflection;
-using System.Net;
+using Ekin.Log;
 
 namespace Ekin.Clarizen
 {
     public class OutboundProperties<T> where T : class, new()
     {
-        XNamespace ns = "http://clarizen.com/api";
+        private XNamespace ns = "http://clarizen.com/api";
 
         public LogFactory Logs { get; private set; }
         public string RawRequest { get; private set; }
@@ -22,7 +20,9 @@ namespace Ekin.Clarizen
         public string RuleName { get; private set; }
         public bool HasErrors { get { return Logs != null && Logs.HasErrors(); } }
 
-        public OutboundProperties() { }
+        public OutboundProperties()
+        {
+        }
 
         // Used for testing only
         public List<T> Parse(string Input)
@@ -35,7 +35,7 @@ namespace Ekin.Clarizen
             }
             return result;
         }
-        
+
         public List<T> Parse(Stream InputStream)
         {
             Logs = new LogFactory();
@@ -84,7 +84,7 @@ namespace Ekin.Clarizen
                                 }
                             }
 
-                            #endregion
+                            #endregion Parse the BaseEntity Id
 
                             #region Parse the Field Values for the BaseEntity
 
@@ -124,7 +124,7 @@ namespace Ekin.Clarizen
                                 }
                             }
 
-                            #endregion
+                            #endregion Parse the Field Values for the BaseEntity
                         }
 
                         result.Add(entityObj);
@@ -190,7 +190,6 @@ namespace Ekin.Clarizen
             }
             return null;
         }
-
     }
 
     [AttributeUsage(AttributeTargets.Property)]

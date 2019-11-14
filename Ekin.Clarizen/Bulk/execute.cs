@@ -1,8 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Bulk
 {
@@ -52,6 +49,5 @@ namespace Ekin.Clarizen.Bulk
                 this.Error = $"{response.InternalError.GetFormattedErrorMessage()}. Timeout set to {TimeSpan.FromMilliseconds(callSettings.timeout.GetValueOrDefault(120000)).ToHumanReadableString()}.";
             }
         }
-
     }
 }

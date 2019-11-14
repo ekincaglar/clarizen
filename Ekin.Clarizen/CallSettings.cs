@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
     public class CallSettings
     {
@@ -17,7 +12,6 @@ namespace Ekin.Clarizen
 
         public CallSettings()
         {
-
         }
 
         public static CallSettings GetFromAPI(API api, int? timeout = null)

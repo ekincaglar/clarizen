@@ -1,9 +1,6 @@
-﻿using Ekin.Clarizen.Interfaces;
+﻿using System;
+using Ekin.Clarizen.Interfaces;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Metadata
 {
@@ -54,6 +51,5 @@ namespace Ekin.Clarizen.Metadata
                 this.Error = response.InternalError.GetFormattedErrorMessage();
             }
         }
-
     }
 }
