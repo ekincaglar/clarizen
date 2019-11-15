@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Clarizen.Tests
 {
-    internal static class TestHelper
+    internal class TestHelper
     {
         internal static IConfiguration GetConfiguration(string settingsFileName = "appsettings.json")
         {
@@ -20,8 +20,9 @@ namespace Clarizen.Tests
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile(path, optional: false, reloadOnChange: true)
                     .AddEnvironmentVariables();
-#if DEBUG 
-            path = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.debug.json");
+         
+#if DEBUG
+            path = Path.Combine(Directory.GetCurrentDirectory(), "secrets.json");
             if (File.Exists(path))
             {
                 builder.AddJsonFile(path, optional: false, reloadOnChange: true);
@@ -37,7 +38,6 @@ namespace Clarizen.Tests
                 builder
                     .AddFilter("Microsoft", LogLevel.Warning)
                     .AddFilter("System", LogLevel.Warning)
-                    .AddFilter("LoggingConsoleApp.Program", LogLevel.Debug)
                     .AddConsole()
                     .AddEventLog();
             });

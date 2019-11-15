@@ -15,6 +15,16 @@ namespace Clarizen.Tests
         {
             _configuration = TestHelper.GetConfiguration();
         }
+
+        [Given(@"I Login using login '(.*)' and password '(.*)'")]
+        public void GivenILoginUsingLoginAndPassword(string username, string password)
+        {
+            var target = new API();
+            var actual = target.Login(username, password);
+            Assert.False(actual, $"You should not be able to login using credentials uid= '{username}' and pwd= '{password}'");
+        }
+
+
         [Given(@"I Login using credentials in appsettings")]
         public void GivenILoginUsingCredentialsInAppsettings()
         {
