@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarizen", "Clarizen\Clariz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clarizen.Standard", "Clarizen.Standard\Clarizen.Standard.csproj", "{CD545A11-DD7C-42C4-8F46-77FF564A8BFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarizen.Tests", "Clarizen.Tests\Clarizen.Tests.csproj", "{5CFA902A-F8F8-43B4-8CAC-1A4D3498AFB5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clarizen.Tests", "Clarizen.Tests\Clarizen.Tests.csproj", "{AA4BF3FA-6F4F-406A-B9D9-7A673D4279EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{CD545A11-DD7C-42C4-8F46-77FF564A8BFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD545A11-DD7C-42C4-8F46-77FF564A8BFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD545A11-DD7C-42C4-8F46-77FF564A8BFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5CFA902A-F8F8-43B4-8CAC-1A4D3498AFB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5CFA902A-F8F8-43B4-8CAC-1A4D3498AFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5CFA902A-F8F8-43B4-8CAC-1A4D3498AFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5CFA902A-F8F8-43B4-8CAC-1A4D3498AFB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA4BF3FA-6F4F-406A-B9D9-7A673D4279EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA4BF3FA-6F4F-406A-B9D9-7A673D4279EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA4BF3FA-6F4F-406A-B9D9-7A673D4279EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA4BF3FA-6F4F-406A-B9D9-7A673D4279EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
