@@ -13,7 +13,7 @@ namespace Clarizen.Tests
 
         public Api_LoginSteps()
         {
-            _configuration = TestHelper.GetConfigurationRoot();
+            _configuration = TestHelper.GetConfiguration();
         }
         [Given(@"I Login using credentials in appsettings")]
         public void GivenILoginUsingCredentialsInAppsettings()
