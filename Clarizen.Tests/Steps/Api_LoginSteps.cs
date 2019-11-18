@@ -1,19 +1,15 @@
-﻿using System;
+﻿using Clarizen.Tests.Context;
 using Ekin.Clarizen;
-using Microsoft.Extensions.Configuration;
 using TechTalk.SpecFlow;
 using Xunit;
 
-namespace Clarizen.Tests
+namespace Clarizen.Tests.Steps
 {
     [Binding]
-    public class Api_LoginSteps
+    public class Api_LoginSteps : BaseApiSteps
     {
-        private readonly IConfiguration _configuration;
-
-        public Api_LoginSteps()
+        public Api_LoginSteps(BaseContext context) : base(context)
         {
-            _configuration = TestHelper.GetConfiguration();
         }
 
         [Given(@"I Login using login '(.*)' and password '(.*)'")]
@@ -23,16 +19,15 @@ namespace Clarizen.Tests
             var actual = target.Login(username, password);
             Assert.False(actual, $"You should not be able to login using credentials uid= '{username}' and pwd= '{password}'");
         }
-
-
         [Given(@"I Login using credentials in appsettings")]
-        public void GivenILoginUsingCredentialsInAppsettings()
+        protected void GivenILoginUsingCredentialsInAppsettings()
         {
-            var username = _configuration["Clarizen:Credentials:UserName"];
-            var password = _configuration["Clarizen:Credentials:Password"];
+            var username = Configuration["Clarizen:Credentials:UserName"];
+            var password = Configuration["Clarizen:Credentials:Password"];
             var target = new API();
             var actual = target.Login(username, password);
-            Assert.True(actual,"Could not login using credentials in appsettings.json");
+            Assert.True(actual, "Could not login using credentials in appsettings.json");
+            Context.Api = target;
         }
     }
 }

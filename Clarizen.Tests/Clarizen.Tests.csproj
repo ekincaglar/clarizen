@@ -34,11 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Context\" />
-    <Folder Include="Steps\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Clarizen\Clarizen.csproj" />
   </ItemGroup>
 
