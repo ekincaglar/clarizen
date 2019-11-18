@@ -19,7 +19,7 @@ namespace Clarizen.Tests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.1.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class Api_ProjectsFeature : Xunit.IClassFixture<Api_ProjectsFeature.FixtureData>, System.IDisposable
+    public partial class Api_UserFeature : Xunit.IClassFixture<Api_UserFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Clarizen.Tests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Api_Projects.feature"
+#line 1 "Api_User.feature"
 #line hidden
         
-        public Api_ProjectsFeature(Api_ProjectsFeature.FixtureData fixtureData, Clarizen_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public Api_UserFeature(Api_UserFeature.FixtureData fixtureData, Clarizen_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Clarizen.Tests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Api_Projects", "\tCheck I can do things with the projects", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Api_User", "\tTest User functionality using the API", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -75,18 +75,27 @@ namespace Clarizen.Tests.Features
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 3
+ #line hidden
+#line 4
+ testRunner.Given("I Login using credentials in appsettings", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+        }
+        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="CountProjects")]
-        [Xunit.TraitAttribute("FeatureTitle", "Api_Projects")]
-        [Xunit.TraitAttribute("Description", "CountProjects")]
-        public virtual void CountProjects()
+        [Xunit.SkippableFactAttribute(DisplayName="There is 1 admin user")]
+        [Xunit.TraitAttribute("FeatureTitle", "Api_User")]
+        [Xunit.TraitAttribute("Description", "There is 1 admin user")]
+        public virtual void ThereIs1AdminUser()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("CountProjects", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("There is 1 admin user", null, ((string[])(null)));
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -107,11 +116,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 6
-testRunner.Given("I Login using credentials in appsettings", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 3
+ this.FeatureBackground();
 #line hidden
-#line 7
- testRunner.Then("there are \'1\' projects", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 6
+ testRunner.Then("there are 1 admin users", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -124,12 +133,12 @@ testRunner.Given("I Login using credentials in appsettings", ((string)(null)), (
             
             public FixtureData()
             {
-                Api_ProjectsFeature.FeatureSetup();
+                Api_UserFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                Api_ProjectsFeature.FeatureTearDown();
+                Api_UserFeature.FeatureTearDown();
             }
         }
     }

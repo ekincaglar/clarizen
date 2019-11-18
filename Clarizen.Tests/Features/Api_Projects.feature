@@ -1,4 +1,4 @@
-﻿Feature: Projects
+﻿Feature: Api_Projects
 	Check I can do things with the projects
 
 
