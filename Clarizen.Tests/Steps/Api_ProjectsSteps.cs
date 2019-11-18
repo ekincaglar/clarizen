@@ -27,7 +27,7 @@ namespace Clarizen.Tests.Steps
 
             var results = Context.Api.ExecuteQuery(query);
             Assert.True((results.Error == null), results.Error);
-            Assert.True(results.Data.entities.Length==expectedProjectCount);
+            Assert.Equal(expectedProjectCount,results.Data.entities.Length);
         }
     }
 }
