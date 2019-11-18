@@ -1,8 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using Microsoft.Extensions.Logging;
 
 namespace Clarizen.Tests
@@ -20,7 +17,7 @@ namespace Clarizen.Tests
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile(path, optional: false, reloadOnChange: true)
                     .AddEnvironmentVariables();
-         
+
 #if DEBUG
             path = Path.Combine(Directory.GetCurrentDirectory(), "secrets.json");
             if (File.Exists(path))

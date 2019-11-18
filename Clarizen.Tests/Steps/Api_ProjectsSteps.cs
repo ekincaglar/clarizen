@@ -1,25 +1,17 @@
-﻿
-using Clarizen.Tests.Context;
+﻿using Clarizen.Tests.Context;
 using Ekin.Clarizen.Data.Request;
 using TechTalk.SpecFlow;
 using Xunit;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Ekin.Clarizen;
-using Microsoft.Extensions.Configuration;
-using System.Linq;
 
 namespace Clarizen.Tests.Steps
 {
     [Binding]
-    public class ProjectsSteps:BaseApiSteps
+    public class ProjectsSteps : BaseApiSteps
     {
-
-        public ProjectsSteps(BaseContext context):base (context)
+        public ProjectsSteps(BaseContext context) : base(context)
         {
         }
-   
+
         [Then(@"there are '(.*)' projects")]
         public void ThenThereAreProjects(int expectedProjectCount)
         {
@@ -27,7 +19,7 @@ namespace Clarizen.Tests.Steps
 
             var results = Context.Api.ExecuteQuery(query);
             Assert.True((results.Error == null), results.Error);
-            Assert.Equal(expectedProjectCount,results.Data.entities.Length);
+            Assert.Equal(expectedProjectCount, results.Data.entities.Length);
         }
     }
 }

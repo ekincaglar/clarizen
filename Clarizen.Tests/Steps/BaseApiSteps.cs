@@ -1,8 +1,5 @@
 ﻿using Clarizen.Tests.Context;
-using Ekin.Clarizen;
 using Microsoft.Extensions.Configuration;
-using TechTalk.SpecFlow;
-using Xunit;
 
 namespace Clarizen.Tests.Steps
 {
@@ -16,7 +13,5 @@ namespace Clarizen.Tests.Steps
             Configuration = TestHelper.GetConfiguration();
             Context = context;
         }
-
-     
     }
 }

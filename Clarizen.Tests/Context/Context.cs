@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Ekin.Clarizen;
+﻿using Ekin.Clarizen;
 
 namespace Clarizen.Tests.Context
 {
