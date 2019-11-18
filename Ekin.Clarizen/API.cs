@@ -55,6 +55,7 @@ namespace Ekin.Clarizen
             Logs = new LogFactory();
             Bulk = new BulkOperations(this);
             FileUpload = new FileUploadHelper(this);
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
         }
 
         /// <summary>
