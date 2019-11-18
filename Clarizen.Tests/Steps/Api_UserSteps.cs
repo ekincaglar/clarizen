@@ -19,7 +19,7 @@ namespace Clarizen.Tests.Steps
 
             var results = Context.Api.ExecuteQuery(query);
             Assert.True((results.Error == null), results.Error);
-            Assert.Equal(expectedAdminUserCount, results.Data.entities.Length);
+            Assert.Equal((int)expectedAdminUserCount, (int)results.Data.entities.Length);
         }
     }
 }
