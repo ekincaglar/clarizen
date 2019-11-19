@@ -19,7 +19,7 @@ namespace Clarizen.Tests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.1.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class Api_UserFeature : Xunit.IClassFixture<Api_UserFeature.FixtureData>, System.IDisposable
+    public partial class Api_ProjectTasksFeature : Xunit.IClassFixture<Api_ProjectTasksFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Clarizen.Tests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Api_User.feature"
+#line 1 "Api_ProjectTasks.feature"
 #line hidden
         
-        public Api_UserFeature(Api_UserFeature.FixtureData fixtureData, Clarizen_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public Api_ProjectTasksFeature(Api_ProjectTasksFeature.FixtureData fixtureData, Clarizen_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Clarizen.Tests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Api_User", "\tTest User functionality using the API", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Api_ProjectTasks", "\tTest the projects and tasks", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -77,12 +77,12 @@ namespace Clarizen.Tests.Features
         
         public virtual void FeatureBackground()
         {
-#line 3
- #line hidden
 #line 4
- testRunner.Given("I Login using credentials in appsettings", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
+ testRunner.Given("I Login using credentials in appsettings", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 6
  testRunner.And("I remove pre-existing test data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
@@ -92,14 +92,14 @@ namespace Clarizen.Tests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="There is 1 admin user")]
-        [Xunit.TraitAttribute("FeatureTitle", "Api_User")]
-        [Xunit.TraitAttribute("Description", "There is 1 admin user")]
-        public virtual void ThereIs1AdminUser()
+        [Xunit.SkippableFactAttribute(DisplayName="CreateProjectWithTask")]
+        [Xunit.TraitAttribute("FeatureTitle", "Api_ProjectTasks")]
+        [Xunit.TraitAttribute("Description", "CreateProjectWithTask")]
+        public virtual void CreateProjectWithTask()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("There is 1 admin user", null, ((string[])(null)));
-#line 7
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("CreateProjectWithTask", null, ((string[])(null)));
+#line 8
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -119,11 +119,23 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 3
- this.FeatureBackground();
+#line 4
+this.FeatureBackground();
 #line hidden
-#line 8
- testRunner.Then("there are 1 admin users", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 9
+ testRunner.Given("I create a project.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 10
+ testRunner.And("I add task \'04 A new hope\' for today only", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 11
+ testRunner.And("I add task \'05 The Empire Strikes Back\' for today only", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 12
+ testRunner.And("I add task \'06 The Revenge of the Jedi\' for today only", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 13
+ testRunner.And("I add task \'06 The Return of the Jedi\' for today only", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -136,12 +148,12 @@ this.ScenarioInitialize(scenarioInfo);
             
             public FixtureData()
             {
-                Api_UserFeature.FeatureSetup();
+                Api_ProjectTasksFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                Api_UserFeature.FeatureTearDown();
+                Api_ProjectTasksFeature.FeatureTearDown();
             }
         }
     }

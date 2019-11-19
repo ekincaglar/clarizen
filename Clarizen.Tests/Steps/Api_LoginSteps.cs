@@ -20,6 +20,12 @@ namespace Clarizen.Tests.Steps
             Assert.False(actual, $"You should not be able to login using credentials uid= '{username}' and pwd= '{password}'");
         }
 
+        [Given(@"I remove pre-existing test data")]
+        public void GivenIRemovePre_ExistingTestData()
+        {
+            base.DeleteTestData();
+        }
+
         [Given(@"I Login using credentials in appsettings")]
         protected void GivenILoginUsingCredentialsInAppsettings()
         {
