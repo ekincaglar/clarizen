@@ -1,9 +1,6 @@
-﻿using Ekin.Clarizen.Interfaces;
+﻿using System;
+using Ekin.Clarizen.Interfaces;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Applications
 {
@@ -14,7 +11,8 @@ namespace Ekin.Clarizen.Applications
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public getApplicationStatus(Request.getApplicationStatus request, CallSettings callSettings) {
+        public getApplicationStatus(Request.getApplicationStatus request, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/applications/getApplicationStatus";
 
@@ -57,6 +55,5 @@ namespace Ekin.Clarizen.Applications
                 this.IsCalledSuccessfully = false;
             }
         }
-
     }
 }

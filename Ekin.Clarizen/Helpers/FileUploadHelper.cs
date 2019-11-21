@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Ekin.Log;
 using Newtonsoft.Json;
@@ -31,7 +29,7 @@ namespace Ekin.Clarizen
             public EntityId Document { get; set; }
         }
 
-        #endregion
+        #endregion Private POCOs
 
         public API ClarizenAPI { get; private set; }
         public LogFactory Logs { get; set; }
@@ -74,7 +72,7 @@ namespace Ekin.Clarizen
                 return false;
             }
 
-            #endregion
+            #endregion Validate input
 
             #region Create a Document entity
 
@@ -97,7 +95,7 @@ namespace Ekin.Clarizen
                 document.id = clarizenDocument.Data.id;
             }
 
-            #endregion
+            #endregion Create a Document entity
 
             #region Get Upload URL from Clarizen
 
@@ -110,7 +108,7 @@ namespace Ekin.Clarizen
 
             string uploadUrl = uploadUrlCall.Data.uploadUrl;
 
-            #endregion
+            #endregion Get Upload URL from Clarizen
 
             #region Send the file to the Upload URL
 
@@ -140,7 +138,7 @@ namespace Ekin.Clarizen
                 }
             }
 
-            #endregion
+            #endregion Send the file to the Upload URL
 
             #region Complete the Upload
 
@@ -157,7 +155,7 @@ namespace Ekin.Clarizen
                 return false;
             }
 
-            #endregion
+            #endregion Complete the Upload
 
             #region If a LinkedEntity object is provided link the file to it
 
@@ -177,10 +175,9 @@ namespace Ekin.Clarizen
                 }
             }
 
-            #endregion
+            #endregion If a LinkedEntity object is provided link the file to it
 
             return true;
         }
-
     }
 }

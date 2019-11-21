@@ -1,9 +1,6 @@
-﻿using Ekin.Clarizen.Interfaces;
+﻿using System;
+using Ekin.Clarizen.Interfaces;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Data
 {
@@ -14,7 +11,8 @@ namespace Ekin.Clarizen.Data
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public objects_put(string id, object obj, CallSettings callSettings) {
+        public objects_put(string id, object obj, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/objects" +
                          (id.Substring(0, 1) != "/" ? "/" : "") + id;
@@ -54,6 +52,5 @@ namespace Ekin.Clarizen.Data
                 this.Error = response.InternalError.GetFormattedErrorMessage();
             }
         }
-
     }
 }

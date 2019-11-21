@@ -1,9 +1,5 @@
-﻿using Ekin.Clarizen.Interfaces;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Ekin.Clarizen.Interfaces;
 
 namespace Ekin.Clarizen.Data
 {
@@ -56,6 +52,5 @@ namespace Ekin.Clarizen.Data
                 this.IsCalledSuccessfully = false;
             }
         }
-
     }
 }

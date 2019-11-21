@@ -1,9 +1,6 @@
-﻿using Ekin.Clarizen.Interfaces;
+﻿using System;
+using Ekin.Clarizen.Interfaces;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Files
 {
@@ -14,7 +11,8 @@ namespace Ekin.Clarizen.Files
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public updateImage(Request.updateImage request, CallSettings callSettings) {
+        public updateImage(Request.updateImage request, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/files/updateImage";
 
@@ -57,6 +55,5 @@ namespace Ekin.Clarizen.Files
                 this.IsCalledSuccessfully = false;
             }
         }
-
     }
 }

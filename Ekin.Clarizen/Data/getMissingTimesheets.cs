@@ -1,9 +1,6 @@
-﻿using Ekin.Clarizen.Interfaces;
+﻿using System;
+using Ekin.Clarizen.Interfaces;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Data
 {
@@ -16,7 +13,7 @@ namespace Ekin.Clarizen.Data
 
         public getMissingTimesheets(Request.getMissingTimesheets request, CallSettings callSettings)
         {
-            if (request == null || string.IsNullOrWhiteSpace(request.user) ||  request.startDate == null || request.endDate == null)
+            if (request == null || string.IsNullOrWhiteSpace(request.user) || request.startDate == null || request.endDate == null)
             {
                 IsCalledSuccessfully = false;
                 this.Error = "user, startDate and endDate parameters must be provided";
@@ -66,6 +63,5 @@ namespace Ekin.Clarizen.Data
                 this.Error = response.InternalError.GetFormattedErrorMessage();
             }
         }
-
     }
 }

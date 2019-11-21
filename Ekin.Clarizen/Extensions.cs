@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Web;
 using Newtonsoft.Json;
-using System.IO;
-using System.Globalization;
 
 namespace Ekin.Clarizen
 {
@@ -29,7 +28,7 @@ namespace Ekin.Clarizen
             {
                 foreach (PropertyInfo propInfo in propInfos)
                 {
-                    if ((IncludeIdField || propInfo.Name.ToLower() != "id") && 
+                    if ((IncludeIdField || propInfo.Name.ToLower() != "id") &&
                         propInfo.GetCustomAttribute(typeof(Newtonsoft.Json.JsonIgnoreAttribute)) == null)
                         ret.Add(propInfo.Name);
                 }
@@ -152,7 +151,7 @@ namespace Ekin.Clarizen
             }
         }
 
-        #endregion
+        #endregion Reflection extensions
 
         #region Clarizen entity comparison and cloning
 
@@ -239,7 +238,7 @@ namespace Ekin.Clarizen
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source), deserializeSettings);
         }
 
-        #endregion
+        #endregion Clarizen entity comparison and cloning
 
         #region Serialization / Deserialization of objects
 
@@ -289,7 +288,7 @@ namespace Ekin.Clarizen
             }
         }
 
-        #endregion
+        #endregion Serialization / Deserialization of objects
 
         #region Identify duplicate entries in Lists
 
@@ -311,20 +310,20 @@ namespace Ekin.Clarizen
             return enumerator.MoveNext() && enumerator.MoveNext();
         }
 
-        #endregion
+        #endregion Identify duplicate entries in Lists
 
         /// <summary>
         /// Generates tree of items from item list
         /// </summary>
-        /// 
+        ///
         /// <typeparam name="T">Type of item in collection</typeparam>
         /// <typeparam name="K">Type of parent_id</typeparam>
-        /// 
+        ///
         /// <param name="collection">Collection of items</param>
         /// <param name="id_selector">Function extracting item's id</param>
         /// <param name="parent_id_selector">Function extracting item's parent_id</param>
         /// <param name="root_id">Root element id</param>
-        /// 
+        ///
         /// <returns>Tree of items</returns>
         public static IEnumerable<TreeItem<T>> GenerateTree<T, K>(this IEnumerable<T> collection, Func<T, K> id_selector, Func<T, K> parent_id_selector, K root_id = default(K))
         {
@@ -344,7 +343,8 @@ namespace Ekin.Clarizen
         }
 
         // TODO: This should be removed as it references a generic object and gets added to EVERY object in the system
-        public static string GetFormattedErrorMessage(this object Error) {
+        public static string GetFormattedErrorMessage(this object Error)
+        {
             if (Error is WebException)
             {
                 WebException ex = Error as WebException;
@@ -382,7 +382,6 @@ namespace Ekin.Clarizen
             add(t.Milliseconds, "ms");
             return string.Join(" ", parts);
         }
-
     }
 
     public class Variance

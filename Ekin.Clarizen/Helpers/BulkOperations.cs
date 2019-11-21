@@ -1,13 +1,10 @@
-﻿using Ekin.Clarizen;
-using Ekin.Clarizen.Data.Queries.Conditions;
-using Ekin.Clarizen.Interfaces;
-using Ekin.Log;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
+using Ekin.Clarizen.Data.Queries.Conditions;
+using Ekin.Log;
 
 namespace Ekin.Clarizen
 {
@@ -147,7 +144,7 @@ namespace Ekin.Clarizen
             }
         }
 
-        #endregion
+        #endregion Internal functions for sending the bulk commits to the API
 
         #region Bulk Operations (Reset, CheckCommit, ForceCommit, Close)
 
@@ -271,7 +268,7 @@ namespace Ekin.Clarizen
             return result;
         }
 
-        #endregion
+        #endregion Bulk Operations (Reset, CheckCommit, ForceCommit, Close)
 
         #region GetAll by type
 
@@ -319,7 +316,7 @@ namespace Ekin.Clarizen
             return (List<T>)result.Data;
         }
 
-        #endregion
+        #endregion GetAll by type
 
         #region Execute queries in bulk
 
@@ -486,6 +483,6 @@ namespace Ekin.Clarizen
             return ParsedObjects;
         }
 
-        #endregion
+        #endregion Execute queries in bulk
     }
 }

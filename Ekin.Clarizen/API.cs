@@ -1,10 +1,7 @@
-﻿using Ekin.Clarizen.Interfaces;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
+using Ekin.Clarizen.Interfaces;
 using Ekin.Log;
 using Newtonsoft.Json.Linq;
 
@@ -42,10 +39,10 @@ namespace Ekin.Clarizen
 
         public int? timeout { get; set; } = 120000;
 
-        #endregion
+        #endregion Public properties
 
         /// <summary>
-        /// To use Clarizen API, first call API.Login("yourUserName", "yourPassword") 
+        /// To use Clarizen API, first call API.Login("yourUserName", "yourPassword")
         /// If this method returns TRUE you can start using the helper functions provided in this class, such as DescribeMetadata, CreateObject, UpdateObject, DeleteObject and ExecuteQuery.
         /// When finished, don't forget to call API.Logout()
         /// </summary>
@@ -149,7 +146,7 @@ namespace Ekin.Clarizen
             return sessionInfo;
         }
 
-        #endregion
+        #endregion Authentication methods
 
         #region Metadata methods
 
@@ -163,7 +160,7 @@ namespace Ekin.Clarizen
         {
             Metadata.describeMetadata metadata = new Metadata.describeMetadata(
                 ((typeNames == null && flags == null) ? new Ekin.Clarizen.Metadata.Request.describeMetadata() :
-                                                        new Ekin.Clarizen.Metadata.Request.describeMetadata(typeNames, flags)), 
+                                                        new Ekin.Clarizen.Metadata.Request.describeMetadata(typeNames, flags)),
                 CallSettings.GetFromAPI(this));
             if (isBulk) bulkRequests.Add(metadata.BulkRequest);
             else { Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "DescribeMetadata", "describeMetadata failed", metadata.Error); TotalAPICallsMadeInCurrentSession++; }
@@ -293,7 +290,7 @@ namespace Ekin.Clarizen
             return metadata;
         }
 
-        #endregion
+        #endregion Metadata methods
 
         #region Data - CRUD methods
 
@@ -394,7 +391,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Creates and immediatly retrieves an entity 
+        /// Creates and immediatly retrieves an entity
         /// </summary>
         /// <param name="entity">Entity to be created. Should include Id field such as /Task</param>
         /// <param name="fields">List of fields to retrieve</param>
@@ -408,7 +405,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Retrieves multiple entities from the same entity type in a single request 
+        /// Retrieves multiple entities from the same entity type in a single request
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -587,12 +584,12 @@ namespace Ekin.Clarizen
             }
         }
 
-        #endregion
+        #endregion Data - CRUD methods
 
         #region Data - Query methods
 
         /// <summary>
-        /// Performs a query and returns the result count 
+        /// Performs a query and returns the result count
         /// </summary>
         /// <param name="query">findUserQuery, entityQuery, expenseQuery, timesheetQuery, aggregateQuery, relationQuery, cZQLQuery, entityFeedQuery, groupsQuery, newsFeedQuery, repliesQuery</param>
         /// <returns></returns>
@@ -605,7 +602,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Retrieve entities from Clarizen according to a certain criteria 
+        /// Retrieve entities from Clarizen according to a certain criteria
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -618,7 +615,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Retrieve all entities from Clarizen of the given typeName 
+        /// Retrieve all entities from Clarizen of the given typeName
         /// </summary>
         /// <param name="typeName">The main entity type to query (e.g. WorkItem, User etc.)</param>
         /// <param name="fields">A list of field names to retrieve</param>
@@ -629,7 +626,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Returns the list of groups the current user is a member of 
+        /// Returns the list of groups the current user is a member of
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -642,7 +639,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Returns the list of groups the current user is a member of 
+        /// Returns the list of groups the current user is a member of
         /// </summary>
         /// <param name="fields">Field names to return</param>
         /// <returns></returns>
@@ -652,7 +649,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Performs a query and aggreagtes (and optionally groups) the results using one of the grouping functions (e.g. Count, Sum, etc.) 
+        /// Performs a query and aggreagtes (and optionally groups) the results using one of the grouping functions (e.g. Count, Sum, etc.)
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -665,7 +662,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Retrieve the related entities of an object from a specific Relation 
+        /// Retrieve the related entities of an object from a specific Relation
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -691,7 +688,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Returns the current user news feed 
+        /// Returns the current user news feed
         /// </summary>
         /// <param name="mode">Mode of the news feed query: Following or All</param>
         /// <param name="fields">List of Fields the query should return</param>
@@ -704,7 +701,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Returns the current user news feed 
+        /// Returns the current user news feed
         /// </summary>
         /// <param name="mode">Mode of the news feed query: Following or All</param>
         /// <param name="fields">List of Fields the query should return</param>
@@ -715,7 +712,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Returns the social feed of an object 
+        /// Returns the social feed of an object
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -728,7 +725,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Returns the social feed of an object 
+        /// Returns the social feed of an object
         /// </summary>
         /// <param name="entityId"></param>
         /// <param name="fields">List of Fields the query should return</param>
@@ -741,7 +738,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Returns the social feed of an object 
+        /// Returns the social feed of an object
         /// </summary>
         /// <param name="entityId"></param>
         /// <param name="fields">List of Fields the query should return</param>
@@ -809,12 +806,12 @@ namespace Ekin.Clarizen
             return op;
         }
 
-        #endregion
+        #endregion Data - Query methods
 
         #region Data - Other methods
 
         /// <summary>
-        /// Performs a text search in a specific entity type or in all entity types 
+        /// Performs a text search in a specific entity type or in all entity types
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -827,7 +824,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Performs a text search in all entity types 
+        /// Performs a text search in all entity types
         /// </summary>
         /// <param name="q">The search query to perform</param>
         /// <returns></returns>
@@ -837,7 +834,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Performs a text search in all entity types 
+        /// Performs a text search in all entity types
         /// </summary>
         /// <param name="q">The search query to perform</param>
         /// <param name="paging">Paging setting for the query</param>
@@ -848,7 +845,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Performs a text search in a specific entity type 
+        /// Performs a text search in a specific entity type
         /// </summary>
         /// <param name="q">The search query to perform</param>
         /// <param name="typeName">The Entity Type to search. If omitted, search on all types</param>
@@ -860,7 +857,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Performs a text search in a specific entity type 
+        /// Performs a text search in a specific entity type
         /// </summary>
         /// <param name="q">The search query to perform</param>
         /// <param name="typeName">The Entity Type to search. If omitted, search on all types</param>
@@ -873,7 +870,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Creates a discussion message, link it related entities and notify users or groups 
+        /// Creates a discussion message, link it related entities and notify users or groups
         /// </summary>
         /// <param name="entity">Discussion message to be created</param>
         /// <param name="relatedEntities">Entity Ids</param>
@@ -886,7 +883,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Creates a discussion message, link it related entities and notify users or groups 
+        /// Creates a discussion message, link it related entities and notify users or groups
         /// </summary>
         /// <param name="entity">Discussion message to be created</param>
         /// <param name="relatedEntities">Entity Ids</param>
@@ -898,7 +895,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Creates a discussion message and link it related entities 
+        /// Creates a discussion message and link it related entities
         /// </summary>
         /// <param name="entity">Discussion message to be created</param>
         /// <param name="relatedEntities">Entity Ids</param>
@@ -919,7 +916,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Creates a discussion message, link it related entities and notify users or groups 
+        /// Creates a discussion message, link it related entities and notify users or groups
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -932,7 +929,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Performs life cycle operations (Activate, Cancel etc.) on an entity 
+        /// Performs life cycle operations (Activate, Cancel etc.) on an entity
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -945,7 +942,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Performs life cycle operations (Activate, Cancel etc.) on an entity 
+        /// Performs life cycle operations (Activate, Cancel etc.) on an entity
         /// </summary>
         /// <param name="ids">A list of objects (Entity Ids) to perform the operation on</param>
         /// <param name="operation">The operation to perform ('Activate', 'Cancel' etc.)</param>
@@ -995,7 +992,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Returns the list of template available for a certain Entity Type 
+        /// Returns the list of template available for a certain Entity Type
         /// </summary>
         /// <param name="typeName"></param>
         /// <returns></returns>
@@ -1008,7 +1005,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Creates an entity from a predefined template 
+        /// Creates an entity from a predefined template
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -1021,7 +1018,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Provides information about calendar definitions in Clarizen. This API can provide information about the organization calendar or a user calendar 
+        /// Provides information about calendar definitions in Clarizen. This API can provide information about the organization calendar or a user calendar
         /// </summary>
         /// <param name="id">The id of the entity (organization or user) to get the calendar info for</param>
         /// <returns></returns>
@@ -1056,7 +1053,7 @@ namespace Ekin.Clarizen
             return op;
         }
 
-        #endregion
+        #endregion Data - Other methods
 
         #region CZQL
 
@@ -1083,7 +1080,7 @@ namespace Ekin.Clarizen
             return ExecuteQuery(new Data.Request.query(query.ToCZQL()));
         }
 
-        #endregion
+        #endregion CZQL
 
         #region Bulk Service
 
@@ -1150,7 +1147,7 @@ namespace Ekin.Clarizen
             bulkRequests = new List<request> { };
         }
 
-        #endregion
+        #endregion Bulk Service
 
         #region Utils
 
@@ -1183,7 +1180,7 @@ namespace Ekin.Clarizen
             return util;
         }
 
-        #endregion
+        #endregion Utils
 
         #region Applications
 
@@ -1203,12 +1200,12 @@ namespace Ekin.Clarizen
             return op;
         }
 
-        #endregion
+        #endregion Applications
 
         #region Files
 
         /// <summary>
-        /// Gets download information about a file attached to a document 
+        /// Gets download information about a file attached to a document
         /// </summary>
         /// <param name="documentId">Entity Id</param>
         /// <param name="redirect"></param>
@@ -1222,7 +1219,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Get a URL for uploading files. After POSTing a file to this URL, perform an Upload operation and pass this URL in the UploadUrl parameter. 
+        /// Get a URL for uploading files. After POSTing a file to this URL, perform an Upload operation and pass this URL in the UploadUrl parameter.
         /// </summary>
         /// <returns></returns>
         public Files.getUploadUrl GetUploadUrl()
@@ -1234,7 +1231,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Upload file to a document in Clarizen 
+        /// Upload file to a document in Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -1268,7 +1265,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Set (Or Reset) the image of an object in Clarizen 
+        /// Set (Or Reset) the image of an object in Clarizen
         /// </summary>
         /// <param name="entityId">Id of an entity to attach to</param>
         /// <param name="uploadUrl">When the file is stored in Clarizen, provide the Url you received in a previous request to getUploadUrl</param>
@@ -1283,7 +1280,7 @@ namespace Ekin.Clarizen
         }
 
         //
-        #endregion
 
+        #endregion Files
     }
 }
