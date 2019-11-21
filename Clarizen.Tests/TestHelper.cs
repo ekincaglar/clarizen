@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
+using Clarizen.Tests.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -40,6 +43,17 @@ namespace Clarizen.Tests
             });
 
             return loggerFactory.CreateLogger<T>();
+        }
+
+
+        public static List<T> ToList<T>(dynamic[] source)
+        {
+            var retVal = new List<T>();
+            foreach (var item in source)
+            {
+                retVal.Add(JsonSerializer.Deserialize<ClarizenEntity>(item.ToString()));
+            }
+            return retVal;
         }
     }
 }

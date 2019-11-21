@@ -1,7 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Clarizen.Tests.Context;
 using Clarizen.Tests.Models;
+using Ekin.Clarizen.Data.Request;
 using TechTalk.SpecFlow;
+using Xunit;
+using System.Text.Json;
+using TechTalk.SpecFlow.Assist;
 
 namespace Clarizen.Tests.Steps
 {
@@ -28,5 +34,30 @@ namespace Clarizen.Tests.Steps
                 throw new Exception(putObject?.Error);
             }
         }
+
+        [Given(@"I add the following tasks to the project")]
+        public void GivenIAddTheFollowingTasksToTheProject(Table table)
+        {
+            foreach (var row in table.Rows)
+            {
+                GivenIAddTaskForTodayOnly(row["name"]);
+            }
+        }
+
+        [Then(@"the following tasks exist in the project")]
+        public void ThenTheFollowingTasksExistInTheProject(Table table)
+        {
+            var q = new query($"Select name from task where Project = '{Context.ProjectId}'");
+            var results = Context.Api.ExecuteQuery(q);
+            Assert.True((results.Error == null), results.Error);
+            var actual = TestHelper.ToList<ClarizenEntity>(results.Data.entities);
+           table.CompareToSet(actual);
+        }
+        [Given(@"I wait (.*) second")]
+        public void GivenIWaitSecond(int waitInSeconds)
+        {
+            System.Threading.Thread.Sleep(waitInSeconds * 1000);
+        }
+
     }
 }

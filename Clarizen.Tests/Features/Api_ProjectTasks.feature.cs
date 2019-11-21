@@ -125,17 +125,34 @@ this.FeatureBackground();
 #line 9
  testRunner.Given("I create a project.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "name"});
+                table1.AddRow(new string[] {
+                            "04 A new hope"});
+                table1.AddRow(new string[] {
+                            "05 The Empire Strikes Back"});
+                table1.AddRow(new string[] {
+                            "06 The Revenge of the Jedi"});
+                table1.AddRow(new string[] {
+                            "06 The Return of the Jedi"});
 #line 10
- testRunner.And("I add task \'04 A new hope\' for today only", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I add the following tasks to the project", ((string)(null)), table1, "And ");
 #line hidden
-#line 11
- testRunner.And("I add task \'05 The Empire Strikes Back\' for today only", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 16
+ testRunner.And("I wait 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 12
- testRunner.And("I add task \'06 The Revenge of the Jedi\' for today only", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 13
- testRunner.And("I add task \'06 The Return of the Jedi\' for today only", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                            "name"});
+                table2.AddRow(new string[] {
+                            "04 A new hope"});
+                table2.AddRow(new string[] {
+                            "05 The Empire Strikes Back"});
+                table2.AddRow(new string[] {
+                            "06 The Revenge of the Jedi"});
+                table2.AddRow(new string[] {
+                            "06 The Return of the Jedi"});
+#line 17
+ testRunner.Then("the following tasks exist in the project", ((string)(null)), table2, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

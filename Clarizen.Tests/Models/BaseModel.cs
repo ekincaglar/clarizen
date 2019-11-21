@@ -7,7 +7,6 @@ namespace Clarizen.Tests.Models
         public DateTime? DueDate { get; set; } = null;
         public string Id { get; set; }
 
-        //public int ChildrenCount { get; set; }
         public string Name { get; set; }
 
         public string Parent { get; set; }

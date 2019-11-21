@@ -7,7 +7,16 @@ Background:
 
 Scenario: CreateProjectWithTask
 	Given I create a project.  
-	And I add task '04 A new hope' for today only
-	And I add task '05 The Empire Strikes Back' for today only
-	And I add task '06 The Revenge of the Jedi' for today only
-	And I add task '06 The Return of the Jedi' for today only
+	And I add the following tasks to the project
+	| name                       |
+	| 04 A new hope              |
+	| 05 The Empire Strikes Back |
+	| 06 The Revenge of the Jedi |
+	| 06 The Return of the Jedi  |
+	And I wait 1 second
+	Then the following tasks exist in the project
+	| name                       |
+	| 04 A new hope              |
+	| 05 The Empire Strikes Back |
+	| 06 The Revenge of the Jedi |
+	| 06 The Return of the Jedi  |
