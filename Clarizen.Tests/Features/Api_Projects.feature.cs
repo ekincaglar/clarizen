@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Clarizen.Tests.Features
+namespace Ekin.Clarizen.Tests.Features
 {
     using TechTalk.SpecFlow;
     using System;
@@ -31,7 +31,7 @@ namespace Clarizen.Tests.Features
 #line 1 "Api_Projects.feature"
 #line hidden
         
-        public Api_ProjectsFeature(Api_ProjectsFeature.FixtureData fixtureData, Clarizen_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public Api_ProjectsFeature(Api_ProjectsFeature.FixtureData fixtureData, Ekin_Clarizen_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();

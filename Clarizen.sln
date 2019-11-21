@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clarizen.Tests", "Clarizen.Tests\Clarizen.Tests.csproj", "{650DA28A-3C0D-4542-A51C-DC39531F3682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ekin.Clarizen.Tests", "Clarizen.Tests\Ekin.Clarizen.Tests.csproj", "{650DA28A-3C0D-4542-A51C-DC39531F3682}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekin.Clarizen", "Ekin.Clarizen\Ekin.Clarizen.csproj", "{D801CFFD-645B-4F47-B9F0-D39F5A37A153}"
 EndProject
