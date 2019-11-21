@@ -92,7 +92,7 @@ namespace Ekin.Clarizen
 
                 // Then we login to the API at the above location
                 Authentication.login CZlogin = new Authentication.login(serverLocation, new Ekin.Clarizen.Authentication.Request.login(username, password, new Ekin.Clarizen.Authentication.Request.loginOptions()));
-                Logs.Assert(CZlogin.IsCalledSuccessfully, "Ekin.Clarizen.API", "Login", "Login failed", CZlogin.Error);
+                Logs.Assert(CZlogin.IsCalledSuccessfully, "Ekin.Clarizen.API", "Login", $"Login failed for {username}", CZlogin.Error);
                 if (CZlogin.IsCalledSuccessfully)
                 {
                     // Upon successful login a unique ID representing the current session is returned.
