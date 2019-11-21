@@ -1,19 +1,16 @@
-﻿using Ekin.Clarizen.Interfaces;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Ekin.Clarizen.Interfaces;
 
 namespace Ekin.Clarizen.Utils
 {
-    public class sendEMail: ISupportBulk
+    public class sendEMail : ISupportBulk
     {
         public bool IsCalledSuccessfully { get; set; }
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public sendEMail(Request.sendEMail request, CallSettings callSettings) {
+        public sendEMail(Request.sendEMail request, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/utils/sendEMail";
 
@@ -28,7 +25,7 @@ namespace Ekin.Clarizen.Utils
             headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", callSettings.sessionId));
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault());
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Post(request, callSettings.serializeNullValues);
 
@@ -47,6 +44,5 @@ namespace Ekin.Clarizen.Utils
                 this.IsCalledSuccessfully = false;
             }
         }
-
     }
 }

@@ -1,9 +1,5 @@
-﻿using Ekin.Clarizen.Interfaces;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Ekin.Clarizen.Interfaces;
 
 namespace Ekin.Clarizen.Data
 {
@@ -13,7 +9,8 @@ namespace Ekin.Clarizen.Data
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public objects_post(string id, object obj, CallSettings callSettings) {
+        public objects_post(string id, object obj, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/objects" +
                          (id.Length > 0 && id.Substring(0, 1) != "/" ? "/" : "") + id;
@@ -29,7 +26,7 @@ namespace Ekin.Clarizen.Data
             headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", callSettings.sessionId));
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault());
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Post(obj, callSettings.serializeNullValues);
 
@@ -48,6 +45,5 @@ namespace Ekin.Clarizen.Data
                 this.IsCalledSuccessfully = false;
             }
         }
-
     }
 }

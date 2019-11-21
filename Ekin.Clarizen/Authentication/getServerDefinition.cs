@@ -1,8 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Authentication
 {
@@ -12,7 +9,8 @@ namespace Ekin.Clarizen.Authentication
         public bool IsCalledSuccessfully { get; set; }
         public string Error { get; set; }
 
-        public getServerDefinition(Request.getServerDefinition request, bool isSandbox) {
+        public getServerDefinition(Request.getServerDefinition request, bool isSandbox)
+        {
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(isSandbox ?
                 "https://apie.clarizentb.com/V2.0/services/authentication/getServerDefinition" :
                 "https://api.clarizen.com/V2.0/services/authentication/getServerDefinition");

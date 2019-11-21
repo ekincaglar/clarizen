@@ -1,9 +1,5 @@
-﻿using Ekin.Clarizen.Interfaces;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Ekin.Clarizen.Interfaces;
 
 namespace Ekin.Clarizen.Metadata
 {
@@ -13,7 +9,8 @@ namespace Ekin.Clarizen.Metadata
         public string Error { get; set; }
         public request BulkRequest { get; set; }
 
-        public setSystemSettingsValues(Request.setSystemSettingsValues request, CallSettings callSettings) {
+        public setSystemSettingsValues(Request.setSystemSettingsValues request, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/metadata/setSystemSettingsValues";
 
@@ -28,7 +25,7 @@ namespace Ekin.Clarizen.Metadata
             headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", callSettings.sessionId));
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault());
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Post(request, callSettings.serializeNullValues);
 
@@ -47,6 +44,5 @@ namespace Ekin.Clarizen.Metadata
                 this.IsCalledSuccessfully = false;
             }
         }
-
     }
 }

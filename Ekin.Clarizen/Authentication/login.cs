@@ -1,8 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Authentication
 {
@@ -12,7 +9,8 @@ namespace Ekin.Clarizen.Authentication
         public bool IsCalledSuccessfully { get; set; }
         public string Error { get; set; }
 
-        public login(string serverLocation, Request.login request) {
+        public login(string serverLocation, Request.login request)
+        {
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(serverLocation + "/authentication/login");
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Post(request, true);

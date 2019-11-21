@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
 
 namespace Ekin.Clarizen.Authentication
 {
@@ -10,7 +6,8 @@ namespace Ekin.Clarizen.Authentication
     {
         public bool IsCalledSuccessfully { get; set; }
 
-        public logout(string serverLocation, string sessionId) {
+        public logout(string serverLocation, string sessionId)
+        {
             System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
             headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", sessionId));
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(serverLocation + "/authentication/logout", headers);

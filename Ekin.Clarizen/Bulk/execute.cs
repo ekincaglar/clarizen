@@ -1,8 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Bulk
 {
@@ -28,7 +25,7 @@ namespace Ekin.Clarizen.Bulk
             }
 
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(120000));
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(120000), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Post(request, callSettings.serializeNullValues);
 
@@ -52,6 +49,5 @@ namespace Ekin.Clarizen.Bulk
                 this.Error = $"{response.InternalError.GetFormattedErrorMessage()}. Timeout set to {TimeSpan.FromMilliseconds(callSettings.timeout.GetValueOrDefault(120000)).ToHumanReadableString()}.";
             }
         }
-
     }
 }
