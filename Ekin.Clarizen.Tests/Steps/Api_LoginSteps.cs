@@ -3,7 +3,7 @@ using Ekin.Clarizen;
 using TechTalk.SpecFlow;
 using Xunit;
 
-namespace Clarizen.Tests.Steps
+namespace Ekin.Clarizen.Tests.Steps
 {
     [Binding]
     public class Api_LoginSteps : BaseApiSteps

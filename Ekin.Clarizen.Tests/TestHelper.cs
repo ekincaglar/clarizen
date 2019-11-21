@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using Clarizen.Tests.Context;
 using Clarizen.Tests.Models;
+using Ekin.Clarizen.Data.Request;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Xunit;
 
-namespace Clarizen.Tests
+namespace Ekin.Clarizen.Tests
 {
     internal class TestHelper
     {
@@ -51,9 +55,33 @@ namespace Clarizen.Tests
             var retVal = new List<T>();
             foreach (var item in source)
             {
-                retVal.Add(JsonSerializer.Deserialize<ClarizenEntity>(item.ToString()));
+                retVal.Add(JsonSerializer.Deserialize<T>(item.ToString()));
             }
             return retVal;
+        }
+
+        public static dynamic[] GetEntities(BaseContext context, string query)
+        {
+            var results = context.Api.ExecuteQuery(new query(query));
+            Assert.True((results.Error == null), results.Error);
+            return results.Data.entities;
+        }
+        internal static IEnumerable<T> GetEntities<T>(BaseContext context, string query)
+        {
+            return ToList<T>( GetEntities(context, query));
+
+        }
+
+        /// <summary>
+        /// Execute the clarizen query.
+        /// Throw exception if error is returned
+        /// </summary>
+        internal static Data.query ExecuteQuery(BaseContext context, string query)
+        {
+            var q = new Ekin.Clarizen.Data.Request.query(query);
+            var results = context.Api.ExecuteQuery(q);
+            Assert.True(string.IsNullOrEmpty(results?.Error), results?.Error);
+            return results;
         }
     }
 }

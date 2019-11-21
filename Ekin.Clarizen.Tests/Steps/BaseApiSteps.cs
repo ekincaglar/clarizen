@@ -2,7 +2,7 @@
 using Ekin.Clarizen;
 using Microsoft.Extensions.Configuration;
 
-namespace Clarizen.Tests.Steps
+namespace Ekin.Clarizen.Tests.Steps
 {
     public abstract class BaseApiSteps
     {
@@ -30,5 +30,6 @@ namespace Clarizen.Tests.Steps
                 Context.Api.DeleteObject(projectId);
             }
         }
+
     }
 }

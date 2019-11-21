@@ -9,7 +9,7 @@ using Xunit;
 using System.Text.Json;
 using TechTalk.SpecFlow.Assist;
 
-namespace Clarizen.Tests.Steps
+namespace Ekin.Clarizen.Tests.Steps
 {
     [Binding]
     public class Api_ProjectTasksSteps : BaseApiSteps

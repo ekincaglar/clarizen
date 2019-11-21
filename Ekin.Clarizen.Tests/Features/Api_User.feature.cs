@@ -85,6 +85,9 @@ namespace Ekin.Clarizen.Tests.Features
 #line 5
  testRunner.And("I remove pre-existing test data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
+#line 6
+ testRunner.And("I delete users with an OfficePhone Number of \'020 7946 0000\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
         }
         
         void System.IDisposable.Dispose()
@@ -92,14 +95,14 @@ namespace Ekin.Clarizen.Tests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="There is 1 admin user")]
+        [Xunit.SkippableFactAttribute(DisplayName="CreateUser")]
         [Xunit.TraitAttribute("FeatureTitle", "Api_User")]
-        [Xunit.TraitAttribute("Description", "There is 1 admin user")]
-        public virtual void ThereIs1AdminUser()
+        [Xunit.TraitAttribute("Description", "CreateUser")]
+        public virtual void CreateUser()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("There is 1 admin user", null, ((string[])(null)));
-#line 7
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("CreateUser", null, ((string[])(null)));
+#line 8
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -122,8 +125,65 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
  this.FeatureBackground();
 #line hidden
-#line 8
- testRunner.Then("there are 1 admin users", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                            "FirstName",
+                            "LastName",
+                            "email",
+                            "OfficePhone",
+                            "MobilePhone",
+                            "ExternalUser",
+                            "SuperUser",
+                            "Financial"});
+                table3.AddRow(new string[] {
+                            "UnitTest",
+                            "Bloggs",
+                            "UnitTest.bloggs@CreateUserTest1.com",
+                            "020 7946 0000",
+                            "07700 900000",
+                            "true",
+                            "false",
+                            "false"});
+                table3.AddRow(new string[] {
+                            "UnitTest",
+                            "Smith",
+                            "UnitTest.Smith@CreateUserTest1.com",
+                            "020 7946 0000",
+                            "07700 900000",
+                            "false",
+                            "false",
+                            "true"});
+#line 9
+testRunner.Given("I create the following User", ((string)(null)), table3, "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                            "FirstName",
+                            "LastName",
+                            "email",
+                            "OfficePhone",
+                            "MobilePhone",
+                            "ExternalUser",
+                            "SuperUser",
+                            "Financial"});
+                table4.AddRow(new string[] {
+                            "UnitTest",
+                            "Bloggs",
+                            "UnitTest.bloggs@CreateUserTest1.com",
+                            "020 7946 0000",
+                            "07700 900000",
+                            "true",
+                            "false",
+                            "false"});
+                table4.AddRow(new string[] {
+                            "UnitTest",
+                            "Smith",
+                            "UnitTest.Smith@CreateUserTest1.com",
+                            "020 7946 0000",
+                            "07700 900000",
+                            "false",
+                            "false",
+                            "true"});
+#line 13
+testRunner.Then("the following users exist with an OfficePhone Number of \'020 7946 0000\'", ((string)(null)), table4, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

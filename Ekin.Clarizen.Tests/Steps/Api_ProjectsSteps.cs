@@ -5,7 +5,7 @@ using Clarizen.Tests.Models;
 using TechTalk.SpecFlow;
 using Xunit;
 
-namespace Clarizen.Tests.Steps
+namespace Ekin.Clarizen.Tests.Steps
 {
     [Binding]
     public class ProjectsSteps : BaseApiSteps
