@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekin.Clarizen", "Ekin.Clari
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ekin.Clarizen.Tests", "Ekin.Clarizen.Tests\Ekin.Clarizen.Tests.csproj", "{B333937C-1427-45A3-8EF5-46BE7E2A62B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekin.Clarizen.POCO", "Ekin.Clarizen.POCO\Ekin.Clarizen.POCO.csproj", "{516F75D0-29EF-4FF1-9EC6-F1EA175AFCA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ekin.Clarizen.POCO", "Ekin.Clarizen.POCO\Ekin.Clarizen.POCO.csproj", "{516F75D0-29EF-4FF1-9EC6-F1EA175AFCA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

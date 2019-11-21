@@ -1,4 +1,5 @@
-﻿using Clarizen.Tests.Context;
+﻿using System;
+using Clarizen.Tests.Context;
 using Ekin.Clarizen.Data.Request;
 using TechTalk.SpecFlow;
 using Xunit;
@@ -10,6 +11,17 @@ namespace Clarizen.Tests.Steps
     {
         public Api_UserSteps(BaseContext context) : base(context)
         {
+        }
+
+        [Given(@"I create the following User")]
+        public void GivenICreateTheFollowingUser(Table table)
+        {
+            foreach (var row in table.Rows)
+            {
+                throw new NotImplementedException();
+            }
+            // Allow the system to catch up
+            System.Threading.Thread.Sleep(1000);
         }
 
         [Then(@"there are (.*) admin users")]
