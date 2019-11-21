@@ -45,9 +45,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ekin.Clarizen.POCO, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ekin.Clarizen.POCO.1.6.0\lib\net452\Ekin.Clarizen.POCO.dll</HintPath>
-    </Reference>
     <Reference Include="Ekin.Encryption, Version=1.0.1.30044, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Ekin.Encryption.1.0.1.30044\lib\net452\Ekin.Encryption.dll</HintPath>
       <Private>True</Private>
@@ -149,6 +146,12 @@
     <Compile Include="Authentication\getServerDefinition.cs" />
     <Compile Include="Utils\appLogin.cs" />
     <Compile Include="Utils\sendEMail.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ekin.Clarizen.POCO\Ekin.Clarizen.POCO.csproj">
+      <Project>{516f75d0-29ef-4ff1-9ec6-f1ea175afca9}</Project>
+      <Name>Ekin.Clarizen.POCO</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
