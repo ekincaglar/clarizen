@@ -11,6 +11,7 @@ Background:
 	| UnitTest  | Bloggs   | UnitTest.bloggs@CreateUserTest1.com | 020 7946 0000 | 07700 900000 | true         | false     | false     |
 	| UnitTest  | Smith    | UnitTest.Smith@CreateUserTest1.com  | 020 7946 0000 | 07700 900000 | false        | false     | false      |
 Scenario: CallMissingTimesheets
-	Given I call MissingTimesheets for user by email 'UnitTest.bloggs@CreateUserTest1.com' between '<<MondayLastWeek>>' and '<<fridaylastweek>>' inclusive
+	Given I set the test user to be 'UnitTest.bloggs@CreateUserTest1.com'
+	Given I call MissingTimesheets for testuser between '<<MondayLastWeek>>' and '<<fridaylastweek>>' inclusive
 	Then there are 5 missing timesheets
-	Given I get the workpattern for user 'UnitTest.bloggs@CreateUserTest1.com'
+	Given I get the workpattern for the test user

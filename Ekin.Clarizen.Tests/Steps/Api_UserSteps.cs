@@ -46,6 +46,13 @@ namespace Ekin.Clarizen.Tests.Steps
             System.Threading.Thread.Sleep(1000);
         }
 
+        [Given(@"I set the test user to be '(.*)'")]
+        public void GivenISetTheTestUserToBe(string email)
+        {
+            var result = TestHelper.ExecuteQuery(Context, $"SELECT FirstName,state FROM user where email = '{email}' and state <> \"deleted\"");
+            Context.UserId = result.Data.GetEntityIds().First();
+        }
+
         [Given(@"I delete users with an OfficePhone Number of '(.*)'")]
         public void GivenIDeleteUsersWithAnOfficePhoneNumberOf(string officePhoneNumber)
         {

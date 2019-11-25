@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Clarizen.Tests.Context;
-using Ekin.Clarizen.Tests.Models;
 using TechTalk.SpecFlow;
 using Xunit;
 
@@ -12,45 +10,38 @@ namespace Ekin.Clarizen.Tests.Steps
     {
         public Api_TimesheetSteps(BaseContext context) : base(context)
         {
-
         }
 
-        [Given(@"I call MissingTimesheets for user by email '(.*)' between '(.*)' and '(.*)' inclusive")]
-        public void GivenICallMissingTimesheetsForUserByEmailBetweenAnd(string userEmail, string startDate, string endDate)
+        [Given(@"I call MissingTimesheets for testuser between '(.*)' and '(.*)' inclusive")]
+        public void GivenICallMissingTimesheetsForTestuserBetweenAndInclusive(string startDate, string endDate)
         {
-            System.Threading.Thread.Sleep(1000);
-            var userId = TestHelper.ExecuteQuery(Context,
-                                $"SELECT  email FROM user where email = '{userEmail}' and state <> \"deleted\"")
-                            .Data.GetEntityIds().Single();
+            GetMissingTimeSheets(startDate, endDate, Context.UserId);
+        }
 
-            var start = TestHelper.convertToDateTime(startDate);
-            var end = TestHelper.convertToDateTime(endDate).AddDays(1);
-
-            var actual = Context.Api.GetMissingTimesheets(userId,
-                                                  start,
-                                                  end);
+        [Given(@"I get the workpattern for the test user")]
+        public void GivenIGetTheWorkpatternForTheTestUser()
+        {
+            var actual = Context.Api.GetCalendarInfo(Context.UserId);
             Assert.Null(actual.Error);
-            Context.SUT = actual;
         }
 
         [Then(@"there are (.*) missing timesheets")]
         public void ThenThereAreEntities(int expected)
         {
             var actual = (Data.getMissingTimesheets)Context.SUT;
-            Assert.Equal(expected,actual.Data.missingTimesheets.Count());
+            Assert.Equal(expected, actual.Data.missingTimesheets.Count());
         }
-      
-        [Given(@"I get the workpattern for user '(.*)'")]
-        public void GivenIGetTheWorkpatternForUser(string userEmail)
+
+        private void GetMissingTimeSheets(string startDate, string endDate, string userId)
         {
-            var userId = TestHelper.ExecuteQuery(Context,
-                    $"SELECT  email FROM user where email = '{userEmail}' and state <> \"deleted\"")
-                .Data.GetEntityIds().Single();
+            var start = TestHelper.convertToDateTime(startDate);
+            var end = TestHelper.convertToDateTime(endDate).AddDays(1);
 
-            var actual = Context.Api.GetCalendarInfo(userId);
+            var actual = Context.Api.GetMissingTimesheets(userId,
+                start,
+                end);
             Assert.Null(actual.Error);
-
+            Context.SUT = actual;
         }
-
     }
 }

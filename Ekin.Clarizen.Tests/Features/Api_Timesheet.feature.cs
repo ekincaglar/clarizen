@@ -159,14 +159,17 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 14
- testRunner.Given("I call MissingTimesheets for user by email \'UnitTest.bloggs@CreateUserTest1.com\' " +
-                        "between \'<<MondayLastWeek>>\' and \'<<fridaylastweek>>\' inclusive", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I set the test user to be \'UnitTest.bloggs@CreateUserTest1.com\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 15
- testRunner.Then("there are 5 missing timesheets", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Given("I call MissingTimesheets for testuser between \'<<MondayLastWeek>>\' and \'<<fridayl" +
+                        "astweek>>\' inclusive", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 16
- testRunner.Given("I get the workpattern for user \'UnitTest.bloggs@CreateUserTest1.com\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Then("there are 5 missing timesheets", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 17
+ testRunner.Given("I get the workpattern for the test user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             }
             this.ScenarioCleanup();
