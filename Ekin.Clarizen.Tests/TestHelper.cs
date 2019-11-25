@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
+using Clarizen.Tests;
 using Clarizen.Tests.Context;
 using Clarizen.Tests.Models;
 using Ekin.Clarizen.Data.Request;
@@ -33,6 +36,15 @@ namespace Ekin.Clarizen.Tests
             }
 #endif
             return builder.Build();
+        }
+
+        /// <summary>
+        /// Get the only entity for the query.
+        /// </summary>
+        internal static T GetEntity<T>(BaseContext context, string query)
+        {
+            var entity =ToList<T>(GetEntities(context, query));
+            return !entity.Any() ? default(T) : entity.Single();
         }
 
         internal static ILogger<T> GetILoggerFactory<T>()
@@ -83,6 +95,44 @@ namespace Ekin.Clarizen.Tests
             var results = context.Api.ExecuteQuery(q);
             Assert.True(string.IsNullOrEmpty(results?.Error), results?.Error);
             return results;
+        }
+
+        internal static DateTime convertToDateTime(string value)
+        {
+            DateTime retVal ;
+            switch (value.ToLower())
+            {
+                case "<<today>>":
+                    retVal = DateTime.Today;
+                    break;
+                case "<<yesterday>>":
+                    retVal = DateTime.Today.AddDays(-1);
+                    break;
+                case "<<now>>":
+                    retVal = DateTime.Now;
+                    break;
+                case "<<yearstart>>":
+                    retVal = new DateTime(DateTime.Now.Year, 1, 1); 
+                    break;
+                case "<<monthstart>>":
+                    retVal = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1); 
+                    break;
+                case "<<mondaylastweek>>":
+                    retVal = DateTime.Today.AddDays(-7).GetDayInWeek(DayOfWeek.Monday);
+                    break;
+                case "<<fridaylastweek>>":
+                    retVal = DateTime.Today.AddDays(-7).GetDayInWeek(DayOfWeek.Friday);
+                    break;
+                default:
+                    retVal = Convert.ToDateTime(value);
+                    break;
+            }
+
+            if (retVal.Year == 1)
+            {
+                throw new ArgumentOutOfRangeException(value,$"parameter '{nameof(value)}' value '{value}' is out of range");
+            }
+            return retVal;
         }
     }
 }

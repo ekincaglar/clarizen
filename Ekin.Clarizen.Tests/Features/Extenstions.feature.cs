@@ -19,7 +19,7 @@ namespace Ekin.Clarizen.Tests.Features
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.1.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class Api_TimesheetFeature : Xunit.IClassFixture<Api_TimesheetFeature.FixtureData>, System.IDisposable
+    public partial class ExtenstionsFeature : Xunit.IClassFixture<ExtenstionsFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Ekin.Clarizen.Tests.Features
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Api_Timesheet.feature"
+#line 1 "Extenstions.feature"
 #line hidden
         
-        public Api_TimesheetFeature(Api_TimesheetFeature.FixtureData fixtureData, Ekin_Clarizen_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public ExtenstionsFeature(ExtenstionsFeature.FixtureData fixtureData, Ekin_Clarizen_Tests_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Ekin.Clarizen.Tests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Api_Timesheet", null, ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Extenstions", "\tTest the extentions", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -75,64 +75,22 @@ namespace Ekin.Clarizen.Tests.Features
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void FeatureBackground()
-        {
-#line 4
-#line hidden
-#line 5
- testRunner.Given("I Login using credentials in appsettings", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 6
- testRunner.And("I remove pre-existing test data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 7
- testRunner.And("I delete users with an OfficePhone Number of \'020 7946 0000\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                        "FirstName",
-                        "LastName",
-                        "email",
-                        "OfficePhone",
-                        "MobilePhone",
-                        "ExternalUser",
-                        "SuperUser",
-                        "Financial"});
-            table3.AddRow(new string[] {
-                        "UnitTest",
-                        "Bloggs",
-                        "UnitTest.bloggs@CreateUserTest1.com",
-                        "020 7946 0000",
-                        "07700 900000",
-                        "true",
-                        "false",
-                        "false"});
-            table3.AddRow(new string[] {
-                        "UnitTest",
-                        "Smith",
-                        "UnitTest.Smith@CreateUserTest1.com",
-                        "020 7946 0000",
-                        "07700 900000",
-                        "false",
-                        "false",
-                        "true"});
-#line 8
- testRunner.And("I create the following User", ((string)(null)), table3, "And ");
-#line hidden
-        }
-        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="CallMissingTimesheets")]
-        [Xunit.TraitAttribute("FeatureTitle", "Api_Timesheet")]
-        [Xunit.TraitAttribute("Description", "CallMissingTimesheets")]
-        public virtual void CallMissingTimesheets()
+        [Xunit.SkippableFactAttribute(DisplayName="StartOfWeek")]
+        [Xunit.TraitAttribute("FeatureTitle", "Extenstions")]
+        [Xunit.TraitAttribute("Description", "StartOfWeek")]
+        [Xunit.TraitAttribute("Category", "mytag")]
+        public virtual void StartOfWeek()
         {
-            string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("CallMissingTimesheets", null, ((string[])(null)));
-#line 12
+            string[] tagsOfScenario = new string[] {
+                    "mytag"};
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("StartOfWeek", null, new string[] {
+                        "mytag"});
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -152,12 +110,40 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
-this.FeatureBackground();
-#line hidden
-#line 13
- testRunner.Given("I call MissingTimesheets for user by email \'UnitTest.bloggs@CreateUserTest1.com\' " +
-                        "between \'<<MondayLastWeek>>\' and \'<<fridaylastweek>>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                            "TargetDate",
+                            "DayOfWeek",
+                            "Expected"});
+                table6.AddRow(new string[] {
+                            "25 Nov 2019",
+                            "Monday",
+                            "25 Nov 2019"});
+                table6.AddRow(new string[] {
+                            "25 Nov 2019",
+                            "Tuesday",
+                            "26 Nov 2019"});
+                table6.AddRow(new string[] {
+                            "25 Nov 2019",
+                            "Wednesday",
+                            "27 Nov 2019"});
+                table6.AddRow(new string[] {
+                            "25 Nov 2019",
+                            "Thursday",
+                            "28 Nov 2019"});
+                table6.AddRow(new string[] {
+                            "25 Nov 2019",
+                            "Friday",
+                            "29 Nov 2019"});
+                table6.AddRow(new string[] {
+                            "25 Nov 2019",
+                            "Saturday",
+                            "30 Nov 2019"});
+                table6.AddRow(new string[] {
+                            "25 Nov 2019",
+                            "Sunday",
+                            "01 Dec 2019"});
+#line 6
+testRunner.Given("I Test Extention Method StartOfWeek with the following values", ((string)(null)), table6, "Given ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -170,12 +156,12 @@ this.FeatureBackground();
             
             public FixtureData()
             {
-                Api_TimesheetFeature.FeatureSetup();
+                ExtenstionsFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                Api_TimesheetFeature.FeatureTearDown();
+                ExtenstionsFeature.FeatureTearDown();
             }
         }
     }

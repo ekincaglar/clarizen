@@ -125,36 +125,6 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
  this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
-                            "FirstName",
-                            "LastName",
-                            "email",
-                            "OfficePhone",
-                            "MobilePhone",
-                            "ExternalUser",
-                            "SuperUser",
-                            "Financial"});
-                table3.AddRow(new string[] {
-                            "UnitTest",
-                            "Bloggs",
-                            "UnitTest.bloggs@CreateUserTest1.com",
-                            "020 7946 0000",
-                            "07700 900000",
-                            "true",
-                            "false",
-                            "false"});
-                table3.AddRow(new string[] {
-                            "UnitTest",
-                            "Smith",
-                            "UnitTest.Smith@CreateUserTest1.com",
-                            "020 7946 0000",
-                            "07700 900000",
-                            "false",
-                            "false",
-                            "true"});
-#line 9
- testRunner.Given("I create the following User", ((string)(null)), table3, "Given ");
-#line hidden
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "FirstName",
                             "LastName",
@@ -182,8 +152,38 @@ this.ScenarioInitialize(scenarioInfo);
                             "false",
                             "false",
                             "true"});
+#line 9
+ testRunner.Given("I create the following User", ((string)(null)), table4, "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                            "FirstName",
+                            "LastName",
+                            "email",
+                            "OfficePhone",
+                            "MobilePhone",
+                            "ExternalUser",
+                            "SuperUser",
+                            "Financial"});
+                table5.AddRow(new string[] {
+                            "UnitTest",
+                            "Bloggs",
+                            "UnitTest.bloggs@CreateUserTest1.com",
+                            "020 7946 0000",
+                            "07700 900000",
+                            "true",
+                            "false",
+                            "false"});
+                table5.AddRow(new string[] {
+                            "UnitTest",
+                            "Smith",
+                            "UnitTest.Smith@CreateUserTest1.com",
+                            "020 7946 0000",
+                            "07700 900000",
+                            "false",
+                            "false",
+                            "true"});
 #line 13
- testRunner.Then("the following users exist with an OfficePhone Number of \'020 7946 0000\'", ((string)(null)), table4, "Then ");
+ testRunner.Then("the following users exist with an OfficePhone Number of \'020 7946 0000\'", ((string)(null)), table5, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
