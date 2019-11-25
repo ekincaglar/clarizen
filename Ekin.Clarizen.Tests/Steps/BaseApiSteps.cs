@@ -1,5 +1,4 @@
 ﻿using Clarizen.Tests.Context;
-using Ekin.Clarizen;
 using Microsoft.Extensions.Configuration;
 
 namespace Ekin.Clarizen.Tests.Steps
@@ -22,7 +21,7 @@ namespace Ekin.Clarizen.Tests.Steps
             if (Context?.Api == null)
                 return;
             var query = new Ekin.Clarizen.Data.Request.query(
-                "SELECT name ,state FROM project where name like 'UnitTest%' and state = 'Draft'  ");
+                "SELECT name ,state FROM project where name like 'UnitTest%' ");
 
             var results = Context.Api.ExecuteQuery(query).Data;
             foreach (var projectId in results.GetEntityIds())
@@ -30,6 +29,5 @@ namespace Ekin.Clarizen.Tests.Steps
                 Context.Api.DeleteObject(projectId);
             }
         }
-
     }
 }

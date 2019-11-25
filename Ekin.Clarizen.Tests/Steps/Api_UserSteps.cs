@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Clarizen.Tests.Context;
 using Ekin.Clarizen.Data.Request;
 using Ekin.Clarizen.Tests.Models;
@@ -14,6 +15,19 @@ namespace Ekin.Clarizen.Tests.Steps
         public Api_UserSteps(BaseContext context) : base(context)
         {
         }
+
+        //////[Given(@"I change the state to '(.*)' for user by email '(.*)'")]
+        //////public void GivenIChangeTheStateToForUserByEmail(string newState, string email)
+        //////{
+        //////    var result = TestHelper.ExecuteQuery(Context, $"SELECT FirstName,LastName, email,OfficePhone,state FROM user where email = '{email}' and state <> \"deleted\"");
+        //////    Assert.True(result.Data.entities.Length == 1, $"There should only be one user found,  {result.Data.entities.Length} users where found.");
+            
+        //////    Context.SUT = result;
+
+        //////   var changeStateResult = Context.Api.ChangeState(result.Data.GetEntityIds(), newState);
+        //////   Assert.True(string.IsNullOrEmpty(changeStateResult?.Error),changeStateResult?.Error);
+          
+        //////}
 
         [Given(@"I create the following User")]
         public void GivenICreateTheFollowingUser(Table table)
@@ -32,32 +46,30 @@ namespace Ekin.Clarizen.Tests.Steps
             System.Threading.Thread.Sleep(1000);
         }
 
+        [Given(@"I delete users with an OfficePhone Number of '(.*)'")]
+        public void GivenIDeleteUsersWithAnOfficePhoneNumberOf(string officePhoneNumber)
+        {
+            var results = TestHelper.ExecuteQuery(Context, $"SELECT FirstName,LastName, email,OfficePhone,state.name FROM user where OfficePhone = '{officePhoneNumber}'");
+            foreach (var id in results.Data.GetEntityIds())
+            {
+                Context.Api.DeleteObject(id);
+            }
+        }
+
+        [Then(@"the following users exist with an OfficePhone Number of '(.*)'")]
+        public void ThenTheFollowingUsersExistWithAnOfficePhoneNumberOf(string officePhoneNumber, Table table)
+        {
+            var results = TestHelper.GetEntities<User>(Context, $"SELECT FirstName , LastName, email , OfficePhone ,MobilePhone ,ExternalUser ,SuperUser ,Financial  FROM user where OfficePhone = '{officePhoneNumber}'");
+        }
+
         [Then(@"there are (.*) admin users")]
         public void ThenThereAreAdminUsers(int expectedAdminUserCount)
         {
-           
             var query = new query("SELECT DisplayName, Admin FROM user where admin = 1");
 
             var results = Context.Api.ExecuteQuery(query);
             Assert.True((results.Error == null), results.Error);
             Assert.Equal((int)expectedAdminUserCount, (int)results.Data.entities.Length);
         }
-
-        [Given(@"I delete users with an OfficePhone Number of '(.*)'")]
-        public void GivenIDeleteUsersWithAnOfficePhoneNumberOf(string officePhoneNumber)
-        {
-            var results = TestHelper.ExecuteQuery(Context, $"SELECT FirstName,LastName, email,OfficePhone FROM user where OfficePhone = '{officePhoneNumber}'");
-            foreach (var id in results.Data.GetEntityIds())
-            {
-                Context.Api.DeleteObject(id);
-            }
-        }
-        [Then(@"the following users exist with an OfficePhone Number of '(.*)'")]
-        public void ThenTheFollowingUsersExistWithAnOfficePhoneNumberOf(string officePhoneNumber, Table table)
-        {
-           var results = TestHelper.GetEntities<User>(Context, $"SELECT FirstName , LastName, email , OfficePhone ,MobilePhone ,ExternalUser ,SuperUser ,Financial  FROM user where OfficePhone = '{officePhoneNumber}'");
-        }
-
-
     }
 }

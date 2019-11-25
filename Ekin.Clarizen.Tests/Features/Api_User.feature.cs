@@ -95,13 +95,13 @@ namespace Ekin.Clarizen.Tests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="CreateUser")]
+        [Xunit.SkippableFactAttribute(DisplayName="CreateUsers")]
         [Xunit.TraitAttribute("FeatureTitle", "Api_User")]
-        [Xunit.TraitAttribute("Description", "CreateUser")]
-        public virtual void CreateUser()
+        [Xunit.TraitAttribute("Description", "CreateUsers")]
+        public virtual void CreateUsers()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("CreateUser", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("CreateUsers", null, ((string[])(null)));
 #line 8
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -153,7 +153,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "false",
                             "true"});
 #line 9
-testRunner.Given("I create the following User", ((string)(null)), table3, "Given ");
+ testRunner.Given("I create the following User", ((string)(null)), table3, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "FirstName",
@@ -183,7 +183,7 @@ testRunner.Given("I create the following User", ((string)(null)), table3, "Given
                             "false",
                             "true"});
 #line 13
-testRunner.Then("the following users exist with an OfficePhone Number of \'020 7946 0000\'", ((string)(null)), table4, "Then ");
+ testRunner.Then("the following users exist with an OfficePhone Number of \'020 7946 0000\'", ((string)(null)), table4, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

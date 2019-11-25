@@ -1,4 +1,6 @@
-﻿namespace Ekin.Clarizen.Tests.Models
+﻿using Clarizen.Tests.Models;
+
+namespace Ekin.Clarizen.Tests.Models
 {
     public class User
     {

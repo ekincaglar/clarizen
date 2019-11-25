@@ -66,6 +66,7 @@ namespace Ekin.Clarizen.Tests
             Assert.True((results.Error == null), results.Error);
             return results.Data.entities;
         }
+
         internal static IEnumerable<T> GetEntities<T>(BaseContext context, string query)
         {
             return ToList<T>( GetEntities(context, query));
