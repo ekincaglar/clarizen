@@ -88,6 +88,9 @@ namespace Ekin.Clarizen.Tests.Features
 #line 7
  testRunner.And("I delete users with an OfficePhone Number of \'020 7946 0000\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
+#line 8
+ testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "FirstName",
                         "LastName",
@@ -114,8 +117,8 @@ namespace Ekin.Clarizen.Tests.Features
                         "07700 900000",
                         "false",
                         "false",
-                        "true"});
-#line 8
+                        "false"});
+#line 9
  testRunner.And("I create the following User", ((string)(null)), table3, "And ");
 #line hidden
         }
@@ -132,7 +135,7 @@ namespace Ekin.Clarizen.Tests.Features
         {
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("CallMissingTimesheets", null, ((string[])(null)));
-#line 12
+#line 13
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -155,9 +158,15 @@ this.ScenarioInitialize(scenarioInfo);
 #line 4
 this.FeatureBackground();
 #line hidden
-#line 13
+#line 14
  testRunner.Given("I call MissingTimesheets for user by email \'UnitTest.bloggs@CreateUserTest1.com\' " +
-                        "between \'<<MondayLastWeek>>\' and \'<<fridaylastweek>>\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+                        "between \'<<MondayLastWeek>>\' and \'<<fridaylastweek>>\' inclusive", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 15
+ testRunner.Then("there are 5 missing timesheets", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 16
+ testRunner.Given("I get the workpattern for user \'UnitTest.bloggs@CreateUserTest1.com\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             }
             this.ScenarioCleanup();

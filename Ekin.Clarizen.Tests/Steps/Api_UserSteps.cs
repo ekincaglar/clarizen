@@ -49,10 +49,16 @@ namespace Ekin.Clarizen.Tests.Steps
         [Given(@"I delete users with an OfficePhone Number of '(.*)'")]
         public void GivenIDeleteUsersWithAnOfficePhoneNumberOf(string officePhoneNumber)
         {
-            var results = TestHelper.ExecuteQuery(Context, $"SELECT FirstName,LastName, email,OfficePhone,state.name FROM user where OfficePhone = '{officePhoneNumber}'");
+            var results = TestHelper.ExecuteQuery(Context
+                    , $"SELECT FirstName FROM user where OfficePhone = '{officePhoneNumber}' and state <> \"deleted\"");
             foreach (var id in results.Data.GetEntityIds())
             {
-                Context.Api.DeleteObject(id);
+                var result = Context.Api.DeleteObject(id);
+                if (result.Error != null)
+                {
+                    throw new Exception(result.Error);
+                }
+
             }
         }
 

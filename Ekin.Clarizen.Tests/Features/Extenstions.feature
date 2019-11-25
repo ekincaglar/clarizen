@@ -4,7 +4,7 @@
 @mytag
 Scenario: StartOfWeek
 Given I Test Extention Method StartOfWeek with the following values
-| TargetDate    | DayOfWeek | Expected    |
+| TargetDate  | DayOfWeek | Expected    |
 | 25 Nov 2019 | Monday    | 25 Nov 2019 |
 | 25 Nov 2019 | Tuesday   | 26 Nov 2019 |
 | 25 Nov 2019 | Wednesday | 27 Nov 2019 |
