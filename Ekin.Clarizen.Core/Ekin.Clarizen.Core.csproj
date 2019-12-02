@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Authors>Ekin</Authors>
+    <Company>Ekin</Company>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="CallSettings.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\Ekin.Clarizen\API.cs" Link="API.cs" />
     <Compile Include="..\Ekin.Clarizen\Applications\getApplicationStatus.cs" Link="Applications\getApplicationStatus.cs" />
     <Compile Include="..\Ekin.Clarizen\Applications\installApplication.cs" Link="Applications\installApplication.cs" />
@@ -27,7 +34,9 @@
     <Compile Include="..\Ekin.Clarizen\Authentication\getSessionInfo.cs" Link="Authentication\getSessionInfo.cs" />
     <Compile Include="..\Ekin.Clarizen\Authentication\login.cs" Link="Authentication\login.cs" />
     <Compile Include="..\Ekin.Clarizen\Authentication\logout.cs" Link="Authentication\logout.cs" />
+    <Compile Include="..\Ekin.Clarizen\Authentication\setPassword.cs" Link="Authentication\setPassword.cs" />
     <Compile Include="..\Ekin.Clarizen\Bulk\execute.cs" Link="Bulk\execute.cs" />
+    <Compile Include="..\Ekin.Clarizen\CallSettings.cs" Link="CallSettings.cs" />
     <Compile Include="..\Ekin.Clarizen\Data\aggregateQuery.cs" Link="Data\aggregateQuery.cs" />
     <Compile Include="..\Ekin.Clarizen\Data\changeState.cs" Link="Data\changeState.cs" />
     <Compile Include="..\Ekin.Clarizen\Data\countQuery.cs" Link="Data\countQuery.cs" />
@@ -40,6 +49,7 @@
     <Compile Include="..\Ekin.Clarizen\Data\expenseQuery.cs" Link="Data\expenseQuery.cs" />
     <Compile Include="..\Ekin.Clarizen\Data\getCalendarExceptions.cs" Link="Data\getCalendarExceptions.cs" />
     <Compile Include="..\Ekin.Clarizen\Data\getCalendarInfo.cs" Link="Data\getCalendarInfo.cs" />
+    <Compile Include="..\Ekin.Clarizen\Data\getMissingTimesheets.cs" Link="Data\getMissingTimesheets.cs" />
     <Compile Include="..\Ekin.Clarizen\Data\getTemplateDescriptions.cs" Link="Data\getTemplateDescriptions.cs" />
     <Compile Include="..\Ekin.Clarizen\Data\groupsQuery.cs" Link="Data\groupsQuery.cs" />
     <Compile Include="..\Ekin.Clarizen\Data\lifecycle.cs" Link="Data\lifecycle.cs" />
@@ -86,22 +96,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ekin.Clarizen.POCO.Core" Version="1.0.5" />
+    <PackageReference Include="Ekin.Encryption.Core" Version="1.0.0" />
+    <PackageReference Include="Ekin.Log.Core" Version="1.0.0" />
+    <PackageReference Include="Ekin.Rest.Core" Version="1.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Ekin.Clarizen.POCO.Core">
-      <HintPath>..\Ekin.Clarizen.POCO.Core\bin\Debug\netcoreapp2.2\Ekin.Clarizen.POCO.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Ekin.Encryption.Core">
-      <HintPath>..\..\..\Ekin\Ekin.Encryption.Core\bin\Debug\netcoreapp2.2\Ekin.Encryption.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Ekin.Log.Core">
-      <HintPath>..\..\..\Ekin\Ekin.Log.Core\bin\Debug\netcoreapp2.2\Ekin.Log.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Ekin.Rest.Core">
-      <HintPath>..\..\..\Ekin\Ekin.Rest.Core\bin\Debug\netcoreapp2.2\Ekin.Rest.Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

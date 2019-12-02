@@ -2,7 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Version>1.0.3</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\dayOfMissingTimesheets.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\Ekin.Clarizen.POCO\Common\action.cs" Link="Common\action.cs" />
@@ -10,6 +15,7 @@
     <Compile Include="..\Ekin.Clarizen.POCO\Common\Currency.cs" Link="Common\Currency.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Common\Day.cs" Link="Common\Day.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Common\dayInformation.cs" Link="Common\dayInformation.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Common\dayOfMissingTimesheets.cs" Link="Common\dayOfMissingTimesheets.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Common\Duration.cs" Link="Common\Duration.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Common\entity.cs" Link="Common\entity.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Common\entityDescription.cs" Link="Common\entityDescription.cs" />
@@ -70,6 +76,7 @@
     <Compile Include="..\Ekin.Clarizen.POCO\Requests\Authentication\getSessionInfo.cs" Link="Requests\Authentication\getSessionInfo.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Requests\Authentication\login.cs" Link="Requests\Authentication\login.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Requests\Authentication\loginOptions.cs" Link="Requests\Authentication\loginOptions.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Authentication\setPassword.cs" Link="Requests\Authentication\setPassword.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Requests\Bulk\execute.cs" Link="Requests\Bulk\execute.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\changeState.cs" Link="Requests\Data\changeState.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\countQuery.cs" Link="Requests\Data\countQuery.cs" />
@@ -79,6 +86,7 @@
     <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\executeCustomAction.cs" Link="Requests\Data\executeCustomAction.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\getCalendarExceptions.cs" Link="Requests\Data\getCalendarExceptions.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\getCalendarInfo.cs" Link="Requests\Data\getCalendarInfo.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\getMissingTimesheets.cs" Link="Requests\Data\getMissingTimesheets.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\getTemplateDescriptions.cs" Link="Requests\Data\getTemplateDescriptions.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\lifecycle.cs" Link="Requests\Data\lifecycle.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Requests\Data\objects_delete.cs" Link="Requests\Data\objects_delete.cs" />
@@ -114,6 +122,7 @@
     <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\expenseQuery.cs" Link="Responses\Data\expenseQuery.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\getCalendarExceptions.cs" Link="Responses\Data\getCalendarExceptions.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\getCalendarInfo.cs" Link="Responses\Data\getCalendarInfo.cs" />
+    <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\getMissingTimesheets.cs" Link="Responses\Data\getMissingTimesheets.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\getTemplateDescriptions.cs" Link="Responses\Data\getTemplateDescriptions.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\groupsQuery.cs" Link="Responses\Data\groupsQuery.cs" />
     <Compile Include="..\Ekin.Clarizen.POCO\Responses\Data\newsFeedQuery.cs" Link="Responses\Data\newsFeedQuery.cs" />
@@ -138,7 +147,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Properties\" />
     <Folder Include="Queries\Conditions\" />
@@ -161,7 +169,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
 </Project>

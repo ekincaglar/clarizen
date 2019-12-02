@@ -163,7 +163,16 @@ publish/
 PublishScripts/
 
 # NuGet Packages
+nuget.exe
 *.nupkg
+*.nuspec
+Ekin.Clarizen/*.nupkg
+Ekin.Clarizen/*.nuspec
+Ekin.Clarizen.Core/*.nupkg
+Ekin.Clarizen.Core/*.nuspec
+Ekin.Clarizen.POCO.Core/*.nupkg
+Ekin.Clarizen.POCO.Core/*.nuspec
+
 # The packages folder can be ignored because of Package Restore
 **/packages/*
 # except build/, which is used as an MSBuild target.
@@ -290,3 +299,4 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/nuget setup.txt
