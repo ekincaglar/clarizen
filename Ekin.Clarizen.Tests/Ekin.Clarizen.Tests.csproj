@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="3.0.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="SpecFlow" Version="3.1.62" />
     <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.1.62" />
     <PackageReference Include="SpecFlow.xUnit" Version="3.1.62" />

@@ -34,8 +34,8 @@ namespace Ekin.Clarizen.Tests.Steps
 
         private void GetMissingTimeSheets(string startDate, string endDate, string userId)
         {
-            var start = TestHelper.convertToDateTime(startDate);
-            var end = TestHelper.convertToDateTime(endDate).AddDays(1);
+            var start = TestHelper.ConvertToDateTime(startDate);
+            var end = TestHelper.ConvertToDateTime(endDate).AddDays(2).AddMilliseconds(-30);
 
             var actual = Context.Api.GetMissingTimesheets(userId,
                 start,

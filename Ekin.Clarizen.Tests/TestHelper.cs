@@ -97,31 +97,31 @@ namespace Ekin.Clarizen.Tests
             return results;
         }
 
-        internal static DateTime convertToDateTime(string value)
+        internal static DateTime ConvertToDateTime(string value)
         {
             DateTime retVal ;
             switch (value.ToLower())
             {
                 case "<<today>>":
-                    retVal = DateTime.Today;
+                    retVal = TimeProvider.Current.Today;
                     break;
                 case "<<yesterday>>":
-                    retVal = DateTime.Today.AddDays(-1);
+                    retVal = TimeProvider.Current.Today.AddDays(-1);
                     break;
                 case "<<now>>":
                     retVal = DateTime.Now;
                     break;
                 case "<<yearstart>>":
-                    retVal = new DateTime(DateTime.Now.Year, 1, 1); 
+                    retVal = new DateTime(TimeProvider.Current.Now.Year, 1, 1); 
                     break;
                 case "<<monthstart>>":
-                    retVal = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1); 
+                    retVal = new DateTime(TimeProvider.Current.Now.Year, TimeProvider.Current.Now.Month, 1); 
                     break;
                 case "<<mondaylastweek>>":
-                    retVal = DateTime.Today.AddDays(-7).GetDayInWeek(DayOfWeek.Monday);
+                    retVal = TimeProvider.Current.Today.AddDays(-7).GetDayInWeek(DayOfWeek.Monday);
                     break;
                 case "<<fridaylastweek>>":
-                    retVal = DateTime.Today.AddDays(-7).GetDayInWeek(DayOfWeek.Friday);
+                    retVal = TimeProvider.Current.Today.AddDays(-7).GetDayInWeek(DayOfWeek.Friday);
                     break;
                 default:
                     retVal = Convert.ToDateTime(value);
