@@ -1,11 +1,16 @@
 ﻿using System;
 using Ekin.Clarizen;
-using Ekin.Clarizen.Data;
+using Ekin.Clarizen.Tests;
 
 namespace Clarizen.Tests.Context
 {
-    public class BaseContext:IDisposable
+    public class BaseContext : IDisposable
     {
+        public BaseContext()
+        {
+            TimeProvider.ResetToDefault();
+        }
+
         public API Api { get; set; }
         public string ProjectId { get; internal set; }
         public dynamic SUT { get; internal set; }
@@ -13,6 +18,7 @@ namespace Clarizen.Tests.Context
 
         public void Dispose()
         {
+            TimeProvider.ResetToDefault();
             Api?.Logout();
         }
     }
