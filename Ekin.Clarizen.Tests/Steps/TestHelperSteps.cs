@@ -19,8 +19,20 @@ namespace Ekin.Clarizen.Tests.Steps
         [Given(@"When I set the TimeProvider date to '(.*)'")]
         public void GivenWhenISetTheTimeProviderDateTo(string date)
         {
-            var todayDateTime = Convert.ToDateTime(date + " 00:00:00");
-            var nowDateTime = Convert.ToDateTime(date + " 23:59:59");
+            DateTime nowDateTime;
+            DateTime todayDateTime;
+            if (!date.Contains(':'))
+            {
+                todayDateTime = Convert.ToDateTime(date + " 00:00:00");
+                nowDateTime = Convert.ToDateTime(date += " 23:14:59");
+            }
+            else
+            {
+                todayDateTime = Convert.ToDateTime(Convert.ToDateTime(date).ToString("d MMM yyyy 0:00:00"))  ;
+                nowDateTime = Convert.ToDateTime(date);
+            }
+
+            
             var timeMock = new Mock<TimeProvider>();
             timeMock.SetupGet(tp => tp.Now).Returns(nowDateTime);
             timeMock.SetupGet(tp => tp.Today).Returns(todayDateTime);
