@@ -23,6 +23,7 @@ namespace Ekin.Clarizen.Tests.Steps
         {
             var actual = Context.Api.GetCalendarInfo(Context.UserId);
             Assert.Null(actual.Error);
+            Context.SUT = actual;
         }
 
         [Then(@"there are (.*) missing timesheets")]

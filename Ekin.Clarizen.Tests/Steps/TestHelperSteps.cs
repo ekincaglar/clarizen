@@ -5,6 +5,7 @@ using Ekin.Clarizen.Tests.Models;
 using Moq;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
+using Xunit;
 
 namespace Ekin.Clarizen.Tests.Steps
 {
@@ -64,5 +65,12 @@ namespace Ekin.Clarizen.Tests.Steps
             timeMock.SetupGet(tp => tp.Today).Returns(todayDateTime);
             TimeProvider.Current = timeMock.Object;
         }
+
+        [Then(@"the first workday of the week is '(.*)'")]
+        public void ThenTheFirstWorkdayOfTheWeekIs(string firstWorkDay)
+        {
+            Assert.Equal(Context.SUT.Data.weekStartsOn,firstWorkDay);
+        }
+
     }
 }
