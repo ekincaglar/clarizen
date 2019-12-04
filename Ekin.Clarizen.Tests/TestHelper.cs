@@ -109,7 +109,7 @@ namespace Ekin.Clarizen.Tests
                     retVal = TimeProvider.Current.Today.AddDays(-1);
                     break;
                 case "<<now>>":
-                    retVal = DateTime.Now;
+                    retVal = TimeProvider.Current.Now;
                     break;
                 case "<<yearstart>>":
                     retVal = new DateTime(TimeProvider.Current.Now.Year, 1, 1); 

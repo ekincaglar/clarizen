@@ -1,69 +1,71 @@
 ﻿using System;
 using System.Globalization;
-using System.Security.Cryptography;
-using Ekin.Clarizen;
+using System.Threading;
+using Ekin.Clarizen.Tests;
 
 namespace Clarizen.Tests
 {
     public static class Extensions
     {
-        public static DateTime GetDayInWeek(this DateTime dt, DayOfWeek startOfWeek)
+        public static DateTime GetDayInWeek(this DateTime dt, DayOfWeek dayOfWeek)
         {
-            var firstDayOfWeek = dt.GetFirstDayOfWeek();
-            return dt.AddDays(startOfWeek.ToInt()-1);
+
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB");
+
+            var firstDayOfWeekCorrection = 0;
+            var firstDayOfWeek = Thread.CurrentThread.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            if (firstDayOfWeek == DayOfWeek.Sunday)
+            {
+                // used to correct the USA insistence of sunday being first day of the week.
+                firstDayOfWeekCorrection += 1;
+            }
+
+            var firstDateOfWeek = dt.GetFirstDayOfWeek().AddDays(firstDayOfWeekCorrection);
+            return firstDateOfWeek.AddDays(dayOfWeek.ToInt());
         }
-        public static  int ToInt(this DayOfWeek dow)
+
+        /// <summary>
+        /// Returns the first day of the week that the specified date is in.
+        /// </summary>
+        public static DateTime GetFirstDayOfWeek(this DateTime dt)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB");
+            var firstDayOfWeek = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            DateTime firstDayInWeek = dt.Date;
+            while (firstDayInWeek.DayOfWeek != firstDayOfWeek)
+                firstDayInWeek = firstDayInWeek.AddDays(-1);
+
+            return firstDayInWeek;
+        }
+
+        public static int ToInt(this DayOfWeek dow)
         {
             switch (dow)
             {
                 case DayOfWeek.Monday:
-                    return 1;
-                    break;
+                    return 0;
+
                 case DayOfWeek.Tuesday:
-                    return 2;
-                    break;
+                    return 1;
+
                 case DayOfWeek.Wednesday:
-                    return 3;
-                    break;
+                    return 2;
+
                 case DayOfWeek.Thursday:
-                    return 4;
+                    return 3;
+
                 case DayOfWeek.Friday:
-                    return 5;
-                    break;
+                    return 4;
+
                 case DayOfWeek.Saturday:
-                    return 6;
-                    break;
+                    return 5;
+
                 case DayOfWeek.Sunday:
-                    return 7;
-                    break;
+                    return 6;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(dow), dow, null);
-                    break;
             }
-
-        }
-        ///////////////// <summary>
-        ///////////////// Returns the first day of the week that the specified
-        ///////////////// date is in using the current culture. 
-        ///////////////// </summary>
-        //////////////public static DateTime GetFirstDayOfWeek(DateTime dayInWeek)
-        //////////////{
-        //////////////    var defaultCultureInfo = CultureInfo.CurrentCulture;
-        //////////////    return GetFirstDateOfWeek(dayInWeek, defaultCultureInfo);
-        //////////////}
-
-        /// <summary>
-        /// Returns the first day of the week that the specified date 
-        /// is in. 
-        /// </summary>
-        public static DateTime GetFirstDayOfWeek(this DateTime dt )
-        {
-            
-            DateTime firstDayInWeek = dt.Date;
-            while (firstDayInWeek.DayOfWeek != DayOfWeek.Monday)
-                firstDayInWeek = firstDayInWeek.AddDays(-1);
-
-            return firstDayInWeek;
         }
     }
 }
