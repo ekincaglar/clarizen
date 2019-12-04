@@ -220,7 +220,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "true"});
                 table10.AddRow(new string[] {
                             "<<now>>",
-                            "4 Feb 2020 13:34:56",
+                            "4 Feb 2020 23:14:59",
                             "true"});
                 table10.AddRow(new string[] {
                             "<<today>>",
@@ -236,15 +236,15 @@ this.ScenarioInitialize(scenarioInfo);
                             "false"});
                 table10.AddRow(new string[] {
                             "<<monthstart>>",
-                            "1 Feb 2019",
+                            "1 Feb 2020",
                             "false"});
                 table10.AddRow(new string[] {
                             "<<mondaylastweek>>",
-                            "27 Jan 2019",
+                            "27 Jan 2020",
                             "false"});
                 table10.AddRow(new string[] {
                             "<<fridaylastweek>>",
-                            "31 Jan 2019",
+                            "31 Jan 2020",
                             "false"});
 #line 23
  testRunner.Given("I TestHelper function convertToDateTime with the following", ((string)(null)), table10, "Given ");
