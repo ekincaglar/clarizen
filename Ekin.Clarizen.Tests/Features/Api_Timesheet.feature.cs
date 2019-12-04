@@ -214,6 +214,65 @@ this.FeatureBackground();
 #line 23
  testRunner.Then("the first workday of the week is \'Monday\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
+#line 24
+ testRunner.And("the testUser has 20 working days a month", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                            "endHour",
+                            "isWorkingDay",
+                            "startHour",
+                            "totalWorkingHours"});
+                table4.AddRow(new string[] {
+                            "16",
+                            "true",
+                            "8",
+                            "8"});
+#line 25
+ testRunner.And("the testUsers defaultWorkingDay is", ((string)(null)), table4, "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                            "endHour",
+                            "isWorkingDay",
+                            "startHour",
+                            "totalWorkingHours"});
+                table5.AddRow(new string[] {
+                            "16",
+                            "true",
+                            "8",
+                            "8"});
+                table5.AddRow(new string[] {
+                            "16",
+                            "true",
+                            "8",
+                            "8"});
+                table5.AddRow(new string[] {
+                            "16",
+                            "true",
+                            "8",
+                            "8"});
+                table5.AddRow(new string[] {
+                            "16",
+                            "true",
+                            "8",
+                            "8"});
+                table5.AddRow(new string[] {
+                            "16",
+                            "true",
+                            "8",
+                            "8"});
+                table5.AddRow(new string[] {
+                            "16",
+                            "true",
+                            "8",
+                            "8"});
+                table5.AddRow(new string[] {
+                            "16",
+                            "true",
+                            "8",
+                            "8"});
+#line 28
+ testRunner.And("the testusers weekDayInformation is", ((string)(null)), table5, "And ");
+#line hidden
             }
             this.ScenarioCleanup();
         }

@@ -21,3 +21,16 @@ Scenario: GetMissingWorkPatterns
 	Given I set the test user to be 'UnitTest.bloggs@CreateUserTest1.com'
 	And  I get the workpattern for the test user
 	Then the first workday of the week is 'Monday'
+	And the testUser has 20 working days a month
+	And the testUsers defaultWorkingDay is
+	| endHour | isWorkingDay | startHour | totalWorkingHours |
+	| 16      | true         | 8         | 8                 |
+	And the testusers weekDayInformation is
+	| endHour | isWorkingDay | startHour | totalWorkingHours |
+	| 16      | true         | 8         | 8                 |
+	| 16      | true         | 8         | 8                 |
+	| 16      | true         | 8         | 8                 |
+	| 16      | true         | 8         | 8                 |
+	| 16      | true         | 8         | 8                 |
+	| 16      | true         | 8         | 8                 |
+	| 16      | true         | 8         | 8                 |

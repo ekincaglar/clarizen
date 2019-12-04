@@ -72,5 +72,36 @@ namespace Ekin.Clarizen.Tests.Steps
             Assert.Equal(Context.SUT.Data.weekStartsOn,firstWorkDay);
         }
 
+        [Then(@"the testUser has (.*) working days a month")]
+        public void ThenTheTestUserHasWorkingDaysAMonth(int expectedWorkingDays)
+        {
+            Assert.Equal(Context.SUT.Data.workingDaysPerMonth, expectedWorkingDays);
+        }
+
+        [Then(@"the testUsers defaultWorkingDay is")]
+        public void ThenTheTestUsersDefaultWorkingDayIs(Table table)
+        {
+            var results = new List<Ekin.Clarizen.dayInformation>();
+            
+            var actual = Context.SUT.Data.defaultWorkingDay;
+            results.Add(actual);
+            table.CompareToSet(results);
+        }
+
+        [Then(@"the testusers weekDayInformation is")]
+        public void ThenTheTestUsersWeekDayInformationIs(Table table)
+        {
+
+            var results = new List<Ekin.Clarizen.dayInformation>();
+            foreach (var row in table.Rows)
+            {
+                var actual = Context.SUT.Data.defaultWorkingDay;
+                results.Add(actual);
+            }  
+          
+            table.CompareToSet(results);
+        }
+
+
     }
 }

@@ -122,56 +122,56 @@ this.FeatureBackground();
 #line 7
  testRunner.Given("I set the TimeProvider date to \'6 Nov 2019 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
                             "Value",
                             "Result",
                             "IncludeTime"});
-                table10.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "1 Feb 2000",
                             "1 Feb 2000",
                             "false"});
-                table10.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "December 1 2222",
                             "1 Dec 2222",
                             "false"});
-                table10.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "1 Feb 2000 13:34:43",
                             "1 Feb 2000 13:34:43",
                             "true"});
-                table10.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "December 1 2222 09:23:48",
                             "1 Dec 2222 09:23:48",
                             "true"});
-                table10.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "<<now>>",
                             "6 Nov 2019 13:34:56",
                             "true"});
-                table10.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "<<today>>",
                             "6 Nov 2019",
                             "false"});
-                table10.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "<<yesterday>>",
                             "5 Nov 2019",
                             "false"});
-                table10.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "<<yearstart>>",
                             "1 Jan 2019",
                             "false"});
-                table10.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "<<monthstart>>",
                             "1 Nov 2019",
                             "false"});
-                table10.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "<<mondaylastweek>>",
                             "28 Oct 2019",
                             "false"});
-                table10.AddRow(new string[] {
+                table12.AddRow(new string[] {
                             "<<fridaylastweek>>",
                             "1 Nov 2019",
                             "false"});
 #line 8
- testRunner.Given("I TestHelper function convertToDateTime with the following", ((string)(null)), table10, "Given ");
+ testRunner.Given("I TestHelper function convertToDateTime with the following", ((string)(null)), table12, "Given ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -213,56 +213,56 @@ this.FeatureBackground();
 #line 24
  testRunner.And("I set the TimeProvider date to \'4 Feb 2020 23:14:59\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
                             "Value",
                             "Result",
                             "IncludeTime"});
-                table11.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "1 Feb 2000",
                             "1 Feb 2000",
                             "false"});
-                table11.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "December 1 2222",
                             "1 Dec 2222",
                             "false"});
-                table11.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "1 Feb 2000 13:34:43",
                             "1 Feb 2000 13:34:43",
                             "true"});
-                table11.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "December 1 2222 09:23:48",
                             "1 Dec 2222 09:23:48",
                             "true"});
-                table11.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "<<now>>",
                             "4 Feb 2020 23:14:59",
                             "true"});
-                table11.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "<<today>>",
                             "4 Feb 2020",
                             "false"});
-                table11.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "<<yesterday>>",
                             "3 Feb 2020",
                             "false"});
-                table11.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "<<yearstart>>",
                             "1 Jan 2020",
                             "false"});
-                table11.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "<<monthstart>>",
                             "1 Feb 2020",
                             "false"});
-                table11.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "<<mondaylastweek>>",
                             "27 Jan 2020",
                             "false"});
-                table11.AddRow(new string[] {
+                table13.AddRow(new string[] {
                             "<<fridaylastweek>>",
                             "31 Jan 2020",
                             "false"});
 #line 25
- testRunner.Given("I TestHelper function convertToDateTime with the following", ((string)(null)), table11, "Given ");
+ testRunner.Given("I TestHelper function convertToDateTime with the following", ((string)(null)), table13, "Given ");
 #line hidden
             }
             this.ScenarioCleanup();
