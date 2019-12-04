@@ -11,8 +11,6 @@ namespace Clarizen.Tests.Context
         public BaseContext()
         {
             TimeProvider.ResetToDefault();
-
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB");
         }
 
         public API Api { get; set; }

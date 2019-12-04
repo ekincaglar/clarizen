@@ -75,6 +75,15 @@ namespace Ekin.Clarizen.Tests.Features
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 4
+#line hidden
+#line 5
+testRunner.Given("I reset the TimeProvider", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+        }
+        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
@@ -83,99 +92,11 @@ namespace Ekin.Clarizen.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="TestHelper.convertToDateTime1")]
         [Xunit.TraitAttribute("FeatureTitle", "TestHelper")]
         [Xunit.TraitAttribute("Description", "TestHelper.convertToDateTime1")]
-        [Xunit.TraitAttribute("Category", "mytag")]
         public virtual void TestHelper_ConvertToDateTime1()
         {
-            string[] tagsOfScenario = new string[] {
-                    "mytag"};
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("TestHelper.convertToDateTime1", null, new string[] {
-                        "mytag"});
-#line 5
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            bool isScenarioIgnored = default(bool);
-            bool isFeatureIgnored = default(bool);
-            if ((tagsOfScenario != null))
-            {
-                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((this._featureTags != null))
-            {
-                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
-            }
-            if ((isScenarioIgnored || isFeatureIgnored))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 6
- testRunner.Given("When I set the TimeProvider date to \'6 Nov 2019 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Value",
-                            "Result",
-                            "IncludeTime"});
-                table9.AddRow(new string[] {
-                            "1 Feb 2000",
-                            "1 Feb 2000",
-                            "false"});
-                table9.AddRow(new string[] {
-                            "December 1 2222",
-                            "1 Dec 2222",
-                            "false"});
-                table9.AddRow(new string[] {
-                            "1 Feb 2000 13:34:43",
-                            "1 Feb 2000 13:34:43",
-                            "true"});
-                table9.AddRow(new string[] {
-                            "December 1 2222 09:23:48",
-                            "1 Dec 2222 09:23:48",
-                            "true"});
-                table9.AddRow(new string[] {
-                            "<<now>>",
-                            "6 Nov 2019 13:34:56",
-                            "true"});
-                table9.AddRow(new string[] {
-                            "<<today>>",
-                            "6 Nov 2019",
-                            "false"});
-                table9.AddRow(new string[] {
-                            "<<yesterday>>",
-                            "5 Nov 2019",
-                            "false"});
-                table9.AddRow(new string[] {
-                            "<<yearstart>>",
-                            "1 Jan 2019",
-                            "false"});
-                table9.AddRow(new string[] {
-                            "<<monthstart>>",
-                            "1 Nov 2019",
-                            "false"});
-                table9.AddRow(new string[] {
-                            "<<mondaylastweek>>",
-                            "28 Oct 2019",
-                            "false"});
-                table9.AddRow(new string[] {
-                            "<<fridaylastweek>>",
-                            "1 Nov 2019",
-                            "false"});
-#line 7
- testRunner.Given("I TestHelper function convertToDateTime with the following", ((string)(null)), table9, "Given ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="TestHelper.convertToDateTime2")]
-        [Xunit.TraitAttribute("FeatureTitle", "TestHelper")]
-        [Xunit.TraitAttribute("Description", "TestHelper.convertToDateTime2")]
-        public virtual void TestHelper_ConvertToDateTime2()
-        {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("TestHelper.convertToDateTime2", null, ((string[])(null)));
-#line 21
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("TestHelper.convertToDateTime1", null, ((string[])(null)));
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -195,8 +116,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 22
- testRunner.Given("When I set the TimeProvider date to \'4 Feb 2020\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 4
+this.FeatureBackground();
+#line hidden
+#line 7
+ testRunner.Given("I set the TimeProvider date to \'6 Nov 2019 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                             "Value",
@@ -220,34 +144,125 @@ this.ScenarioInitialize(scenarioInfo);
                             "true"});
                 table10.AddRow(new string[] {
                             "<<now>>",
-                            "4 Feb 2020 23:14:59",
+                            "6 Nov 2019 13:34:56",
                             "true"});
                 table10.AddRow(new string[] {
                             "<<today>>",
-                            "4 Feb 2020",
+                            "6 Nov 2019",
                             "false"});
                 table10.AddRow(new string[] {
                             "<<yesterday>>",
-                            "3 Feb 2020",
+                            "5 Nov 2019",
                             "false"});
                 table10.AddRow(new string[] {
                             "<<yearstart>>",
-                            "1 Jan 2020",
+                            "1 Jan 2019",
                             "false"});
                 table10.AddRow(new string[] {
                             "<<monthstart>>",
-                            "1 Feb 2020",
+                            "1 Nov 2019",
                             "false"});
                 table10.AddRow(new string[] {
                             "<<mondaylastweek>>",
-                            "27 Jan 2020",
+                            "28 Oct 2019",
                             "false"});
                 table10.AddRow(new string[] {
                             "<<fridaylastweek>>",
+                            "1 Nov 2019",
+                            "false"});
+#line 8
+ testRunner.Given("I TestHelper function convertToDateTime with the following", ((string)(null)), table10, "Given ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="TestHelper.convertToDateTime2")]
+        [Xunit.TraitAttribute("FeatureTitle", "TestHelper")]
+        [Xunit.TraitAttribute("Description", "TestHelper.convertToDateTime2")]
+        public virtual void TestHelper_ConvertToDateTime2()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("TestHelper.convertToDateTime2", null, ((string[])(null)));
+#line 22
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 4
+this.FeatureBackground();
+#line hidden
+#line 23
+ testRunner.Given("I reset the TimeProvider", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 24
+ testRunner.And("I set the TimeProvider date to \'4 Feb 2020 23:14:59\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Value",
+                            "Result",
+                            "IncludeTime"});
+                table11.AddRow(new string[] {
+                            "1 Feb 2000",
+                            "1 Feb 2000",
+                            "false"});
+                table11.AddRow(new string[] {
+                            "December 1 2222",
+                            "1 Dec 2222",
+                            "false"});
+                table11.AddRow(new string[] {
+                            "1 Feb 2000 13:34:43",
+                            "1 Feb 2000 13:34:43",
+                            "true"});
+                table11.AddRow(new string[] {
+                            "December 1 2222 09:23:48",
+                            "1 Dec 2222 09:23:48",
+                            "true"});
+                table11.AddRow(new string[] {
+                            "<<now>>",
+                            "4 Feb 2020 23:14:59",
+                            "true"});
+                table11.AddRow(new string[] {
+                            "<<today>>",
+                            "4 Feb 2020",
+                            "false"});
+                table11.AddRow(new string[] {
+                            "<<yesterday>>",
+                            "3 Feb 2020",
+                            "false"});
+                table11.AddRow(new string[] {
+                            "<<yearstart>>",
+                            "1 Jan 2020",
+                            "false"});
+                table11.AddRow(new string[] {
+                            "<<monthstart>>",
+                            "1 Feb 2020",
+                            "false"});
+                table11.AddRow(new string[] {
+                            "<<mondaylastweek>>",
+                            "27 Jan 2020",
+                            "false"});
+                table11.AddRow(new string[] {
+                            "<<fridaylastweek>>",
                             "31 Jan 2020",
                             "false"});
-#line 23
- testRunner.Given("I TestHelper function convertToDateTime with the following", ((string)(null)), table10, "Given ");
+#line 25
+ testRunner.Given("I TestHelper function convertToDateTime with the following", ((string)(null)), table11, "Given ");
 #line hidden
             }
             this.ScenarioCleanup();

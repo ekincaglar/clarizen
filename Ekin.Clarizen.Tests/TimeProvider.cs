@@ -8,7 +8,6 @@ namespace Ekin.Clarizen.Tests
     {
         public TimeProvider()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB");
         }
         private static TimeProvider current = DefaultTimeProvider.Instance;
 
@@ -30,9 +29,8 @@ namespace Ekin.Clarizen.Tests
 
         public static void ResetToDefault()
         {
+            CultureInfo.CurrentCulture = new CultureInfo("en-GB");
             TimeProvider.current = DefaultTimeProvider.Instance;
-
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB");
         }
     }
 
@@ -43,8 +41,6 @@ namespace Ekin.Clarizen.Tests
 
         private DefaultTimeProvider()
         {
-
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB");
         }
 
         public override DateTime Now => DateTime.UtcNow;

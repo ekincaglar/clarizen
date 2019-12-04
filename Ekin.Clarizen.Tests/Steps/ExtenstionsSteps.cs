@@ -45,6 +45,20 @@ namespace Ekin.Clarizen.Tests.Steps
             table.CompareToSet(results);
         }
 
+        [Given(@"I check the date time extenstion GetFirstDayOfWeek")]
+        public void GivenICheckTheDateTimeExtenstionGetFirstDayOfWeek(Table table)
+        {
+            var results = new List<ValueExpected>();
+            foreach (var row in table.Rows)
+            {
+                var target = Convert.ToDateTime(row["Value"]);
+                var actual = target.GetFirstDayOfWeek();
+                results.Add(new ValueExpected() { Value = row["Value"], Expected = actual.ToString("d MMM yyyy") });
+            }
+
+            table.CompareToSet(results);
+        }
+
         private DayOfWeek getDayOfWeek(string dayOfWeek)
         {
             DayOfWeek day;
@@ -91,6 +105,7 @@ namespace Ekin.Clarizen.Tests.Steps
             public string Value { get; set; }
             public string Expected { get; set; }
         }
+
         public struct StartOfWeekData
         {
             public string DayOfWeek { get; set; }

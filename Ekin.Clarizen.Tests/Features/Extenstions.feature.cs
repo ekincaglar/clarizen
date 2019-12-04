@@ -75,6 +75,18 @@ namespace Ekin.Clarizen.Tests.Features
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 5
+#line hidden
+#line 6
+testRunner.Given("I reset the TimeProvider", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 7
+testRunner.And("I wait 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+        }
+        
         void System.IDisposable.Dispose()
         {
             this.TestTearDown();
@@ -83,14 +95,11 @@ namespace Ekin.Clarizen.Tests.Features
         [Xunit.SkippableFactAttribute(DisplayName="StartOfWeek")]
         [Xunit.TraitAttribute("FeatureTitle", "Extenstions")]
         [Xunit.TraitAttribute("Description", "StartOfWeek")]
-        [Xunit.TraitAttribute("Category", "mytag")]
         public virtual void StartOfWeek()
         {
-            string[] tagsOfScenario = new string[] {
-                    "mytag"};
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("StartOfWeek", null, new string[] {
-                        "mytag"});
-#line 5
+            string[] tagsOfScenario = ((string[])(null));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("StartOfWeek", null, ((string[])(null)));
+#line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -110,6 +119,9 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+#line 5
+this.FeatureBackground();
+#line hidden
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "TargetDate",
                             "DayOfWeek",
@@ -198,7 +210,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "01 Mar 2012",
                             "Sunday",
                             "04 Mar 2012"});
-#line 6
+#line 10
 testRunner.Given("I Test Extention Method StartOfWeek with the following values", ((string)(null)), table6, "Given ");
 #line hidden
             }
@@ -212,7 +224,7 @@ testRunner.Given("I Test Extention Method StartOfWeek with the following values"
         {
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GetDayInWeek1", null, ((string[])(null)));
-#line 31
+#line 35
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -232,8 +244,11 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 32
-testRunner.Given("When I set the TimeProvider date to \'6 Nov 2019 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 5
+this.FeatureBackground();
+#line hidden
+#line 36
+testRunner.Given("I set the TimeProvider date to \'6 Nov 2019 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                             "Value",
@@ -259,7 +274,7 @@ testRunner.Given("When I set the TimeProvider date to \'6 Nov 2019 13:34:56\'", 
                 table7.AddRow(new string[] {
                             "Sunday",
                             "10 Nov 2019"});
-#line 33
+#line 37
 testRunner.Then("I check extenstion method GetDayInWeek returns the following", ((string)(null)), table7, "Then ");
 #line hidden
             }
@@ -273,7 +288,7 @@ testRunner.Then("I check extenstion method GetDayInWeek returns the following", 
         {
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GetDayInWeek2", null, ((string[])(null)));
-#line 43
+#line 47
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -293,8 +308,14 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 44
-testRunner.Given("When I set the TimeProvider date to \'1 Mar 2012 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 5
+this.FeatureBackground();
+#line hidden
+#line 48
+testRunner.Given("I set the TimeProvider date to \'1 Mar 2012 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 49
+testRunner.And("I wait 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                             "Value",
@@ -320,8 +341,69 @@ testRunner.Given("When I set the TimeProvider date to \'1 Mar 2012 13:34:56\'", 
                 table8.AddRow(new string[] {
                             "Sunday",
                             "4 Mar 2012"});
-#line 45
+#line 50
 testRunner.Then("I check extenstion method GetDayInWeek returns the following", ((string)(null)), table8, "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="GetFirstDayOfWeek")]
+        [Xunit.TraitAttribute("FeatureTitle", "Extenstions")]
+        [Xunit.TraitAttribute("Description", "GetFirstDayOfWeek")]
+        public virtual void GetFirstDayOfWeek()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GetFirstDayOfWeek", null, ((string[])(null)));
+#line 60
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 5
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Value",
+                            "Expected"});
+                table9.AddRow(new string[] {
+                            "1 Mar 2012",
+                            "27 Feb 2012"});
+                table9.AddRow(new string[] {
+                            "2 Mar 2012",
+                            "27 Feb 2012"});
+                table9.AddRow(new string[] {
+                            "3 Mar 2012",
+                            "27 Feb 2012"});
+                table9.AddRow(new string[] {
+                            "4 Mar 2012",
+                            "27 Feb 2012"});
+                table9.AddRow(new string[] {
+                            "27 Feb 2012",
+                            "27 Feb 2012"});
+                table9.AddRow(new string[] {
+                            "28 Feb 2012",
+                            "27 Feb 2012"});
+                table9.AddRow(new string[] {
+                            "29 Feb 2012",
+                            "27 Feb 2012"});
+#line 61
+testRunner.Given("I check the date time extenstion GetFirstDayOfWeek", ((string)(null)), table9, "Given ");
 #line hidden
             }
             this.ScenarioCleanup();

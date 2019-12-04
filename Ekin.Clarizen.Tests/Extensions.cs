@@ -9,19 +9,8 @@ namespace Clarizen.Tests
     {
         public static DateTime GetDayInWeek(this DateTime dt, DayOfWeek dayOfWeek)
         {
-
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB");
-
-            var firstDayOfWeekCorrection = 0;
-            var firstDayOfWeek = Thread.CurrentThread.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
-            if (firstDayOfWeek == DayOfWeek.Sunday)
-            {
-                // used to correct the USA insistence of sunday being first day of the week.
-                firstDayOfWeekCorrection += 1;
-            }
-
-            var firstDateOfWeek = dt.GetFirstDayOfWeek().AddDays(firstDayOfWeekCorrection);
-            return firstDateOfWeek.AddDays(dayOfWeek.ToInt());
+            var firstDateOfWeek = dt.GetFirstDayOfWeek().AddDays(dayOfWeek.ToInt());
+            return firstDateOfWeek;
         }
 
         /// <summary>
@@ -29,8 +18,7 @@ namespace Clarizen.Tests
         /// </summary>
         public static DateTime GetFirstDayOfWeek(this DateTime dt)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB");
-            var firstDayOfWeek = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+            var firstDayOfWeek = DayOfWeek.Monday;
             DateTime firstDayInWeek = dt.Date;
             while (firstDayInWeek.DayOfWeek != firstDayOfWeek)
                 firstDayInWeek = firstDayInWeek.AddDays(-1);

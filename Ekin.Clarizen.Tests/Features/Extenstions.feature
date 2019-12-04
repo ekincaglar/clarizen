@@ -1,7 +1,11 @@
 ﻿Feature: Extenstions
 	Test the extentions
 
-@mytag
+
+Background: 
+Given I reset the TimeProvider
+And I wait 1 second
+
 Scenario: StartOfWeek
 Given I Test Extention Method StartOfWeek with the following values
 | TargetDate  | DayOfWeek | Expected    |
@@ -29,7 +33,7 @@ Given I Test Extention Method StartOfWeek with the following values
 
 
 Scenario: GetDayInWeek1
-Given When I set the TimeProvider date to '6 Nov 2019 13:34:56'
+Given I set the TimeProvider date to '6 Nov 2019 13:34:56'
 Then I check extenstion method GetDayInWeek returns the following
 | Value     | Expected    |
 | Monday    | 4 Nov 2019  |
@@ -41,7 +45,8 @@ Then I check extenstion method GetDayInWeek returns the following
 | Sunday    | 10 Nov 2019 |
 
 Scenario: GetDayInWeek2
-Given When I set the TimeProvider date to '1 Mar 2012 13:34:56'
+Given I set the TimeProvider date to '1 Mar 2012 13:34:56'
+And I wait 1 second
 Then I check extenstion method GetDayInWeek returns the following
 | Value     | Expected   |
 | Monday    | 27 Feb 2012 |
@@ -51,3 +56,15 @@ Then I check extenstion method GetDayInWeek returns the following
 | Friday    | 2 Mar 2012 |
 | Saturday  | 3 Mar 2012 |
 | Sunday    | 4 Mar 2012 |
+
+Scenario: GetFirstDayOfWeek
+Given I check the date time extenstion GetFirstDayOfWeek
+| Value       | Expected    |
+| 1 Mar 2012  | 27 Feb 2012 |
+| 2 Mar 2012  | 27 Feb 2012 |
+| 3 Mar 2012  | 27 Feb 2012 |
+| 4 Mar 2012  | 27 Feb 2012 |
+| 27 Feb 2012 | 27 Feb 2012 |
+| 28 Feb 2012 | 27 Feb 2012 |
+| 29 Feb 2012 | 27 Feb 2012 |
+

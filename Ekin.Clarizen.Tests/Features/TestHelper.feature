@@ -1,9 +1,10 @@
 ﻿Feature: TestHelper
 	Test the TestHelper methods
 
-@mytag
+Background: 
+Given I reset the TimeProvider
 Scenario: TestHelper.convertToDateTime1
-	Given When I set the TimeProvider date to '6 Nov 2019 13:34:56'
+	Given I set the TimeProvider date to '6 Nov 2019 13:34:56'
 	Given I TestHelper function convertToDateTime with the following
 	| Value                    | Result              | IncludeTime |
 	| 1 Feb 2000               | 1 Feb 2000          | false       |
@@ -19,7 +20,8 @@ Scenario: TestHelper.convertToDateTime1
 	| <<fridaylastweek>>       | 1 Nov 2019          | false       |
 
 Scenario: TestHelper.convertToDateTime2
-	Given When I set the TimeProvider date to '4 Feb 2020'
+	Given I reset the TimeProvider
+	And I set the TimeProvider date to '4 Feb 2020 23:14:59'
 	Given I TestHelper function convertToDateTime with the following
 	| Value                    | Result              | IncludeTime |
 	| 1 Feb 2000               | 1 Feb 2000          | false       |

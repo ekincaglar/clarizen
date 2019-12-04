@@ -1,4 +1,5 @@
-﻿using Clarizen.Tests.Context;
+﻿using System.Globalization;
+using Clarizen.Tests.Context;
 using Microsoft.Extensions.Configuration;
 
 namespace Ekin.Clarizen.Tests.Steps
@@ -10,6 +11,7 @@ namespace Ekin.Clarizen.Tests.Steps
 
         public BaseApiSteps(BaseContext context)
         {
+            CultureInfo.CurrentCulture = new CultureInfo("en-GB");
             Configuration = TestHelper.GetConfiguration();
             Context = context;
         }
