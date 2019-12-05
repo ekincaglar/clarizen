@@ -175,13 +175,13 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="GetMissingWorkPatterns")]
+        [Xunit.SkippableFactAttribute(DisplayName="GetWorkPatterns")]
         [Xunit.TraitAttribute("FeatureTitle", "Api_Timesheet")]
-        [Xunit.TraitAttribute("Description", "GetMissingWorkPatterns")]
-        public virtual void GetMissingWorkPatterns()
+        [Xunit.TraitAttribute("Description", "GetWorkPatterns")]
+        public virtual void GetWorkPatterns()
         {
             string[] tagsOfScenario = ((string[])(null));
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GetMissingWorkPatterns", null, ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GetWorkPatterns", null, ((string[])(null)));
 #line 20
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

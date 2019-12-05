@@ -83,7 +83,7 @@ namespace Ekin.Clarizen.Tests.Features
 testRunner.Given("I reset the TimeProvider", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 7
-testRunner.And("I wait 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
@@ -312,10 +312,13 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 48
-testRunner.Given("I set the TimeProvider date to \'1 Mar 2012 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+testRunner.Given("I wait 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 49
-testRunner.And("I wait 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+testRunner.And("I set the TimeProvider date to \'1 Mar 2012 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 50
+testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                             "Value",
@@ -341,7 +344,7 @@ testRunner.And("I wait 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(n
                 table10.AddRow(new string[] {
                             "Sunday",
                             "4 Mar 2012"});
-#line 50
+#line 51
 testRunner.Then("I check extenstion method GetDayInWeek returns the following", ((string)(null)), table10, "Then ");
 #line hidden
             }
@@ -355,7 +358,7 @@ testRunner.Then("I check extenstion method GetDayInWeek returns the following", 
         {
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GetFirstDayOfWeek", null, ((string[])(null)));
-#line 60
+#line 61
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -402,7 +405,7 @@ this.FeatureBackground();
                 table11.AddRow(new string[] {
                             "29 Feb 2012",
                             "27 Feb 2012"});
-#line 61
+#line 62
 testRunner.Given("I check the date time extenstion GetFirstDayOfWeek", ((string)(null)), table11, "Given ");
 #line hidden
             }

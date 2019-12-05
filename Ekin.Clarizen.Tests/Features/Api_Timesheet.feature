@@ -17,7 +17,7 @@ Scenario: CallMissingTimesheets
 	Then there are 5 missing timesheets
 	Given I get the workpattern for the test user
 
-Scenario: GetMissingWorkPatterns
+Scenario: GetWorkPatterns
 	Given I set the test user to be 'UnitTest.bloggs@CreateUserTest1.com'
 	And  I get the workpattern for the test user
 	Then the first workday of the week is 'Monday'

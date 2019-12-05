@@ -4,7 +4,7 @@
 
 Background: 
 Given I reset the TimeProvider
-And I wait 1 second
+And I wait 2 second
 
 Scenario: StartOfWeek
 Given I Test Extention Method StartOfWeek with the following values
@@ -45,8 +45,9 @@ Then I check extenstion method GetDayInWeek returns the following
 | Sunday    | 10 Nov 2019 |
 
 Scenario: GetDayInWeek2
-Given I set the TimeProvider date to '1 Mar 2012 13:34:56'
-And I wait 1 second
+Given I wait 1 second
+And I set the TimeProvider date to '1 Mar 2012 13:34:56'
+And I wait 2 second
 Then I check extenstion method GetDayInWeek returns the following
 | Value     | Expected   |
 | Monday    | 27 Feb 2012 |
