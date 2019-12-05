@@ -381,12 +381,6 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 this.FeatureBackground();
 #line hidden
-#line 62
-testRunner.Given("I set the TimeProvider date to \'29 Feb 2012 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 63
-testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
                 TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                             "Value",
                             "Expected"});
@@ -411,7 +405,7 @@ testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(n
                 table11.AddRow(new string[] {
                             "29 Feb 2012",
                             "27 Feb 2012"});
-#line 64
+#line 62
 testRunner.Given("I check the date time extenstion GetFirstDayOfWeek", ((string)(null)), table11, "Given ");
 #line hidden
             }
