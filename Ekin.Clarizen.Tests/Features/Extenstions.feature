@@ -59,6 +59,8 @@ Then I check extenstion method GetDayInWeek returns the following
 | Sunday    | 4 Mar 2012 |
 
 Scenario: GetFirstDayOfWeek
+Given I set the TimeProvider date to '29 Feb 2012 13:34:56'
+And I wait 2 second
 Given I check the date time extenstion GetFirstDayOfWeek
 | Value       | Expected    |
 | 1 Mar 2012  | 27 Feb 2012 |
