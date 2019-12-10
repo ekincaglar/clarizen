@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <Authors>Ekin Caglar</Authors>
     <Description>.Net wrapper for the Clarizen API v2.0</Description>
     <Copyright>Copyright ©  2016-2019, Ekin Caglar</Copyright>
@@ -15,7 +15,8 @@
 
   <ItemGroup>
     <PackageReference Include="Ekin.Clarizen.POCO" Version="3.0.1" />
-    <PackageReference Include="Ekin.Rest" Version="2.0.1" />
+    <PackageReference Include="Ekin.Log" Version="3.0.2" />
+    <PackageReference Include="Ekin.Rest" Version="2.0.2" />
   </ItemGroup>
 
 </Project>
