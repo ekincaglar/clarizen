@@ -9,8 +9,8 @@ namespace Ekin.Clarizen
 {
     /// <summary>
     /// .Net wrapper for the Clarizen API v2.0 located at https://api.clarizen.com/V2.0/services
-    /// Developed by Ekin Caglar - ekin@caglar.com
-    /// October 2016 - August 2019
+    /// Developed by Ekin Caglar - ekin@caglar.com - in October 2016
+    /// Contributors since then (with special thanks): Mustafa Kipergil, Roberto Rey Linares
     /// </summary>
     public class API
     {
@@ -942,7 +942,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Performs life cycle operations (Activate, Cancel etc.) on an entity
+        /// Performs life cycle operations on an entity. For timesheets, possible operations are Submit, Approve and Reopen. For other entities these could be Activate, Cancel etc.
         /// </summary>
         /// <param name="ids">A list of objects (Entity Ids) to perform the operation on</param>
         /// <param name="operation">The operation to perform ('Activate', 'Cancel' etc.)</param>
