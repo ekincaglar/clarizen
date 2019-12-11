@@ -9,8 +9,8 @@ namespace Ekin.Clarizen
 {
     /// <summary>
     /// .Net wrapper for the Clarizen API v2.0 located at https://api.clarizen.com/V2.0/services
-    /// Developed by Ekin Caglar - ekin@caglar.com
-    /// October 2016 - August 2019
+    /// Developed by Ekin Caglar - ekin@caglar.com - in October 2016
+    /// Contributors since then (with special thanks): Mustafa Kipergil, Roberto Rey Linares
     /// </summary>
     public class API
     {
@@ -97,7 +97,7 @@ namespace Ekin.Clarizen
 
                 // Then we login to the API at the above location
                 Authentication.login CZlogin = new Authentication.login(serverLocation, new Ekin.Clarizen.Authentication.Request.login(username, password, new Ekin.Clarizen.Authentication.Request.loginOptions()));
-                Logs.Assert(CZlogin.IsCalledSuccessfully, "Ekin.Clarizen.API", "Login", "Login failed", CZlogin.Error);
+                Logs.Assert(CZlogin.IsCalledSuccessfully, "Ekin.Clarizen.API", "Login", $"Login failed for {username}", CZlogin.Error);
                 if (CZlogin.IsCalledSuccessfully)
                 {
                     // Upon successful login a unique ID representing the current session is returned.
@@ -942,7 +942,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Performs life cycle operations (Activate, Cancel etc.) on an entity
+        /// Performs life cycle operations on an entity. For timesheets, possible operations are Submit, Approve and Reopen. For other entities these could be Activate, Cancel etc.
         /// </summary>
         /// <param name="ids">A list of objects (Entity Ids) to perform the operation on</param>
         /// <param name="operation">The operation to perform ('Activate', 'Cancel' etc.)</param>
