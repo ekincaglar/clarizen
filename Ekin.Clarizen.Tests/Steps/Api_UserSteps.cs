@@ -56,23 +56,15 @@ namespace Ekin.Clarizen.Tests.Steps
         [Given(@"I delete users with an OfficePhone Number of '(.*)'")]
         public void GivenIDeleteUsersWithAnOfficePhoneNumberOf(string officePhoneNumber)
         {
-            var results = TestHelper.ExecuteQuery(Context
-                    , $"SELECT FirstName FROM user where OfficePhone = '{officePhoneNumber}' and state <> \"deleted\"");
-            foreach (var id in results.Data.GetEntityIds())
-            {
-                var result = Context.Api.DeleteObject(id);
-                if (result.Error != null)
-                {
-                    throw new Exception(result.Error);
-                }
-
-            }
+            base.DeleteQuery($"SELECT FirstName FROM user where OfficePhone = '{officePhoneNumber}' and state <> \"deleted\"", Context.Api);
         }
 
         [Then(@"the following users exist with an OfficePhone Number of '(.*)'")]
         public void ThenTheFollowingUsersExistWithAnOfficePhoneNumberOf(string officePhoneNumber, Table table)
         {
-            var results = TestHelper.GetEntities<User>(Context, $"SELECT FirstName , LastName, email , OfficePhone ,MobilePhone ,ExternalUser ,SuperUser ,Financial  FROM user where OfficePhone = '{officePhoneNumber}'");
+            var query = $"SELECT FirstName , LastName, email , OfficePhone ,MobilePhone ,ExternalUser ,SuperUser ,Financial  FROM user where OfficePhone = '{officePhoneNumber}' and state = 'active'";
+            var results = TestHelper.GetEntities<User>(Context, query);
+            table.CompareToSet(results);
         }
 
         [Then(@"there are (.*) admin users")]

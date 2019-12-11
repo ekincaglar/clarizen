@@ -24,10 +24,11 @@ namespace Ekin.Clarizen.Tests.Steps
         public void GivenIRemovePre_ExistingTestData()
         {
             base.DeleteTestData();
+            
         }
 
         [Given(@"I Login using credentials in appsettings")]
-        protected void GivenILoginUsingCredentialsInAppsettings()
+        protected void GivenILoginUsingCredentialsInAppSettings()
         {
             var username = Configuration["Clarizen:Credentials:UserName"];
             var password = Configuration["Clarizen:Credentials:Password"];

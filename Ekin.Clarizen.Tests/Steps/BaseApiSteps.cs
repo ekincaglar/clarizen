@@ -20,15 +20,31 @@ namespace Ekin.Clarizen.Tests.Steps
 
         protected void DeleteTestData()
         {
-            if (Context?.Api == null)
-                return;
-            var query = new Ekin.Clarizen.Data.Request.query(
-                "SELECT name ,state FROM project where name like 'UnitTest%' ");
+            TimeProvider.ResetToDefault();
 
-            var results = Context.Api.ExecuteQuery(query).Data;
+            DeleteQuery("select name, state  from user where state <> 'deleted' and name like '%unittest%'", Context.Api);
+            DeleteQuery("SELECT name ,state FROM project where name like 'UnitTest%'",Context.Api);
+        }
+
+        protected void DeleteQuery(string czql, API api = null)
+        {
+            var query = new Ekin.Clarizen.Data.Request.query(czql);
+            if (api == null)
+            {
+                api = new API();
+                var username = Configuration["Clarizen:Credentials:UserName"];
+                var password = Configuration["Clarizen:Credentials:Password"];
+                api.Login(username, password);
+            }
+            var results = api.ExecuteQuery(query).Data;
+            if (results == null)
+            {
+                return;
+            }
+
             foreach (var projectId in results.GetEntityIds())
             {
-                Context.Api.DeleteObject(projectId);
+                api.DeleteObject(projectId);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Ekin.Clarizen.Tests.Context;
 using Ekin.Clarizen.Tests.Models;
 using Moq;
@@ -29,7 +30,6 @@ namespace Ekin.Clarizen.Tests.Steps
             foreach (var row in table.Rows)
             {
                 var value = row["Value"];
-                var expected = Convert.ToDateTime(row["Result"]);
                 var includeTime = row["IncludeTime"].ToString().ToLower();
                 var actualDateFormat = "d MMM yyyy";
                 if (includeTime == "true")
@@ -94,13 +94,8 @@ namespace Ekin.Clarizen.Tests.Steps
         public void ThenTheTestUsersWeekDayInformationIs(Table table)
         {
 
-            var results = new List<Ekin.Clarizen.dayInformation>();
-            foreach (var row in table.Rows)
-            {
-                var actual = Context.SUT.Data.defaultWorkingDay;
-                results.Add(actual);
-            }  
-          
+            var results = table.Rows.Select(row => Context.SUT.Data.defaultWorkingDay).Select(actual => (dayInformation) actual).ToList();
+
             table.CompareToSet(results);
         }
 

@@ -1,15 +1,27 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using Ekin.Clarizen.Tests;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
 namespace Ekin.Clarizen.Tests.Steps
 {
     [Binding]
-    public class ExtenstionsSteps
+    public class ExtensionSteps
     {
+        [Given(@"I check the date time extenstion GetFirstDayOfWeek")]
+        public void GivenICheckTheDateTimeExtenstionGetFirstDayOfWeek(Table table)
+        {
+            var results = new List<ValueExpected>();
+            foreach (var row in table.Rows)
+            {
+                var target = Convert.ToDateTime(row["Value"]);
+                var actual = target.GetFirstDayOfWeek();
+                results.Add(new ValueExpected() { Value = row["Value"], Expected = actual.ToString("d MMM yyyy") });
+            }
+
+            table.CompareToSet(results);
+        }
+
         [Given(@"I Test Extention Method StartOfWeek with the following values")]
         public void GivenITestExtenstionMethodStartOfWeekWithTheFollowingValues(Table table)
         {
@@ -18,12 +30,14 @@ namespace Ekin.Clarizen.Tests.Steps
             {
                 var target = Convert.ToDateTime(row["TargetDate"]);
                 var expected = Convert.ToDateTime(row["Expected"]);
-                var dayOfWeek = getDayOfWeek(row["DayOfWeek"]);
+               
 
-                var actual = target.GetDayInWeek(dayOfWeek);
-                var result = new StartOfWeekData() { TargetDate = target.ToString("dd MMM yyyy"), 
-                                                     DayOfWeek = row["DayOfWeek"], 
-                                                     Expected = expected.ToString("dd MMM yyyy") };
+                var result = new StartOfWeekData()
+                {
+                    TargetDate = target.ToString("dd MMM yyyy"),
+                    DayOfWeek = row["DayOfWeek"],
+                    Expected = expected.ToString("dd MMM yyyy")
+                };
 
                 results.Add(result);
             }
@@ -36,24 +50,9 @@ namespace Ekin.Clarizen.Tests.Steps
             var results = new List<ValueExpected>();
             foreach (var row in table.Rows)
             {
-                var expected = row["Expected"];
                 var dow = getDayOfWeek(row["Value"]);
                 var actual = TimeProvider.Current.Now.GetDayInWeek(dow).ToString("d MMM yyyy");
-                results.Add(new ValueExpected(){Value = row["Value"], Expected = actual } );
-            }
-
-            table.CompareToSet(results);
-        }
-
-        [Given(@"I check the date time extenstion GetFirstDayOfWeek")]
-        public void GivenICheckTheDateTimeExtenstionGetFirstDayOfWeek(Table table)
-        {
-            var results = new List<ValueExpected>();
-            foreach (var row in table.Rows)
-            {
-                var target = Convert.ToDateTime(row["Value"]);
-                var actual = target.GetFirstDayOfWeek();
-                results.Add(new ValueExpected() { Value = row["Value"], Expected = actual.ToString("d MMM yyyy") });
+                results.Add(new ValueExpected() { Value = row["Value"], Expected = actual });
             }
 
             table.CompareToSet(results);
@@ -99,18 +98,17 @@ namespace Ekin.Clarizen.Tests.Steps
             return day;
         }
 
-        public struct ValueExpected
-        {
-
-            public string Value { get; set; }
-            public string Expected { get; set; }
-        }
-
         public struct StartOfWeekData
         {
             public string DayOfWeek { get; set; }
             public string Expected { get; set; }
             public string TargetDate { get; set; }
+        }
+
+        public struct ValueExpected
+        {
+            public string Expected { get; set; }
+            public string Value { get; set; }
         }
     }
 }
