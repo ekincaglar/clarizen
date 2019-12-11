@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using Clarizen.Tests.Context;
-using Clarizen.Tests.Models;
+using Ekin.Clarizen.Tests.Context;
+using Ekin.Clarizen.Tests.Models;
 using TechTalk.SpecFlow;
 using Xunit;
 

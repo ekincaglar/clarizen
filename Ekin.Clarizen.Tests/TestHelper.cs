@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using Clarizen.Tests;
-using Clarizen.Tests.Context;
-using Clarizen.Tests.Models;
+using Ekin.Clarizen.Tests;
+using Ekin.Clarizen.Tests.Context;
+using Ekin.Clarizen.Tests.Models;
 using Ekin.Clarizen.Data.Request;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -54,8 +54,8 @@ namespace Ekin.Clarizen.Tests
                 builder
                     .AddFilter("Microsoft", LogLevel.Warning)
                     .AddFilter("System", LogLevel.Warning)
-                    .AddConsole()
-                    .AddEventLog();
+                    .AddConsole();
+                    //.AddEventLog();
             });
 
             return loggerFactory.CreateLogger<T>();

@@ -1,4 +1,4 @@
-﻿using Clarizen.Tests.Context;
+﻿using Ekin.Clarizen.Tests.Context;
 using Ekin.Clarizen;
 using TechTalk.SpecFlow;
 using Xunit;

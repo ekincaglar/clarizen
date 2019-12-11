@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Threading;
 using Ekin.Clarizen.Tests;
 
-namespace Clarizen.Tests
+namespace Ekin.Clarizen.Tests
 {
     public static class Extensions
     {

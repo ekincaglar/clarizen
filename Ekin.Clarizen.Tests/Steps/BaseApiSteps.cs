@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using Clarizen.Tests.Context;
+using Ekin.Clarizen.Tests.Context;
 using Microsoft.Extensions.Configuration;
 
 namespace Ekin.Clarizen.Tests.Steps

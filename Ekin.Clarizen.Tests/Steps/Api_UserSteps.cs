@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Clarizen.Tests.Context;
 using Ekin.Clarizen.Data.Request;
+using Ekin.Clarizen.Tests.Context;
 using Ekin.Clarizen.Tests.Models;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;

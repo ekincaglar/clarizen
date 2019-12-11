@@ -122,96 +122,96 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 this.FeatureBackground();
 #line hidden
-                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "TargetDate",
                             "DayOfWeek",
                             "Expected"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "25 Nov 2019",
                             "Monday",
                             "25 Nov 2019"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "25 Nov 2019",
                             "Tuesday",
                             "26 Nov 2019"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "25 Nov 2019",
                             "Wednesday",
                             "27 Nov 2019"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "25 Nov 2019",
                             "Thursday",
                             "28 Nov 2019"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "25 Nov 2019",
                             "Friday",
                             "29 Nov 2019"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "25 Nov 2019",
                             "Saturday",
                             "30 Nov 2019"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "25 Nov 2019",
                             "Sunday",
                             "01 Dec 2019"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "07 Mar 2016",
                             "Monday",
                             "07 Mar 2016"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "07 Mar 2016",
                             "Tuesday",
                             "08 Mar 2016"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "07 Mar 2016",
                             "Wednesday",
                             "09 Mar 2016"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "07 Mar 2016",
                             "Thursday",
                             "10 Mar 2016"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "07 Mar 2016",
                             "Friday",
                             "11 Mar 2016"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "07 Mar 2016",
                             "Saturday",
                             "12 Mar 2016"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "07 Mar 2016",
                             "Sunday",
                             "13 Mar 2016"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "01 Mar 2012",
                             "Monday",
                             "27 Feb 2012"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "01 Mar 2012",
                             "Tuesday",
                             "28 Feb 2012"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "01 Mar 2012",
                             "Wednesday",
                             "29 Feb 2012"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "01 Mar 2012",
                             "Thursday",
                             "01 Mar 2012"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "01 Mar 2012",
                             "Friday",
                             "02 Mar 2012"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "01 Mar 2012",
                             "Saturday",
                             "03 Mar 2012"});
-                table8.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "01 Mar 2012",
                             "Sunday",
                             "04 Mar 2012"});
 #line 10
-testRunner.Given("I Test Extention Method StartOfWeek with the following values", ((string)(null)), table8, "Given ");
+testRunner.Given("I Test Extention Method StartOfWeek with the following values", ((string)(null)), table6, "Given ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -250,32 +250,32 @@ this.FeatureBackground();
 #line 36
 testRunner.Given("I set the TimeProvider date to \'6 Nov 2019 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                             "Value",
                             "Expected"});
-                table9.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Monday",
                             "4 Nov 2019"});
-                table9.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Tuesday",
                             "5 Nov 2019"});
-                table9.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Wednesday",
                             "6 Nov 2019"});
-                table9.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Thursday",
                             "7 Nov 2019"});
-                table9.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Friday",
                             "8 Nov 2019"});
-                table9.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Saturday",
                             "9 Nov 2019"});
-                table9.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "Sunday",
                             "10 Nov 2019"});
 #line 37
-testRunner.Then("I check extenstion method GetDayInWeek returns the following", ((string)(null)), table9, "Then ");
+testRunner.Then("I check extenstion method GetDayInWeek returns the following", ((string)(null)), table7, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -320,32 +320,32 @@ testRunner.And("I set the TimeProvider date to \'1 Mar 2012 13:34:56\'", ((strin
 #line 50
 testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                             "Value",
                             "Expected"});
-                table10.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "Monday",
                             "27 Feb 2012"});
-                table10.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "Tuesday",
                             "28 Feb 2012"});
-                table10.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "Wednesday",
                             "29 Feb 2012"});
-                table10.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "Thursday",
                             "1 Mar 2012"});
-                table10.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "Friday",
                             "2 Mar 2012"});
-                table10.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "Saturday",
                             "3 Mar 2012"});
-                table10.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "Sunday",
                             "4 Mar 2012"});
 #line 51
-testRunner.Then("I check extenstion method GetDayInWeek returns the following", ((string)(null)), table10, "Then ");
+testRunner.Then("I check extenstion method GetDayInWeek returns the following", ((string)(null)), table8, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -387,32 +387,32 @@ testRunner.Given("I set the TimeProvider date to \'29 Feb 2012 13:34:56\'", ((st
 #line 63
 testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                             "Value",
                             "Expected"});
-                table11.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "1 Mar 2012",
                             "27 Feb 2012"});
-                table11.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "2 Mar 2012",
                             "27 Feb 2012"});
-                table11.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "3 Mar 2012",
                             "27 Feb 2012"});
-                table11.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "4 Mar 2012",
                             "27 Feb 2012"});
-                table11.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "27 Feb 2012",
                             "27 Feb 2012"});
-                table11.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "28 Feb 2012",
                             "27 Feb 2012"});
-                table11.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "29 Feb 2012",
                             "27 Feb 2012"});
 #line 64
-testRunner.Given("I check the date time extenstion GetFirstDayOfWeek", ((string)(null)), table11, "Given ");
+testRunner.Given("I check the date time extenstion GetFirstDayOfWeek", ((string)(null)), table9, "Given ");
 #line hidden
             }
             this.ScenarioCleanup();

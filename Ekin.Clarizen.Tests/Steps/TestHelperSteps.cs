@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Clarizen.Tests.Context;
+using Ekin.Clarizen.Tests.Context;
 using Ekin.Clarizen.Tests.Models;
 using Moq;
 using TechTalk.SpecFlow;

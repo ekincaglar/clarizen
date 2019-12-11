@@ -1,4 +1,4 @@
-﻿using Clarizen.Tests.Models;
+﻿using Ekin.Clarizen.Tests.Models;
 
 namespace Ekin.Clarizen.Tests.Models
 {

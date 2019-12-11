@@ -1,9 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <UserSecretsId>3012ff2f-606e-42f0-8547-7a64b1e0da4f</UserSecretsId>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <UserSecretsId>5097f124-1b58-48f6-b165-be8708fd88c9</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,17 +20,19 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.EventSource" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.TraceSource" Version="3.1.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="SpecFlow" Version="3.1.67" />
     <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.1.67" />
     <PackageReference Include="SpecFlow.xUnit" Version="3.1.67" />
     <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="coverlet.collector" Version="1.1.0">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+    <PackageReference Include="coverlet.collector" Version="1.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -40,16 +44,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="secrets.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="XUnit\" />
+    <None Update="secrets.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

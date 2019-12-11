@@ -91,7 +91,7 @@ namespace Ekin.Clarizen.Tests.Features
 #line 8
  testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "FirstName",
                         "LastName",
                         "email",
@@ -100,7 +100,7 @@ namespace Ekin.Clarizen.Tests.Features
                         "ExternalUser",
                         "SuperUser",
                         "Financial"});
-            table3.AddRow(new string[] {
+            table1.AddRow(new string[] {
                         "UnitTest",
                         "Bloggs",
                         "UnitTest.bloggs@CreateUserTest1.com",
@@ -109,7 +109,7 @@ namespace Ekin.Clarizen.Tests.Features
                         "true",
                         "false",
                         "false"});
-            table3.AddRow(new string[] {
+            table1.AddRow(new string[] {
                         "UnitTest",
                         "Smith",
                         "UnitTest.Smith@CreateUserTest1.com",
@@ -119,7 +119,7 @@ namespace Ekin.Clarizen.Tests.Features
                         "false",
                         "false"});
 #line 9
- testRunner.And("I create the following User", ((string)(null)), table3, "And ");
+ testRunner.And("I create the following User", ((string)(null)), table1, "And ");
 #line hidden
         }
         
@@ -217,61 +217,61 @@ this.FeatureBackground();
 #line 24
  testRunner.And("the testUser has 20 working days a month", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "endHour",
                             "isWorkingDay",
                             "startHour",
                             "totalWorkingHours"});
-                table4.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "16",
                             "true",
                             "8",
                             "8"});
 #line 25
- testRunner.And("the testUsers defaultWorkingDay is", ((string)(null)), table4, "And ");
+ testRunner.And("the testUsers defaultWorkingDay is", ((string)(null)), table2, "And ");
 #line hidden
-                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "endHour",
                             "isWorkingDay",
                             "startHour",
                             "totalWorkingHours"});
-                table5.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "16",
                             "true",
                             "8",
                             "8"});
-                table5.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "16",
                             "true",
                             "8",
                             "8"});
-                table5.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "16",
                             "true",
                             "8",
                             "8"});
-                table5.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "16",
                             "true",
                             "8",
                             "8"});
-                table5.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "16",
                             "true",
                             "8",
                             "8"});
-                table5.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "16",
                             "true",
                             "8",
                             "8"});
-                table5.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "16",
                             "true",
                             "8",
                             "8"});
 #line 28
- testRunner.And("the testusers weekDayInformation is", ((string)(null)), table5, "And ");
+ testRunner.And("the testusers weekDayInformation is", ((string)(null)), table3, "And ");
 #line hidden
             }
             this.ScenarioCleanup();

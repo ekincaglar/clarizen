@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Clarizen.Tests;
+using Ekin.Clarizen.Tests;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 

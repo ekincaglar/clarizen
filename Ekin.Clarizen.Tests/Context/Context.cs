@@ -4,7 +4,7 @@ using System.Threading;
 using Ekin.Clarizen;
 using Ekin.Clarizen.Tests;
 
-namespace Clarizen.Tests.Context
+namespace Ekin.Clarizen.Tests.Context
 {
     public class BaseContext : IDisposable
     {

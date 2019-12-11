@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Clarizen.Tests.Context;
-using Clarizen.Tests.Models;
 using Ekin.Clarizen.Data.Request;
 using TechTalk.SpecFlow;
 using Xunit;
 using System.Text.Json;
+using Ekin.Clarizen.Tests.Context;
 using TechTalk.SpecFlow.Assist;
+using Ekin.Clarizen.Tests.Models;
 
 namespace Ekin.Clarizen.Tests.Steps
 {
@@ -21,7 +21,7 @@ namespace Ekin.Clarizen.Tests.Steps
         [Given(@"I add task '(.*)' for today only")]
         public void GivenIAddTaskForTodayOnly(string taskName)
         {
-            var task = new Task(taskName)
+            var task = new Ekin.Clarizen.Tests.Models.Task(taskName)
             {
                 Parent = Context.ProjectId,
                 StartDate = DateTime.Today,
