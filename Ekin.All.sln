@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ekin.Clarizen", "Ekin.Clarizen\Ekin.Clarizen.csproj", "{D801CFFD-645B-4F47-B9F0-D39F5A37A153}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ekin.Clarizen.POCO", "Ekin.Clarizen.POCO\Ekin.Clarizen.POCO.csproj", "{516F75D0-29EF-4FF1-9EC6-F1EA175AFCA9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ekin.Clarizen.Tests", "Ekin.Clarizen.Tests\Ekin.Clarizen.Tests.csproj", "{D4BCCCD0-17A3-455B-AA0C-706C2317270D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ekin.Log", "..\Ekin.Log\Ekin.Log\Ekin.Log.csproj", "{50A4FF52-AFC1-4F2F-A9FA-EFD5222A22F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ekin.Rest", "..\Ekin.Rest\Ekin.Rest\Ekin.Rest.csproj", "{5165E202-AABA-4AF1-A3E3-F63E97B4FDE6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ekin.Encryption", "..\Ekin.Encryption\Ekin.Encryption\Ekin.Encryption.csproj", "{F0453F87-9348-4153-AA3A-07264FC39ADB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ekin.Email", "..\Ekin.Email\Ekin.Email\Ekin.Email.csproj", "{ED3B91AC-60EA-4F69-90B0-6FD4DF019527}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D801CFFD-645B-4F47-B9F0-D39F5A37A153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D801CFFD-645B-4F47-B9F0-D39F5A37A153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D801CFFD-645B-4F47-B9F0-D39F5A37A153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D801CFFD-645B-4F47-B9F0-D39F5A37A153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{516F75D0-29EF-4FF1-9EC6-F1EA175AFCA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516F75D0-29EF-4FF1-9EC6-F1EA175AFCA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516F75D0-29EF-4FF1-9EC6-F1EA175AFCA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516F75D0-29EF-4FF1-9EC6-F1EA175AFCA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4BCCCD0-17A3-455B-AA0C-706C2317270D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4BCCCD0-17A3-455B-AA0C-706C2317270D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4BCCCD0-17A3-455B-AA0C-706C2317270D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4BCCCD0-17A3-455B-AA0C-706C2317270D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50A4FF52-AFC1-4F2F-A9FA-EFD5222A22F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50A4FF52-AFC1-4F2F-A9FA-EFD5222A22F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50A4FF52-AFC1-4F2F-A9FA-EFD5222A22F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50A4FF52-AFC1-4F2F-A9FA-EFD5222A22F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5165E202-AABA-4AF1-A3E3-F63E97B4FDE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5165E202-AABA-4AF1-A3E3-F63E97B4FDE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5165E202-AABA-4AF1-A3E3-F63E97B4FDE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5165E202-AABA-4AF1-A3E3-F63E97B4FDE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0453F87-9348-4153-AA3A-07264FC39ADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0453F87-9348-4153-AA3A-07264FC39ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0453F87-9348-4153-AA3A-07264FC39ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0453F87-9348-4153-AA3A-07264FC39ADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED3B91AC-60EA-4F69-90B0-6FD4DF019527}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED3B91AC-60EA-4F69-90B0-6FD4DF019527}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED3B91AC-60EA-4F69-90B0-6FD4DF019527}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED3B91AC-60EA-4F69-90B0-6FD4DF019527}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A2961361-F5EE-46BC-8FC9-032D55C9E86E}
+	EndGlobalSection
+EndGlobal
