@@ -14,9 +14,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Ekin.Log\Ekin.Log\Ekin.Log.csproj" />
-    <ProjectReference Include="..\..\Ekin.Rest\Ekin.Rest\Ekin.Rest.csproj" />
-    <ProjectReference Include="..\Ekin.Clarizen.POCO\Ekin.Clarizen.POCO.csproj" />
+    <PackageReference Include="Ekin.Clarizen.POCO" Version="3.0.1" />
+    <PackageReference Include="Ekin.Log" Version="3.0.2" />
+    <PackageReference Include="Ekin.Rest" Version="2.0.2" />
   </ItemGroup>
 
 </Project>
