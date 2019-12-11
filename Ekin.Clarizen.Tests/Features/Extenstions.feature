@@ -34,6 +34,7 @@ Given I Test Extention Method StartOfWeek with the following values
 
 Scenario: GetDayInWeek1
 Given I set the TimeProvider date to '6 Nov 2019 13:34:56'
+And I wait 2 second
 Then I check extenstion method GetDayInWeek returns the following
 | Value     | Expected    |
 | Monday    | 4 Nov 2019  |
@@ -45,8 +46,7 @@ Then I check extenstion method GetDayInWeek returns the following
 | Sunday    | 10 Nov 2019 |
 
 Scenario: GetDayInWeek2
-Given I wait 1 second
-And I set the TimeProvider date to '1 Mar 2012 13:34:56'
+Given I set the TimeProvider date to '1 Mar 2012 13:34:56'
 And I wait 2 second
 Then I check extenstion method GetDayInWeek returns the following
 | Value     | Expected   |

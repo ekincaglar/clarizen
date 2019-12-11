@@ -250,6 +250,9 @@ this.FeatureBackground();
 #line 36
 testRunner.Given("I set the TimeProvider date to \'6 Nov 2019 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+#line 37
+testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
                 TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                             "Value",
                             "Expected"});
@@ -274,7 +277,7 @@ testRunner.Given("I set the TimeProvider date to \'6 Nov 2019 13:34:56\'", ((str
                 table7.AddRow(new string[] {
                             "Sunday",
                             "10 Nov 2019"});
-#line 37
+#line 38
 testRunner.Then("I check extenstion method GetDayInWeek returns the following", ((string)(null)), table7, "Then ");
 #line hidden
             }
@@ -288,7 +291,7 @@ testRunner.Then("I check extenstion method GetDayInWeek returns the following", 
         {
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GetDayInWeek2", null, ((string[])(null)));
-#line 47
+#line 48
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -311,11 +314,8 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 this.FeatureBackground();
 #line hidden
-#line 48
-testRunner.Given("I wait 1 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
 #line 49
-testRunner.And("I set the TimeProvider date to \'1 Mar 2012 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+testRunner.Given("I set the TimeProvider date to \'1 Mar 2012 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 50
 testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
