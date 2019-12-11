@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Globalization;
-using System.Threading;
 
 namespace Ekin.Clarizen.Tests
 {
-    public abstract class TimeProvider 
+    public class DefaultTimeProvider : TimeProvider
     {
-        public TimeProvider()
+        private static readonly DefaultTimeProvider instance = new DefaultTimeProvider();
+
+        private DefaultTimeProvider()
         {
         }
+
+        public static DefaultTimeProvider Instance => DefaultTimeProvider.instance;
+        public override DateTime Now => DateTime.UtcNow;
+        public override DateTime Today => DateTime.UtcNow;
+    }
+
+    public abstract class TimeProvider
+    {
         private static TimeProvider current = DefaultTimeProvider.Instance;
+
 
         public static TimeProvider Current
         {
@@ -18,7 +28,7 @@ namespace Ekin.Clarizen.Tests
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 TimeProvider.current = value;
             }
@@ -32,20 +42,5 @@ namespace Ekin.Clarizen.Tests
             CultureInfo.CurrentCulture = new CultureInfo("en-GB");
             TimeProvider.current = DefaultTimeProvider.Instance;
         }
-    }
-
-
-    public class DefaultTimeProvider : TimeProvider
-    {
-        private static readonly DefaultTimeProvider instance =new DefaultTimeProvider();
-
-        private DefaultTimeProvider()
-        {
-        }
-
-        public override DateTime Now => DateTime.UtcNow;
-        public override DateTime Today => DateTime.UtcNow;
-
-        public static DefaultTimeProvider Instance => DefaultTimeProvider.instance;
     }
 }

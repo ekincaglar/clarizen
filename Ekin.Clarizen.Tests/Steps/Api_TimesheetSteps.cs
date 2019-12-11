@@ -13,13 +13,13 @@ namespace Ekin.Clarizen.Tests.Steps
         }
 
         [Given(@"I call MissingTimesheets for testuser between '(.*)' and '(.*)' inclusive")]
-        public void GivenICallMissingTimesheetsForTestuserBetweenAndInclusive(string startDate, string endDate)
+        public void GivenICallMissingTimeSheetsForTestUserBetweenAndInclusive(string startDate, string endDate)
         {
             GetMissingTimeSheets(startDate, endDate, Context.UserId);
         }
 
         [Given(@"I get the workpattern for the test user")]
-        public void GivenIGetTheWorkpatternForTheTestUser()
+        public void GivenIGetTheWorkPatternForTheTestUser()
         {
             var actual = Context.Api.GetCalendarInfo(Context.UserId);
             Assert.Null(actual.Error);
@@ -27,10 +27,10 @@ namespace Ekin.Clarizen.Tests.Steps
         }
 
         [Then(@"there are (.*) missing timesheets")]
-        public void ThenThereAreEntities(int expected)
+        public void ThenThereAreEntities(int expectedCount)
         {
             var actual = (Data.getMissingTimesheets)Context.SUT;
-            Assert.Equal(expected, actual.Data.missingTimesheets.Count());
+            Assert.Equal(expectedCount, actual.Data.missingTimesheets.Count());
         }
 
         private void GetMissingTimeSheets(string startDate, string endDate, string userId)
