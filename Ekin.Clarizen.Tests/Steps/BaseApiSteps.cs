@@ -20,7 +20,7 @@ namespace Ekin.Clarizen.Tests.Steps
 
         protected void DeleteTestData()
         {
-            TimeProvider.ResetToDefault();
+            //TimeProvider.ResetToDefault();
 
             DeleteQuery("select name, state  from user where state <> 'deleted' and name like '%unittest%'", Context.Api);
             DeleteQuery("SELECT name ,state FROM project where name like 'UnitTest%'",Context.Api);

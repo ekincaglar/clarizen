@@ -278,7 +278,7 @@ testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(n
                             "Sunday",
                             "10 Nov 2019"});
 #line 38
-testRunner.Then("I check extenstion method GetDayInWeek returns the following", ((string)(null)), table7, "Then ");
+testRunner.Then("I check extension method GetDayInWeek returns the following", ((string)(null)), table7, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -291,7 +291,7 @@ testRunner.Then("I check extenstion method GetDayInWeek returns the following", 
         {
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GetDayInWeek2", null, ((string[])(null)));
-#line 48
+#line 49
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -314,10 +314,10 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 this.FeatureBackground();
 #line hidden
-#line 49
+#line 50
 testRunner.Given("I set the TimeProvider date to \'1 Mar 2012 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 50
+#line 51
 testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
@@ -344,8 +344,8 @@ testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(n
                 table8.AddRow(new string[] {
                             "Sunday",
                             "4 Mar 2012"});
-#line 51
-testRunner.Then("I check extenstion method GetDayInWeek returns the following", ((string)(null)), table8, "Then ");
+#line 52
+testRunner.Then("I check extension method GetDayInWeek returns the following", ((string)(null)), table8, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -358,7 +358,7 @@ testRunner.Then("I check extenstion method GetDayInWeek returns the following", 
         {
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GetFirstDayOfWeek", null, ((string[])(null)));
-#line 61
+#line 63
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -381,10 +381,10 @@ this.ScenarioInitialize(scenarioInfo);
 #line 5
 this.FeatureBackground();
 #line hidden
-#line 62
+#line 64
 testRunner.Given("I set the TimeProvider date to \'29 Feb 2012 13:34:56\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 63
+#line 65
 testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
@@ -411,7 +411,7 @@ testRunner.And("I wait 2 second", ((string)(null)), ((TechTalk.SpecFlow.Table)(n
                 table9.AddRow(new string[] {
                             "29 Feb 2012",
                             "27 Feb 2012"});
-#line 64
+#line 66
 testRunner.Given("I check the date time extenstion GetFirstDayOfWeek", ((string)(null)), table9, "Given ");
 #line hidden
             }
