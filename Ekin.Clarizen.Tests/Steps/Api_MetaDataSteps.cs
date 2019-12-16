@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using Ekin.Clarizen.Tests.Context;
 using TechTalk.SpecFlow;
-
+using Xunit;
+using System.Xml.Linq;
 namespace Ekin.Clarizen.Tests.Steps
 {
     [Binding]
@@ -17,7 +18,10 @@ namespace Ekin.Clarizen.Tests.Steps
         [Given(@"I call the weekdays entity")]
         public void GivenICallTheWeekdaysEntity()
         {
-            throw new NotImplementedException();
+            var typeNames = new[] { "WeekDays","BaseFile","User","Organization","TimeSheet","Bug" };
+            var actual = Context.Api.DescribeMetadata(typeNames);
+            var nullFields = actual.Data.entityDescriptions.Where(a => a.fields == null)?.ToList();
+            Assert.False(nullFields.Any());
         }
 
     }
