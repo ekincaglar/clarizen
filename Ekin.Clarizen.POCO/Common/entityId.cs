@@ -37,6 +37,14 @@ namespace Ekin.Clarizen
         {
             return id.GetHashCode();
         }
+
+        public string value
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(id) || id.Contains("/") ? id.Substring(id.LastIndexOf("/") + 1) : id;
+            }
+        }
     }
 
 
