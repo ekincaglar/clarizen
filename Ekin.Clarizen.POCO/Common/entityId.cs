@@ -38,7 +38,9 @@ namespace Ekin.Clarizen
             return id.GetHashCode();
         }
 
-        public string value
+        
+        [JsonIgnore]
+        public string id_value
         {
             get
             {
