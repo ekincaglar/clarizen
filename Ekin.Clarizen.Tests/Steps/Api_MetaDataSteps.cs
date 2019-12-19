@@ -6,6 +6,8 @@ using Ekin.Clarizen.Tests.Context;
 using TechTalk.SpecFlow;
 using Xunit;
 using System.Xml.Linq;
+using Xunit.Sdk;
+
 namespace Ekin.Clarizen.Tests.Steps
 {
     [Binding]
@@ -14,13 +16,19 @@ namespace Ekin.Clarizen.Tests.Steps
         public Api_MetaDataSteps(BaseContext context) : base(context)
         {
         }
-
-        [Given(@"I call the weekdays entity")]
-        public void GivenICallTheWeekdaysEntity()
+        [Given(@"I call the '(.*)' entity")]
+        public void GivenICallTheEntity(string entityName)
+        { 
+            var typeNames = new[] { entityName };
+            var actual = Context.Api.DescribeEntities(typeNames);
+            Assert.True(actual.Error==null,actual.Error);
+            Context.SUT = actual.Data.entityDescriptions;
+        }
+        [Then(@"there are fields in the entity description")]
+        public void ThenThereAreFieldsInTheEntityDescription()
         {
-            var typeNames = new[] { "WeekDays","BaseFile","User","Organization","TimeSheet","Bug" };
-            var actual = Context.Api.DescribeMetadata(typeNames);
-            var nullFields = actual.Data.entityDescriptions.Where(a => a.fields == null)?.ToList();
+            var entity = (entityDescription[]) Context.SUT;
+            var nullFields = entity.Where(a => a.fields == null)?.ToList();
             Assert.False(nullFields.Any());
         }
 
