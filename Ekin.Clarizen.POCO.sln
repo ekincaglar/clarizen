@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.705
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekin.Clarizen.POCO", "Ekin.Clarizen.POCO\Ekin.Clarizen.POCO.csproj", "{6457D0DC-E697-4D32-A97B-E49816A02328}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ekin.Clarizen.POCO", "Ekin.Clarizen.POCO\Ekin.Clarizen.POCO.csproj", "{6457D0DC-E697-4D32-A97B-E49816A02328}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ekin.Clarizen.POCO.Tests", "Ekin.Clarizen.POCO.Tests\Ekin.Clarizen.POCO.Tests.csproj", "{6DF03372-E4F3-43ED-845F-BE42A6D781AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6457D0DC-E697-4D32-A97B-E49816A02328}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6457D0DC-E697-4D32-A97B-E49816A02328}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6457D0DC-E697-4D32-A97B-E49816A02328}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DF03372-E4F3-43ED-845F-BE42A6D781AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DF03372-E4F3-43ED-845F-BE42A6D781AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DF03372-E4F3-43ED-845F-BE42A6D781AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DF03372-E4F3-43ED-845F-BE42A6D781AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
