@@ -1,0 +1,125 @@
+﻿using System;
+using System.Collections.Generic;
+using Ekin.Clarizen.POCO.Tests.Context;
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
+
+namespace Ekin.Clarizen.POCO.Tests.Steps
+{
+    [Binding]
+    public class ExtensionSteps : BaseApiSteps
+    {
+        public ExtensionSteps(BaseContext context) : base(context)
+        {
+        }
+
+        [Given(@"I check the date time extension GetFirstDayOfWeek")]
+        public void GivenICheckTheDateTimeExtenstionGetFirstDayOfWeek(Table table)
+        {
+            var results = new List<ValueExpected>();
+            foreach (var row in table.Rows)
+            {
+                var target = Convert.ToDateTime(row["Value"]);
+                var actual = target.GetFirstDayOfWeek();
+                results.Add(new ValueExpected() { Value = row["Value"], Expected = actual.ToString("d MMM yyyy") });
+            }
+
+            table.CompareToSet(results);
+        }
+
+        [Given(@"I Test Extension Method StartOfWeek with the following values")]
+        public void GivenITestExtensionMethodStartOfWeekWithTheFollowingValues(Table table)
+        {
+            var results = new List<StartOfWeekData>(); ;
+            foreach (var row in table.Rows)
+            {
+                var target = Convert.ToDateTime(row["TargetDate"]);
+                var expected = Convert.ToDateTime(row["Expected"]);
+
+                var result = new StartOfWeekData()
+                {
+                    TargetDate = target.ToString("dd MMM yyyy"),
+                    DayOfWeek = row["DayOfWeek"],
+                    Expected = expected.ToString("dd MMM yyyy")
+                };
+
+                results.Add(result);
+            }
+            table.CompareToSet(results);
+        }
+
+        [Given(@"I wait (.*) second")]
+        public void GivenIWaitSecond(int waitInSeconds)
+        {
+            System.Threading.Thread.Sleep(waitInSeconds * 1000);
+        }
+
+        [Then(@"I check extension method GetDayInWeek returns the following")]
+        public void ThenICheckExtensionMethodGetDayInWeekReturnsTheFollowing(Table table)
+        {
+            var results = new List<ValueExpected>();
+            var sut = Context.TimeProvider;
+            foreach (var row in table.Rows)
+            {
+                var dow = getDayOfWeek(row["Value"]);
+                var actual = sut.Now.GetDayInWeek(dow).ToString("d MMM yyyy");
+                results.Add(new ValueExpected() { Value = row["Value"], Expected = actual });
+            }
+
+            table.CompareToSet(results);
+        }
+
+        private DayOfWeek getDayOfWeek(string dayOfWeek)
+        {
+            DayOfWeek day;
+            switch (dayOfWeek.ToLower())
+            {
+                case "monday":
+                    day = DayOfWeek.Monday;
+                    break;
+
+                case "tuesday":
+                    day = DayOfWeek.Tuesday;
+                    break;
+
+                case "wednesday":
+                    day = DayOfWeek.Wednesday;
+                    break;
+
+                case "thursday":
+                    day = DayOfWeek.Thursday;
+                    break;
+
+                case "friday":
+                    day = DayOfWeek.Friday;
+                    break;
+
+                case "saturday":
+                    day = DayOfWeek.Saturday;
+                    break;
+
+                case "sunday":
+                    day = DayOfWeek.Sunday;
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(day));
+            }
+
+            return day;
+        }
+
+        public struct StartOfWeekData
+        {
+            public string DayOfWeek { get; set; }
+            public string Expected { get; set; }
+            public string TargetDate { get; set; }
+        }
+
+        public struct ValueExpected
+        {
+            public string Expected { get; set; }
+            public string Value { get; set; }
+        }
+    }
+}
