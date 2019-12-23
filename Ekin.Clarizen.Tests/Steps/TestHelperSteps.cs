@@ -65,7 +65,7 @@ namespace Ekin.Clarizen.Tests.Steps
             timeMock.SetupGet(tp => tp.Today).Returns(todayDateTime);
             TimeProvider.Current = timeMock.Object;
 
-            
+            Context.TimeProvider = timeMock.Object;
         }
 
         [Then(@"the first workday of the week is '(.*)'")]

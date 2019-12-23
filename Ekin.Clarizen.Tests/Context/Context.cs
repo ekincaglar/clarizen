@@ -13,6 +13,7 @@ namespace Ekin.Clarizen.Tests.Context
         public string ProjectId { get;  set; }
         public dynamic SUT { get;  set; }
         public string UserId { get; set; }
+        public TimeProvider TimeProvider { get; internal set; }
 
         public void Dispose()
         {
