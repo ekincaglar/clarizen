@@ -35,6 +35,7 @@ namespace Ekin.Clarizen.Data.Queries
             this.typeName = typeName;
             this.fields = fields;
             this.orders = orders;
+            this.where = where;
             this.relations = relations;
             this.deleted = deleted;
             this.originalExternalID = originalExternalID;

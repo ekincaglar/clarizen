@@ -615,6 +615,17 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
+        /// Retrieve entities from multiple organizations in Clarizen for a specific user and according to a certain criteria
+        /// </summary>
+        public Data.crossOrgEntityQuery CrossOrgEntityQuery(Data.Queries.crossOrgEntityQuery request)
+        {
+            Data.crossOrgEntityQuery entities = new Data.crossOrgEntityQuery(request, CallSettings.GetFromAPI(this));
+            if (isBulk) bulkRequests.Add(entities.BulkRequest);
+            else { Logs.Assert(entities.IsCalledSuccessfully, "Ekin.Clarizen.API", "CrossOrgEntityQuery", "crossOrgEntityQuery call failed", entities.Error); TotalAPICallsMadeInCurrentSession++; }
+            return entities;
+        }
+
+        /// <summary>
         /// Retrieve all entities from Clarizen of the given typeName
         /// </summary>
         /// <param name="typeName">The main entity type to query (e.g. WorkItem, User etc.)</param>
