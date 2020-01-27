@@ -30,7 +30,7 @@ namespace Ekin.Clarizen.Authentication
             else
             {
                 this.IsCalledSuccessfully = false;
-                this.Error = response.InternalError.GetFormattedErrorMessage();
+                this.Error = response.GetFormattedErrorMessage();
             }
         }
     }

@@ -49,7 +49,7 @@ namespace Ekin.Clarizen.Metadata
             else
             {
                 this.IsCalledSuccessfully = false;
-                this.Error = response.InternalError.GetFormattedErrorMessage();
+                this.Error = response.GetFormattedErrorMessage();
             }
         }
     }

@@ -48,7 +48,7 @@ namespace Ekin.Clarizen.Data
             else if (response.InternalError != null)
             {
                 this.IsCalledSuccessfully = false;
-                this.Error = response.InternalError.GetFormattedErrorMessage();
+                this.Error = response.GetFormattedErrorMessage();
             }
             else
             {

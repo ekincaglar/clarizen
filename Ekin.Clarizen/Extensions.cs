@@ -342,9 +342,9 @@ namespace Ekin.Clarizen
             return source?.IndexOf(value, comparisonType) >= 0;
         }
 
-        // TODO: This should be removed as it references a generic object and gets added to EVERY object in the system
-        public static string GetFormattedErrorMessage(this object Error)
+        public static string GetFormattedErrorMessage(this Ekin.Rest.Response response)
         {
+            object Error = response?.InternalError;
             if (Error is WebException)
             {
                 WebException ex = Error as WebException;
@@ -355,7 +355,7 @@ namespace Ekin.Clarizen
                 error err = Error as error;
                 return err.formatted;
             }
-            return "";
+            return string.Empty;
         }
 
         public static int StatusCode(this WebException ex)

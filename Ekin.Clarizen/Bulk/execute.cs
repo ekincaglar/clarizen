@@ -46,7 +46,7 @@ namespace Ekin.Clarizen.Bulk
             else
             {
                 this.IsCalledSuccessfully = false;
-                this.Error = $"{response.InternalError.GetFormattedErrorMessage()}. Timeout set to {TimeSpan.FromMilliseconds(callSettings.timeout.GetValueOrDefault(120000)).ToHumanReadableString()}.";
+                this.Error = $"{response.GetFormattedErrorMessage()}. Timeout set to {TimeSpan.FromMilliseconds(callSettings.timeout.GetValueOrDefault(120000)).ToHumanReadableString()}.";
             }
         }
     }
