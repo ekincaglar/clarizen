@@ -30,7 +30,7 @@ namespace Ekin.Clarizen.Data
             // Call the API
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Put(obj);
+            Ekin.Rest.Response response = restClient.Put(obj, callSettings.serializeNullValues);
 
             // Parse Data
             if (response.Status == System.Net.HttpStatusCode.OK)
