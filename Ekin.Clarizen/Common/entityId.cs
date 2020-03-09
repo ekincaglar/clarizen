@@ -44,7 +44,7 @@ namespace Ekin.Clarizen
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(id) && id.Contains("/") ? id.Substring(id.LastIndexOf("/") + 1) : id;
+                return string.IsNullOrWhiteSpace(id) || id.Contains("/") ? id.Substring(id.LastIndexOf("/") + 1) : id;
             }
         }
     }
