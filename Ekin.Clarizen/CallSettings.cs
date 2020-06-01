@@ -4,6 +4,7 @@
     {
         public string serverLocation { get; set; }
         public string sessionId { get; set; }
+        public string apiKey { get; set; }
         public int? timeout { get; set; } = null;
         public bool isBulk { get; set; } = false;
         public bool serializeNullValues { get; set; } = false;
@@ -22,6 +23,7 @@
                 {
                     serverLocation = api.serverLocation,
                     sessionId = api.sessionId,
+                    apiKey = api.ApiKey,
                     isBulk = api.isBulk,
                     serializeNullValues = api.serializeNullValues,
                     retry = api.retry,
@@ -33,6 +35,24 @@
             {
                 return new CallSettings();
             }
+        }
+
+        /// <summary>
+        /// Get the http header for the authenticated user
+        /// </summary>
+        /// <returns></returns>
+        public System.Net.WebHeaderCollection GetHeaders()
+        {
+            System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
+            if (!string.IsNullOrWhiteSpace(apiKey))
+            {
+                headers.Add(System.Net.HttpRequestHeader.Authorization, string.Format("ApiKey {0}", apiKey));
+            }
+            else if (!string.IsNullOrWhiteSpace(sessionId))
+            {
+                headers.Add(System.Net.HttpRequestHeader.Authorization, string.Format("Session {0}", sessionId));
+            }
+            return headers;
         }
     }
 }

@@ -14,11 +14,8 @@ namespace Ekin.Clarizen.Bulk
             // Set the URL
             string url = callSettings.serverLocation + "/bulk/execute";
 
-            // Set the header for the authenticated user
-            System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
-            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", callSettings.sessionId));
-
             // Set the CallOptions header
+            System.Net.WebHeaderCollection headers = callSettings.GetHeaders();
             if (request.batch != null)
             {
                 headers.Add("CallOptions", string.Format("Batch={0}", ((bool)request.batch) ? "true" : "false"));

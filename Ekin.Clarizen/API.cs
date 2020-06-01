@@ -23,6 +23,8 @@ namespace Ekin.Clarizen
         public string serverLocation { get; set; }
         public string sessionId { get; set; }
 
+        public string ApiKey { get; set; }
+
         public bool isSandbox { get; set; } = false;
         public int TotalAPICallsMadeInCurrentSession { get; set; }
         public bool serializeNullValues { get; set; } = false;
@@ -64,6 +66,7 @@ namespace Ekin.Clarizen
             return new API()
             {
                 sessionId = this.sessionId,
+                ApiKey = this.ApiKey,
                 isSandbox = this.isSandbox,
                 serverLocation = this.serverLocation,
                 username = this.username,

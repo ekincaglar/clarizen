@@ -22,12 +22,8 @@ namespace Ekin.Clarizen.Data
                 return;
             }
 
-            // Set the header for the authenticated user
-            System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
-            headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", callSettings.sessionId));
-
             // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
+            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
             Ekin.Rest.Response response = restClient.Post(request, callSettings.serializeNullValues, true);
 
