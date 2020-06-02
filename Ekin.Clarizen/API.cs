@@ -110,14 +110,20 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public bool Login(string username, string password)
         {
-            // First we get the Url where your organization API is located
-            Authentication.getServerDefinition serverDefinition = new Authentication.getServerDefinition(new Ekin.Clarizen.Authentication.Request.getServerDefinition(username, password, new Ekin.Clarizen.Authentication.Request.loginOptions()), isSandbox);
-            //TotalAPICallsMadeInCurrentSession++; // Login call doesn't count towards quota (Confirmed by Yaron Perlman on 9 Nov 2016)
-            Logs.Assert(serverDefinition.IsCalledSuccessfully, "Ekin.Clarizen.API", "Login", "Server definition could not be retrieved", serverDefinition.Error);
-            if (serverDefinition.IsCalledSuccessfully)
+            if (string.IsNullOrWhiteSpace(serverLocation))
             {
-                serverLocation = serverDefinition.Data.serverLocation;
+                // First we get the Url where your organization API is located
+                Authentication.getServerDefinition serverDefinition = new Authentication.getServerDefinition(new Ekin.Clarizen.Authentication.Request.getServerDefinition(username, password, new Ekin.Clarizen.Authentication.Request.loginOptions()), isSandbox);
+                //TotalAPICallsMadeInCurrentSession++; // Login call doesn't count towards quota (Confirmed by Yaron Perlman on 9 Nov 2016)
+                Logs.Assert(serverDefinition.IsCalledSuccessfully, "Ekin.Clarizen.API", "Login", "Server definition could not be retrieved", serverDefinition.Error);
+                if (serverDefinition.IsCalledSuccessfully)
+                {
+                    serverLocation = serverDefinition.Data.serverLocation;
+                }
+            }
 
+            if (!string.IsNullOrWhiteSpace(serverLocation))
+            {
                 // Then we login to the API at the above location
                 Authentication.login CZlogin = new Authentication.login(serverLocation, new Ekin.Clarizen.Authentication.Request.login(username, password, new Ekin.Clarizen.Authentication.Request.loginOptions()));
                 Logs.Assert(CZlogin.IsCalledSuccessfully, "Ekin.Clarizen.API", "Login", $"Login failed for {username}", CZlogin.Error);
@@ -129,6 +135,7 @@ namespace Ekin.Clarizen
                     return true;
                 }
             }
+
             return false;
         }
 
