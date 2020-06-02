@@ -10,6 +10,8 @@
         public bool serializeNullValues { get; set; } = false;
         public int retry { get; set; } = 1;
         public int sleepBetweenRetries { get; set; } = 0;
+        public string requester { get; set; }
+        public string redirect { get; set; }
 
         public CallSettings()
         {
@@ -28,7 +30,9 @@
                     serializeNullValues = api.serializeNullValues,
                     retry = api.retry,
                     sleepBetweenRetries = api.sleepBetweenRetries,
-                    timeout = (timeout != null) ? timeout : api.timeout
+                    timeout = (timeout != null) ? timeout : api.timeout,
+                    requester = api.Requester,
+                    redirect = api.Redirect
                 };
             }
             else
@@ -51,6 +55,14 @@
             else if (!string.IsNullOrWhiteSpace(sessionId))
             {
                 headers.Add(System.Net.HttpRequestHeader.Authorization, string.Format("Session {0}", sessionId));
+            }
+            if (!string.IsNullOrWhiteSpace(requester))
+            {
+                headers.Add("ClzApiRequester", requester);
+            }
+            if (!string.IsNullOrWhiteSpace(redirect))
+            {
+                headers.Add("x-redirect", redirect);
             }
             return headers;
         }

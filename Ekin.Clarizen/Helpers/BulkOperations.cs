@@ -287,7 +287,7 @@ namespace Ekin.Clarizen
             {
                 condition = new cZQLCondition(customCondition);
             }
-            GetAllResult result = ClarizenAPI.Clone().GetAll(entityName, typeof(T), condition, sleepTime);
+            GetAllResult result = ClarizenAPI.GetAll(entityName, typeof(T), condition, sleepTime);
             if (result == null || result.Errors.Any())
             {
                 var detailedMsg = "Error: " + string.Join(System.Environment.NewLine, result.Errors.Select(i => i.message));
@@ -306,7 +306,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public List<T> GetAll<T>(Ekin.Clarizen.Interfaces.IClarizenQuery query, int? pageSize = null, int? sleepTime = null)
         {
-            GetAllResult result = ClarizenAPI.Clone().GetAll(query, typeof(T), pageSize, sleepTime);
+            GetAllResult result = ClarizenAPI.GetAll(query, typeof(T), pageSize, sleepTime);
             if (result == null || result.Errors.Any())
             {
                 var detailedMsg = "Error: " + string.Join(System.Environment.NewLine, result.Errors.Select(i => i.message));

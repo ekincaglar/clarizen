@@ -14,6 +14,11 @@ namespace Ekin.Clarizen
     /// </summary>
     public class API
     {
+        #region Private Properties
+        internal string Requester { get; set; }
+
+        #endregion
+
         #region Public properties
 
         public bool removeInvalidFieldsFromJsonResult { get; set; }
@@ -24,6 +29,7 @@ namespace Ekin.Clarizen
         public string sessionId { get; set; }
 
         public string ApiKey { get; set; }
+        public string Redirect { get; set; }
 
         public bool isSandbox { get; set; } = false;
         public int TotalAPICallsMadeInCurrentSession { get; set; }
@@ -75,9 +81,23 @@ namespace Ekin.Clarizen
                 sleepBetweenRetries = this.sleepBetweenRetries,
                 serializeNullValues = this.serializeNullValues,
                 timeout = this.timeout,
-                removeInvalidFieldsFromJsonResult = this.removeInvalidFieldsFromJsonResult
-                // We don't copy Logs or Bulk in the clone
+                removeInvalidFieldsFromJsonResult = this.removeInvalidFieldsFromJsonResult,
+                Redirect = this.Redirect
+                // We don't copy Logs, Bulk and Requester in the clone
             };
+        }
+
+        public void SetRequester(string value)
+        {
+            Requester = value;
+            if (Bulk?.ClarizenAPI != null)
+            {
+                Bulk.ClarizenAPI.Requester = value;
+            }
+            if (FileUpload?.ClarizenAPI != null)
+            {
+                FileUpload.ClarizenAPI.Requester = value;
+            }
         }
 
         #region Authentication methods

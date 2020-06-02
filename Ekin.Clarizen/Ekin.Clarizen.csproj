@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>4.5.0</Version>
+    <Version>4.5.1</Version>
     <Authors>Ekin Caglar</Authors>
     <Description>.Net wrapper for the Clarizen API v2.0</Description>
     <Copyright>Copyright ©  2016-2020, Ekin Caglar</Copyright>
