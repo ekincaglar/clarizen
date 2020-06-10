@@ -33,8 +33,11 @@ namespace Ekin.Clarizen
         {
             try
             {
-                body = (body as JObject).ToObject(type);
-                BodyType = type.FullName;
+                if (type != null)
+                {
+                    body = (body as JObject).ToObject(type);
+                    BodyType = type.FullName;
+                }
             }
             catch
             {
