@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Ekin.Log;
 using Newtonsoft.Json;
@@ -124,17 +126,17 @@ namespace Ekin.Clarizen
                     {
                         formData.Add(new ByteArrayContent((byte[])InputData), "file", FileName);
                     }
-                    HttpResponseMessage response = await client.PostAsync(uploadUrl, formData);
+                    HttpResponseMessage response = await client.PostAsync(uploadUrl, formData).ConfigureAwait(false);
                     if (!response.IsSuccessStatusCode)
                     {
                         using (HttpContent content = response.Content)
                         {
-                            string data = await content.ReadAsStringAsync();
+                            string data = await content.ReadAsStringAsync().ConfigureAwait(false);
                             Logs.AddError("Ekin.Clarizen.FileUploadHelper", "Upload", "Document couldn't be uploaded. Error: " + data);
                         }
                         return false;
                     }
-                    System.IO.Stream resultStream = await response.Content.ReadAsStreamAsync();
+                    System.IO.Stream resultStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
                 }
             }
 
@@ -163,11 +165,12 @@ namespace Ekin.Clarizen
             {
                 AttachmentLink attachmentLink = new AttachmentLink
                 {
+                    id = "/AttachmentLink",
                     Entity = LinkedEntity,
                     Document = new EntityId(document.id)
                 };
 
-                Ekin.Clarizen.Data.objects_put clarizenDocumentLink = ClarizenAPI.CreateObject("/AttachmentLink", attachmentLink);
+                Ekin.Clarizen.Data.objects_put clarizenDocumentLink = ClarizenAPI.CreateObject(attachmentLink.id, attachmentLink);
                 if (!clarizenDocumentLink.IsCalledSuccessfully || clarizenDocumentLink.Data == null || clarizenDocumentLink.Data.id == null)
                 {
                     Logs.AddError("Ekin.Clarizen.FileUploadHelper", "Upload", "Document successfully created in Clarizen but it could not be linked to the System Admin user. Error: " + clarizenDocumentLink.Error);

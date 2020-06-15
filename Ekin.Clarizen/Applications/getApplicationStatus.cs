@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Ekin.Clarizen.Interfaces;
 using Newtonsoft.Json;
 
@@ -13,6 +14,10 @@ namespace Ekin.Clarizen.Applications
 
         public getApplicationStatus(Request.getApplicationStatus request, CallSettings callSettings)
         {
+            Call(request, callSettings);
+        }
+        public async Task Call(Request.getApplicationStatus request, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/applications/getApplicationStatus";
 
@@ -25,7 +30,7 @@ namespace Ekin.Clarizen.Applications
             // Call the API
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Post(request, callSettings.serializeNullValues);
+            Ekin.Rest.Response response = await restClient.Post(request, callSettings.serializeNullValues);
 
             // Return result
             if (response.Status == System.Net.HttpStatusCode.OK)

@@ -60,7 +60,8 @@ namespace Ekin.Clarizen
             Logs = new LogFactory();
             Bulk = new BulkOperations(this);
             FileUpload = new FileUploadHelper(this);
-            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12 | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls;
+            System.Net.ServicePointManager.Expect100Continue = false;
         }
 
         /// <summary>

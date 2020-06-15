@@ -1,5 +1,6 @@
 ﻿using System;
 using Ekin.Clarizen.Interfaces;
+using System.Threading.Tasks;
 
 namespace Ekin.Clarizen.Data
 {
@@ -10,6 +11,10 @@ namespace Ekin.Clarizen.Data
         public request BulkRequest { get; set; }
 
         public objects_post(string id, object obj, CallSettings callSettings)
+        {
+            Call(id, obj, callSettings);
+        }
+        public async Task Call(string id, object obj, CallSettings callSettings)
         {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/objects" +
@@ -24,7 +29,7 @@ namespace Ekin.Clarizen.Data
             // Call the API
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Post(obj, callSettings.serializeNullValues);
+            Ekin.Rest.Response response = await restClient.Post(obj, callSettings.serializeNullValues);
 
             // Return result
             if (response.Status == System.Net.HttpStatusCode.OK)

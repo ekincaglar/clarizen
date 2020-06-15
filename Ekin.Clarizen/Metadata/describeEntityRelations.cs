@@ -1,5 +1,6 @@
 ﻿using System;
 using Ekin.Clarizen.Interfaces;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Metadata
@@ -13,6 +14,10 @@ namespace Ekin.Clarizen.Metadata
 
         public describeEntityRelations(Request.describeEntityRelations request, CallSettings callSettings)
         {
+            Call(request, callSettings);
+        }
+        public async Task Call(Request.describeEntityRelations request, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/metadata/describeEntityRelations";
 
@@ -25,7 +30,7 @@ namespace Ekin.Clarizen.Metadata
             // Call the API
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Post(request, callSettings.serializeNullValues);
+            Ekin.Rest.Response response = await restClient.Post(request, callSettings.serializeNullValues);
 
             // Parse Data
             if (response.Status == System.Net.HttpStatusCode.OK)

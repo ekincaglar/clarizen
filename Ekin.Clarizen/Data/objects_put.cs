@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Ekin.Clarizen.Interfaces;
 using Newtonsoft.Json;
 
@@ -13,6 +14,10 @@ namespace Ekin.Clarizen.Data
 
         public objects_put(string id, object obj, CallSettings callSettings)
         {
+            Call(id, obj, callSettings);
+        }
+        public async Task Call(string id, object obj, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/objects" +
                          (id.Substring(0, 1) != "/" ? "/" : "") + id;
@@ -26,7 +31,7 @@ namespace Ekin.Clarizen.Data
             // Call the API
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Put(obj, callSettings.serializeNullValues);
+            Ekin.Rest.Response response = await restClient.Put(obj, callSettings.serializeNullValues);
 
             // Parse Data
             if (response.Status == System.Net.HttpStatusCode.OK)

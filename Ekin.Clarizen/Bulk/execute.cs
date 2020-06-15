@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Bulk
@@ -10,6 +11,10 @@ namespace Ekin.Clarizen.Bulk
         public string Error { get; set; }
 
         public execute(Request.execute request, CallSettings callSettings)
+        {
+            Call(request, callSettings);
+        }
+        public async Task Call(Request.execute request, CallSettings callSettings)
         {
             // Set the URL
             string url = callSettings.serverLocation + "/bulk/execute";
@@ -24,7 +29,7 @@ namespace Ekin.Clarizen.Bulk
             // Call the API
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(120000), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Post(request, callSettings.serializeNullValues);
+            Ekin.Rest.Response response = await restClient.Post(request, callSettings.serializeNullValues);
 
             // Parse Data
             if (response.Status == System.Net.HttpStatusCode.OK)

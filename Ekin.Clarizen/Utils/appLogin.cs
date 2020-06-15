@@ -1,5 +1,6 @@
 ﻿using System;
 using Ekin.Clarizen.Interfaces;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Utils
@@ -13,6 +14,10 @@ namespace Ekin.Clarizen.Utils
 
         public appLogin(CallSettings callSettings)
         {
+            Call(callSettings);
+        }
+        public async Task Call(CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/utils/appLogin";
 
@@ -25,7 +30,7 @@ namespace Ekin.Clarizen.Utils
             // Call the API
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Get();
+            Ekin.Rest.Response response = await restClient.Get();
 
             // Parse Data
             if (response.Status == System.Net.HttpStatusCode.OK)

@@ -1,5 +1,6 @@
 ﻿using System;
 using Ekin.Clarizen.Interfaces;
+using System.Threading.Tasks;
 using Ekin.Rest;
 using Newtonsoft.Json;
 
@@ -14,6 +15,10 @@ namespace Ekin.Clarizen.Metadata
 
         public describeMetadata(Request.describeMetadata request, CallSettings callSettings)
         {
+            Call(request, callSettings);
+        }
+        public async Task Call(Request.describeMetadata request, CallSettings callSettings)
+        {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/metadata/describeMetadata" + (request != null ? "?" + request.ToQueryString() : string.Empty);
 
@@ -26,7 +31,7 @@ namespace Ekin.Clarizen.Metadata
             // Call the API
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Get();
+            Ekin.Rest.Response response = await restClient.Get();
 
             // Parse Data
             if (response.Status == System.Net.HttpStatusCode.OK)

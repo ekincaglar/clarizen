@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Authentication
@@ -11,11 +12,15 @@ namespace Ekin.Clarizen.Authentication
 
         public getServerDefinition(Request.getServerDefinition request, bool isSandbox)
         {
+            Call(request, isSandbox);
+        }
+        public async Task Call(Request.getServerDefinition request, bool isSandbox)
+        {
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(isSandbox ?
                 "https://apie.clarizentb.com/V2.0/services/authentication/getServerDefinition" :
                 "https://api.clarizen.com/V2.0/services/authentication/getServerDefinition");
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Post(request, true);
+            Ekin.Rest.Response response = await restClient.Post(request, true);
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 try

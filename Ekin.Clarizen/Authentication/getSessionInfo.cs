@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Authentication
@@ -11,11 +12,15 @@ namespace Ekin.Clarizen.Authentication
 
         public getSessionInfo(string serverLocation, string sessionId)
         {
+            Call(serverLocation, sessionId);
+        }
+        public async Task Call(string serverLocation, string sessionId)
+        {
             System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
             headers.Add(System.Net.HttpRequestHeader.Authorization, String.Format("Session {0}", sessionId));
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(serverLocation + "/authentication/getSessionInfo", headers);
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Get();
+            Ekin.Rest.Response response = await restClient.Get();
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 try

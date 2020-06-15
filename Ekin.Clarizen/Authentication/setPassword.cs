@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Ekin.Clarizen.Authentication
 {
@@ -9,6 +10,10 @@ namespace Ekin.Clarizen.Authentication
         public request BulkRequest { get; set; }
 
         public setPassword(Request.setPassword request, CallSettings callSettings)
+        {
+            Call(request, callSettings);
+        }
+        public async Task Call(Request.setPassword request, CallSettings callSettings)
         {
             // Set the URL
             string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/authentication/setPassword";
@@ -22,7 +27,7 @@ namespace Ekin.Clarizen.Authentication
             // Call the API
             Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
             restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = restClient.Post(request, callSettings.serializeNullValues);
+            Ekin.Rest.Response response = await restClient.Post(request, callSettings.serializeNullValues);
 
             // Return result
             if (response.Status == System.Net.HttpStatusCode.OK)
