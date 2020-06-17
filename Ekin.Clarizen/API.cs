@@ -354,6 +354,37 @@ namespace Ekin.Clarizen
         /// <summary>
         /// Read an entity in Clarizen
         /// </summary>
+        /// <typeparam name="T">Return type of the operation</typeparam>
+        /// <param name="id">Entity Id of the object to get</param>
+        /// <returns></returns>
+        public T GetObject<T>(string id)
+        {
+            string[] fields = typeof(T).GetPropertyList();
+            Data.objects_get objects = new Data.objects_get(new Data.Request.objects_get(id, fields), CallSettings.GetFromAPI(this), true);
+            if (isBulk) bulkRequests.Add(objects.BulkRequest);
+            else { Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", objects.Error); TotalAPICallsMadeInCurrentSession++; }
+            if (objects.IsCalledSuccessfully)
+            {
+                try
+                {
+                    Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(objects.Data);
+                    RemoveInvalidFields(obj);
+                    return obj.ToObject<T>();
+                }
+                catch (Exception ex)
+                {
+                    return default(T);
+                }
+            }
+            else
+            {
+                return default(T);
+            }
+        }
+
+        /// <summary>
+        /// Read an entity in Clarizen
+        /// </summary>
         /// <param name="id">Entity Id of the object to get</param>
         /// <param name="pocoObject">Return type of the operation</param>
         /// <returns></returns>
