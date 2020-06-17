@@ -1,8 +1,4 @@
-﻿using System;
-using Ekin.Clarizen.Interfaces;
-using System.Threading.Tasks;
-
-namespace Ekin.Clarizen.Data
+﻿namespace Ekin.Clarizen.Data
 {
     public class objects_post : Call<dynamic>
     {

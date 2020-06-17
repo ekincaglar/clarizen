@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-namespace Ekin.Clarizen.Authentication
+﻿namespace Ekin.Clarizen.Authentication
 {
     public class getSessionInfo : Call<Result.getSessionInfo>
     {

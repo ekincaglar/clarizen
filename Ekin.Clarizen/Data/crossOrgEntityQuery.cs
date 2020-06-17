@@ -1,10 +1,4 @@
-﻿using System;
-using Ekin.Clarizen.Interfaces;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-
-namespace Ekin.Clarizen.Data
+﻿namespace Ekin.Clarizen.Data
 {
     public class crossOrgEntityQuery : Call<Result.entityQuery>
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using Ekin.Clarizen.Interfaces;
-using System.Threading.Tasks;
-
-namespace Ekin.Clarizen.Metadata
+﻿namespace Ekin.Clarizen.Metadata
 {
     public class setSystemSettingsValues : Call<dynamic>
     {

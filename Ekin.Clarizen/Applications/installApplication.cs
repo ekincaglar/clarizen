@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Ekin.Clarizen.Interfaces;
-
-namespace Ekin.Clarizen.Applications
+﻿namespace Ekin.Clarizen.Applications
 {
     public class installApplication : Call<dynamic>
     {

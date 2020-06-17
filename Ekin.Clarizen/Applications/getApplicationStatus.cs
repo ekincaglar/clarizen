@@ -1,9 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Ekin.Clarizen.Interfaces;
-using Newtonsoft.Json;
-
-namespace Ekin.Clarizen.Applications
+﻿namespace Ekin.Clarizen.Applications
 {
     public class getApplicationStatus : Call<Result.getApplicationStatus>
     {

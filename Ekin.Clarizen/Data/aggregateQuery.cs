@@ -1,9 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Ekin.Clarizen.Interfaces;
-using Newtonsoft.Json;
-
-namespace Ekin.Clarizen.Data
+﻿namespace Ekin.Clarizen.Data
 {
     public class aggregateQuery : Call<Result.aggregateQuery>
     {

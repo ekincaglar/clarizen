@@ -1,9 +1,4 @@
-﻿using System;
-using Ekin.Clarizen.Interfaces;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-namespace Ekin.Clarizen.Data
+﻿namespace Ekin.Clarizen.Data
 {
     public class entityFeedQuery : Call<Result.entityFeedQuery>
     {

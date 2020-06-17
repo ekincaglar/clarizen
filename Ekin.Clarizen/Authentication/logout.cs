@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Ekin.Clarizen.Authentication
+﻿namespace Ekin.Clarizen.Authentication
 {
     public class logout : Call<dynamic>
     {
@@ -9,7 +6,8 @@ namespace Ekin.Clarizen.Authentication
         {
             _callSettings = new CallSettings
             {
-                sessionId = sessionId
+                sessionId = sessionId,
+                isBulk = false  // Force this call to be made as a single call
             };
             _url = serverLocation + "/authentication/logout";
             _method = requestMethod.Get;

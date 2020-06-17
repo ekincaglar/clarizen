@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace Ekin.Clarizen.Authentication
+﻿namespace Ekin.Clarizen.Authentication
 {
     public class setPassword : Call<dynamic>
     {

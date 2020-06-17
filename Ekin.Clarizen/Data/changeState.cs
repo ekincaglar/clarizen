@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Ekin.Clarizen.Interfaces;
-
-namespace Ekin.Clarizen.Data
+﻿namespace Ekin.Clarizen.Data
 {
     public class changeState : Call<dynamic>
     {

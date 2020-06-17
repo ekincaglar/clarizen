@@ -1,8 +1,5 @@
 ﻿using System;
-using Ekin.Clarizen.Interfaces;
-using System.Threading.Tasks;
 using Ekin.Rest;
-using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Files
 {

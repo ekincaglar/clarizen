@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-namespace Ekin.Clarizen.Bulk
+﻿namespace Ekin.Clarizen.Bulk
 {
     public class execute : Call<Result.execute>
     {
