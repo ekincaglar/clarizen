@@ -36,6 +36,7 @@ namespace Ekin.Clarizen
         public bool serializeNullValues { get; set; } = false;
         public int retry { get; set; } = 1;
         public int sleepBetweenRetries { get; set; } = 0;
+        public int? connectionLimit { get; set; } = null;
 
         public LogFactory Logs { get; set; }
 
@@ -83,7 +84,8 @@ namespace Ekin.Clarizen
                 serializeNullValues = this.serializeNullValues,
                 timeout = this.timeout,
                 removeInvalidFieldsFromJsonResult = this.removeInvalidFieldsFromJsonResult,
-                Redirect = this.Redirect
+                Redirect = this.Redirect,
+                connectionLimit = this.connectionLimit
                 // We don't copy Logs, Bulk and Requester in the clone
             };
         }

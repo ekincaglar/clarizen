@@ -12,6 +12,8 @@
         public int sleepBetweenRetries { get; set; } = 0;
         public string requester { get; set; }
         public string redirect { get; set; }
+        public int? connectionLimit { get; set; } = null;
+        public System.Net.WebHeaderCollection Headers { get; set; } = null;
 
         public CallSettings()
         {
@@ -32,7 +34,8 @@
                     sleepBetweenRetries = api.sleepBetweenRetries,
                     timeout = (timeout != null) ? timeout : api.timeout,
                     requester = api.Requester,
-                    redirect = api.Redirect
+                    redirect = api.Redirect,
+                    connectionLimit = api.connectionLimit
                 };
             }
             else
@@ -63,6 +66,10 @@
             if (!string.IsNullOrWhiteSpace(redirect))
             {
                 headers.Add("x-redirect", redirect);
+            }
+            if (Headers != null)
+            {
+                headers.Add(Headers);
             }
             return headers;
         }

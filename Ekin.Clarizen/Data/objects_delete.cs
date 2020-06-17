@@ -4,54 +4,24 @@ using System.Threading.Tasks;
 
 namespace Ekin.Clarizen.Data
 {
-    public class objects_delete : ISupportBulk
+    public class objects_delete : Call<dynamic>
     {
-        public bool IsCalledSuccessfully { get; set; }
-        public string Error { get; set; }
-        public request BulkRequest { get; set; }
-
         public objects_delete(Request.objects_delete request, CallSettings callSettings)
-        {
-            Call(request, callSettings);
-        }
-        public async Task Call(Request.objects_delete request, CallSettings callSettings)
         {
             if (request == null || String.IsNullOrEmpty(request.id))
             {
                 IsCalledSuccessfully = false;
-                this.Error = "Object id must be provided";
+                this.Error = "Object id must be provided in the request";
                 return;
             }
 
-            // Set the URL
-            string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/objects" +
-                         (request.id.Substring(0, 1) != "/" ? "/" : "") + request.id;
+            _request = request;
+            _callSettings = callSettings;
+            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/objects" +
+                   (request.id.Substring(0, 1) != "/" ? "/" : "") + request.id;
+            _method = requestMethod.Delete;
 
-            if (callSettings.isBulk)
-            {
-                this.BulkRequest = new request(url, requestMethod.Delete);
-                return;
-            }
-
-            // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
-            restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = await restClient.Delete();
-
-            // Return result
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                this.IsCalledSuccessfully = true;
-            }
-            else if (response.InternalError != null)
-            {
-                this.IsCalledSuccessfully = false;
-                this.Error = response.GetFormattedErrorMessage();
-            }
-            else
-            {
-                this.IsCalledSuccessfully = false;
-            }
+            var result = Execute();
         }
     }
 }

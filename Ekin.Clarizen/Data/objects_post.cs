@@ -4,47 +4,17 @@ using System.Threading.Tasks;
 
 namespace Ekin.Clarizen.Data
 {
-    public class objects_post : ISupportBulk
+    public class objects_post : Call<dynamic>
     {
-        public bool IsCalledSuccessfully { get; set; }
-        public string Error { get; set; }
-        public request BulkRequest { get; set; }
-
         public objects_post(string id, object obj, CallSettings callSettings)
         {
-            Call(id, obj, callSettings);
-        }
-        public async Task Call(string id, object obj, CallSettings callSettings)
-        {
-            // Set the URL
-            string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/objects" +
-                         (id.Length > 0 && id.Substring(0, 1) != "/" ? "/" : "") + id;
+            _request = obj;
+            _callSettings = callSettings;
+            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/objects" +
+                   (id.Length > 0 && id.Substring(0, 1) != "/" ? "/" : "") + id;
+            _method = requestMethod.Post;
 
-            if (callSettings.isBulk)
-            {
-                this.BulkRequest = new request(url, requestMethod.Post, obj, null);
-                return;
-            }
-
-            // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
-            restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = await restClient.Post(obj, callSettings.serializeNullValues);
-
-            // Return result
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                this.IsCalledSuccessfully = true;
-            }
-            else if (response.InternalError != null)
-            {
-                this.IsCalledSuccessfully = false;
-                this.Error = response.GetFormattedErrorMessage();
-            }
-            else
-            {
-                this.IsCalledSuccessfully = false;
-            }
+            var result = Execute();
         }
     }
 }

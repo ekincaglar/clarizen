@@ -6,18 +6,9 @@ using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Files
 {
-    public class download : ISupportBulk
+    public class download : Call<Result.download>
     {
-        public Result.download Data { get; set; }
-        public bool IsCalledSuccessfully { get; set; }
-        public string Error { get; set; }
-        public request BulkRequest { get; set; }
-
         public download(Request.download request, CallSettings callSettings)
-        {
-            Call(request, callSettings);
-        }
-        public async Task Call(Request.download request, CallSettings callSettings)
         {
             if (request == null || String.IsNullOrEmpty(request.documentId))
             {
@@ -26,41 +17,14 @@ namespace Ekin.Clarizen.Files
                 return;
             }
 
-            // Set the URL
-            string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/files/download?documentId=" +
-                         (request.documentId.Substring(0, 1) != "/" ? "/" : "") + request.documentId +
-                         (request.redirect ? "&" + request.redirect.ToQueryString() : string.Empty);
+            _request = request;
+            _callSettings = callSettings;
+            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/files/download?documentId=" +
+                    (request.documentId.Substring(0, 1) != "/" ? "/" : "") + request.documentId +
+                    (request.redirect ? "&" + request.redirect.ToQueryString() : string.Empty);
+            _method = requestMethod.Get;
 
-            if (callSettings.isBulk)
-            {
-                this.BulkRequest = new request(url, requestMethod.Get);
-                return;
-            }
-
-            // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
-            restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = await restClient.Get();
-
-            // Parse Data
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                try
-                {
-                    this.Data = JsonConvert.DeserializeObject<Result.download>(response.Content);
-                    this.IsCalledSuccessfully = true;
-                }
-                catch (Exception ex)
-                {
-                    this.IsCalledSuccessfully = false;
-                    this.Error = ex.Message;
-                }
-            }
-            else
-            {
-                this.IsCalledSuccessfully = false;
-                this.Error = response.GetFormattedErrorMessage();
-            }
+            var result = Execute();
         }
     }
 }

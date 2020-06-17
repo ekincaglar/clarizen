@@ -5,57 +5,16 @@ using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Data
 {
-    public class createAndRetrieve : ISupportBulk
+    public class createAndRetrieve : Call<Result.createAndRetrieve>
     {
-        public Result.createAndRetrieve Data { get; set; }
-        public bool IsCalledSuccessfully { get; set; }
-        public string Error { get; set; }
-        public request BulkRequest { get; set; }
-
         public createAndRetrieve(Request.createAndRetrieve request, CallSettings callSettings)
         {
-            Call(request, callSettings);
-        }
+            _request = request;
+            _callSettings = callSettings;
+            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/createAndRetrieve";
+            _method = requestMethod.Post;
 
-        public async Task Call(Request.createAndRetrieve request, CallSettings callSettings)
-        {
-            // Set the URL
-            string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/createAndRetrieve";
-
-            if (callSettings.isBulk)
-            {
-                this.BulkRequest = new request(url, requestMethod.Post, request, typeof(Result.createAndRetrieve));
-                return;
-            }
-
-            // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
-            restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = await restClient.Post(request, callSettings.serializeNullValues);
-
-            // Return result
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                try
-                {
-                    this.Data = JsonConvert.DeserializeObject<Result.createAndRetrieve>(response.Content);
-                    this.IsCalledSuccessfully = true;
-                }
-                catch (Exception ex)
-                {
-                    this.IsCalledSuccessfully = false;
-                    this.Error = ex.Message;
-                }
-            }
-            else if (response.InternalError != null)
-            {
-                this.IsCalledSuccessfully = false;
-                this.Error = response.GetFormattedErrorMessage();
-            }
-            else
-            {
-                this.IsCalledSuccessfully = false;
-            }
+            var result = Execute();
         }
     }
 }

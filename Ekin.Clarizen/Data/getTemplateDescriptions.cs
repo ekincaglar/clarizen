@@ -5,19 +5,9 @@ using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Data
 {
-    public class getTemplateDescriptions : ISupportBulk
+    public class getTemplateDescriptions : Call<Result.getTemplateDescriptions>
     {
-        public Result.getTemplateDescriptions Data { get; set; }
-        public bool IsCalledSuccessfully { get; set; }
-        public string Error { get; set; }
-        public request BulkRequest { get; set; }
-
         public getTemplateDescriptions(Request.getTemplateDescriptions request, CallSettings callSettings)
-        {
-            Call(request, callSettings);
-        }
-
-        public async Task Call(Request.getTemplateDescriptions request, CallSettings callSettings)
         {
             if (request == null || string.IsNullOrWhiteSpace(request.typeName))
             {
@@ -26,39 +16,12 @@ namespace Ekin.Clarizen.Data
                 return;
             }
 
-            // Set the URL
-            string url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/getTemplateDescriptions?typeName=" + request.typeName;
+            _request = request;
+            _callSettings = callSettings;
+            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/getTemplateDescriptions?typeName=" + request.typeName;
+            _method = requestMethod.Get;
 
-            if (callSettings.isBulk)
-            {
-                this.BulkRequest = new request(url, requestMethod.Get);
-                return;
-            }
-
-            // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, callSettings.GetHeaders(), callSettings.timeout.GetValueOrDefault(), callSettings.retry, callSettings.sleepBetweenRetries);
-            restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = await restClient.Get();
-
-            // Parse Data
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                try
-                {
-                    this.Data = JsonConvert.DeserializeObject<Result.getTemplateDescriptions>(response.Content);
-                    this.IsCalledSuccessfully = true;
-                }
-                catch (Exception ex)
-                {
-                    this.IsCalledSuccessfully = false;
-                    this.Error = ex.Message;
-                }
-            }
-            else
-            {
-                this.IsCalledSuccessfully = false;
-                this.Error = response.GetFormattedErrorMessage();
-            }
+            var result = Execute();
         }
     }
 }

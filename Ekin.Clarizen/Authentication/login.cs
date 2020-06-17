@@ -4,39 +4,20 @@ using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Authentication
 {
-    public class login
+    public class login : Call<Result.login>
     {
-        public Result.login Data { get; set; }
-        public bool IsCalledSuccessfully { get; set; }
-        public string Error { get; set; }
-
         public login(string serverLocation, Request.login request)
         {
-            Call(serverLocation, request);
-        }
-        public async Task Call(string serverLocation, Request.login request)
-        {
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(serverLocation + "/authentication/login");
-            restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = await restClient.Post(request, true);
-            if (response.Status == System.Net.HttpStatusCode.OK)
+            _request = request;
+            _callSettings = new CallSettings
             {
-                try
-                {
-                    this.Data = JsonConvert.DeserializeObject<Result.login>(response.Content);
-                    this.IsCalledSuccessfully = true;
-                }
-                catch (Exception ex)
-                {
-                    this.IsCalledSuccessfully = false;
-                    this.Error = ex.Message;
-                }
-            }
-            else
-            {
-                this.IsCalledSuccessfully = false;
-                this.Error = response.GetFormattedErrorMessage();
-            }
+                isBulk = false, // Force this call to be made as a single call
+                serializeNullValues = true
+            };
+            _url = serverLocation + "/authentication/login";
+            _method = requestMethod.Post;
+
+            var result = Execute();
         }
     }
 }

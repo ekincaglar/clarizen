@@ -4,52 +4,24 @@ using Newtonsoft.Json;
 
 namespace Ekin.Clarizen.Bulk
 {
-    public class execute
+    public class execute : Call<Result.execute>
     {
-        public Result.execute Data { get; set; }
-        public bool IsCalledSuccessfully { get; set; }
-        public string Error { get; set; }
-
         public execute(Request.execute request, CallSettings callSettings)
         {
-            Call(request, callSettings);
-        }
-        public async Task Call(Request.execute request, CallSettings callSettings)
-        {
-            // Set the URL
-            string url = callSettings.serverLocation + "/bulk/execute";
+            _request = request;
 
-            // Set the CallOptions header
-            System.Net.WebHeaderCollection headers = callSettings.GetHeaders();
+            _callSettings = callSettings;
+            _callSettings.isBulk = false; // Force this call to be made as a single call
             if (request.batch != null)
             {
-                headers.Add("CallOptions", string.Format("Batch={0}", ((bool)request.batch) ? "true" : "false"));
+                _callSettings.Headers = new System.Net.WebHeaderCollection();
+                _callSettings.Headers.Add("CallOptions", string.Format("Batch={0}", ((bool)request.batch) ? "true" : "false"));
             }
 
-            // Call the API
-            Ekin.Rest.Client restClient = new Ekin.Rest.Client(url, headers, callSettings.timeout.GetValueOrDefault(120000), callSettings.retry, callSettings.sleepBetweenRetries);
-            restClient.ErrorType = typeof(error);
-            Ekin.Rest.Response response = await restClient.Post(request, callSettings.serializeNullValues);
+            _url = callSettings.serverLocation + "/bulk/execute";
+            _method = requestMethod.Post;
 
-            // Parse Data
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                try
-                {
-                    this.Data = JsonConvert.DeserializeObject<Result.execute>(response.Content);
-                    this.IsCalledSuccessfully = true;
-                }
-                catch (Exception ex)
-                {
-                    this.IsCalledSuccessfully = false;
-                    this.Error = ex.Message;
-                }
-            }
-            else
-            {
-                this.IsCalledSuccessfully = false;
-                this.Error = $"{response.GetFormattedErrorMessage()}. Timeout set to {TimeSpan.FromMilliseconds(callSettings.timeout.GetValueOrDefault(120000)).ToHumanReadableString()}.";
-            }
+            var result = Execute();
         }
     }
 }
