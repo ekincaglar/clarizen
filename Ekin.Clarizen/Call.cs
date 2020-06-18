@@ -130,7 +130,19 @@ namespace Ekin.Clarizen
             }
             else if (response.InternalError != null)
             {
-                IsCalledSuccessfully = false;
+                error internalError = response.InternalError as error;
+                if (_method == requestMethod.Get && internalError?.errorCode != null && internalError.errorCode.Equals("EntityNotFound"))
+                {
+                    // Clarizen returns Http 500 when an entity of the given type is not found
+                    // In the body of the response "errorCode": "EntityNotFound" is returned
+                    // This is where we handle that case
+                    IsCalledSuccessfully = true;
+                }
+                else
+                {
+                    IsCalledSuccessfully = false;
+                }
+
                 if (_callSettings?.timeout != null)
                 {
                     Error = $"{response.GetFormattedErrorMessage()}. Timeout set to {TimeSpan.FromMilliseconds(_callSettings.timeout.GetValueOrDefault(120000)).ToHumanReadableString()}.";
