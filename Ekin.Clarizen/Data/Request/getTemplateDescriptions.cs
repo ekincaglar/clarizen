@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Request
+﻿namespace Ekin.Clarizen.Data.Request
 {
-    public class getTemplateDescriptions
+    public class GetTemplateDescriptions
     {
-        public string typeName { get; set; }
+        public string TypeName { get; set; }
 
-        public getTemplateDescriptions(string typeName)
+        public GetTemplateDescriptions(string typeName)
         {
-            this.typeName = typeName;
+            TypeName = typeName;
         }
     }
 }

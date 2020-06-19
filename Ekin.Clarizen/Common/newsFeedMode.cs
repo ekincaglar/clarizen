@@ -1,25 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public enum newsFeedMode
+    public enum NewsFeedMode
     {
         Following, All
     }
 
-    public static class newsFeedModeExtensions
+    public static class NewsFeedModeExtensions
     {
-        public static string ToEnumString(this newsFeedMode me)
+        public static string ToEnumString(this NewsFeedMode me)
         {
             switch (me)
             {
-                case newsFeedMode.All: return "All";
-                case newsFeedMode.Following: return "Following";
+                case NewsFeedMode.All: return "All";
+                case NewsFeedMode.Following: return "Following";
                 default: return "ERROR";
             }
         }

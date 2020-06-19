@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Files
 {
-    public class upload : Call<dynamic>
+    public class Upload : Call<dynamic>
     {
-        public upload(Request.upload request, CallSettings callSettings)
+        public Upload(Request.Upload request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/files/upload";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/files/upload";
+            _method = RequestMethod.Post;
         }
     }
 }

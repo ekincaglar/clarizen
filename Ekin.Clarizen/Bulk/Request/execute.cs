@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace Ekin.Clarizen.Bulk.Request
 {
-    public class execute
+    public class Execute
     {
         /// <summary>
         /// Array of Request objects representing individual API calls
         /// </summary>
-        public List<request> requests { get; set; }
-        public bool transactional { get; set; }
-        public bool? batch { get; set; }
+        public List<Clarizen.Request> Requests { get; set; }
+        public bool Transactional { get; set; }
+        public bool? Batch { get; set; }
 
-        public execute(List<request> requests, bool transactional, bool? batch = null)
+        public Execute(List<Clarizen.Request> requests, bool transactional, bool? batch = null)
         {
-            this.requests = requests;
-            this.transactional = transactional;
-            this.batch = batch;
+            this.Requests = requests;
+            this.Transactional = transactional;
+            this.Batch = batch;
         }
     }
 }

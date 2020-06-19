@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Result
+﻿namespace Ekin.Clarizen.Data.Result
 {
-    public class retrieveMultiple
+    public class RetrieveMultiple
     {
-        public dynamic[] results { get; set; }
+        public dynamic[] Results { get; set; }
     }
 }

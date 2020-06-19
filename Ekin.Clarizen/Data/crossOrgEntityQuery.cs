@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class crossOrgEntityQuery : Call<Result.entityQuery>
+    public class CrossOrgEntityQuery : Call<Result.EntityQuery>
     {
-        public crossOrgEntityQuery(Queries.crossOrgEntityQuery request, CallSettings callSettings)
+        public CrossOrgEntityQuery(Queries.CrossOrgEntityQuery request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/crossOrgEntityQuery";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/crossOrgEntityQuery";
+            _method = RequestMethod.Post;
         }
     }
 }

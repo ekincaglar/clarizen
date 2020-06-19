@@ -1,18 +1,14 @@
 ﻿using Ekin.Clarizen.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Data.Request
 {
-    public class countQuery
+    public class CountQuery
     {
-        public IQuery query { get; set; }
+        public IQuery Query { get; set; }
 
-        public countQuery(IQuery query)
+        public CountQuery(IQuery query)
         {
-            this.query = query;
+            Query = query;
         }
     }
 }

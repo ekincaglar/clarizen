@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Request
+﻿namespace Ekin.Clarizen.Data.Request
 {
-    public class createFromTemplate
+    public class CreateFromTemplate
     {
         /// <summary>
         /// Entity to be created
         /// </summary>
-        public object entity { get; set; }
+        public object Entity { get; set; }
         /// <summary>
         /// Name of the template to use
         /// </summary>
-        public string templateName { get; set; }
+        public string TemplateName { get; set; }
         /// <summary>
         /// Entity Id of the parent
         /// </summary>
-        public string parentId { get; set; }
+        public string ParentId { get; set; }
 
-        public createFromTemplate(object entity, string templateName, string parentId)
+        public CreateFromTemplate(object entity, string templateName, string parentId)
         {
-            this.entity = entity;
-            this.templateName = templateName;
-            this.parentId = parentId;
+            Entity = entity;
+            TemplateName = templateName;
+            ParentId = parentId;
         }
     }
 }

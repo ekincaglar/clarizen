@@ -3,11 +3,11 @@ using Ekin.Rest;
 
 namespace Ekin.Clarizen.Files
 {
-    public class download : Call<Result.download>
+    public class Download : Call<Result.Download>
     {
-        public download(Request.download request, CallSettings callSettings)
+        public Download(Request.Download request, CallSettings callSettings)
         {
-            if (request == null || String.IsNullOrEmpty(request.documentId))
+            if (request == null || String.IsNullOrEmpty(request.DocumentId))
             {
                 IsCalledSuccessfully = false;
                 this.Error = "Document id must be provided";
@@ -16,12 +16,10 @@ namespace Ekin.Clarizen.Files
 
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/files/download?documentId=" +
-                    (request.documentId.Substring(0, 1) != "/" ? "/" : "") + request.documentId +
-                    (request.redirect ? "&" + request.redirect.ToQueryString() : string.Empty);
-            _method = requestMethod.Get;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/files/download?documentId=" +
+                    (request.DocumentId.Substring(0, 1) != "/" ? "/" : "") + request.DocumentId +
+                    (request.Redirect ? "&" + request.Redirect.ToQueryString() : string.Empty);
+            _method = RequestMethod.Get;
         }
     }
 }

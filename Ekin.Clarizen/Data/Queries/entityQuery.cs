@@ -1,45 +1,41 @@
 ﻿using Ekin.Clarizen.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Data.Queries
 {
-    public class entityQuery : IQuery
+    public class EntityQuery : IQuery
     {
         public string _type { get { return "entityQuery"; } }
 
-        public string typeName { get; set; }
-        public string[] fields { get; set; }
-        public orderBy[] orders { get; set; }
-        public ICondition where { get; set; }
-        public relation[] relations { get; set; }   // NOT TESTED
-        public bool deleted { get; set; }
-        public bool originalExternalID { get; set; }
-        public paging paging { get; set; }
+        public string TypeName { get; set; }
+        public string[] Fields { get; set; }
+        public OrderBy[] Orders { get; set; }
+        public ICondition Where { get; set; }
+        public Relation[] Relations { get; set; }
+        public bool Deleted { get; set; }
+        public bool OriginalExternalID { get; set; }
+        public Paging Paging { get; set; }
 
-        public entityQuery(string typeName)
+        public EntityQuery(string typeName)
         {
-            this.typeName = typeName;
+            TypeName = typeName;
         }
 
-        public entityQuery(string typeName, string[] fields)
+        public EntityQuery(string typeName, string[] fields)
         {
-            this.typeName = typeName;
-            this.fields = fields;
+            TypeName = typeName;
+            Fields = fields;
         }
 
-        public entityQuery(string typeName, string[] fields, orderBy[] orders, ICondition where, relation[] relations, bool deleted, bool originalExternalID, paging paging)
+        public EntityQuery(string typeName, string[] fields, OrderBy[] orders, ICondition where, Relation[] relations, bool deleted, bool originalExternalID, Paging paging)
         {
-            this.typeName = typeName;
-            this.fields = fields;
-            this.orders = orders;
-            this.where = where;
-            this.relations = relations;
-            this.deleted = deleted;
-            this.originalExternalID = originalExternalID;
-            this.paging = paging;
+            TypeName = typeName;
+            Fields = fields;
+            Orders = orders;
+            Where = where;
+            Relations = relations;
+            Deleted = deleted;
+            OriginalExternalID = originalExternalID;
+            Paging = paging;
         }
     }
 }

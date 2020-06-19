@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public enum timesheetStateEnum
+    public enum TimesheetStateEnum
     {
         UnSubmitted, PendingApproval, Approved, All
     }
 
-    public static class timesheetStateEnumExtensions
+    public static class TimesheetStateEnumExtensions
     {
-        public static string ToEnumString(this timesheetStateEnum me)
+        public static string ToEnumString(this TimesheetStateEnum me)
         {
             switch (me)
             {
-                case timesheetStateEnum.UnSubmitted: return "UnSubmitted";
-                case timesheetStateEnum.PendingApproval: return "PendingApproval";
-                case timesheetStateEnum.Approved: return "Approved";
-                case timesheetStateEnum.All: return "All";
+                case TimesheetStateEnum.UnSubmitted: return "UnSubmitted";
+                case TimesheetStateEnum.PendingApproval: return "PendingApproval";
+                case TimesheetStateEnum.Approved: return "Approved";
+                case TimesheetStateEnum.All: return "All";
                 default: return "ERROR";
             }
         }

@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Request
+﻿namespace Ekin.Clarizen.Data.Request
 {
-    public class objects_get
+    public class Objects_get
     {
         /// <summary>
         /// The list of fields to read
         /// </summary>
-        public string[] fields { get; set; }
+        public string[] Fields { get; set; }
+
         /// <summary>
         /// Represents the unique Id of an entity in Clarizen
         /// Format: /typeName/entityId (e.g. /task/3F2504E0-4F89-42D3-9A0C-0305E82C3301)
         /// </summary>
-        public string id { get; set; }
+        public string Id { get; set; }
 
-        public objects_get (string id, string[] fields)
+        public Objects_get (string id, string[] fields)
         {
-            this.id = id;
-            this.fields = fields;
+            Id = id;
+            Fields = fields;
         }
 
     }

@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Request
+﻿namespace Ekin.Clarizen.Data.Request
 {
-    public class retrieveMultiple
+    public class RetrieveMultiple
     {
-        public string[] fields { get; set; }
-        public string[] ids { get; set; }
+        public string[] Fields { get; set; }
+        public string[] Ids { get; set; }
 
-        public retrieveMultiple(string[] fields, string[] ids)
+        public RetrieveMultiple(string[] fields, string[] ids)
         {
-            this.fields = fields;
-            this.ids = ids;
+            Fields = fields;
+            Ids = ids;
         }
     }
 }

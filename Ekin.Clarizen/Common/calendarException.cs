@@ -1,12 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen
 {
-    public class calendarException: EntityId
+    public class CalendarException: EntityId
     {
         /// <summary>
         /// Name
@@ -69,6 +66,6 @@ namespace Ekin.Clarizen
 
         #endregion
 
-        public calendarException() { }
+        public CalendarException() { }
     }
 }

@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class entityFeedQuery : Call<Result.entityFeedQuery>
+    public class EntityFeedQuery : Call<Result.EntityFeedQuery>
     {
-        public entityFeedQuery(Queries.entityFeedQuery request, CallSettings callSettings)
+        public EntityFeedQuery(Queries.EntityFeedQuery request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/entityFeedQuery";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/entityFeedQuery";
+            _method = RequestMethod.Post;
         }
     }
 }

@@ -1,27 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen
 {
-    public class entityDescription
+    public class EntityDescription
     {
-        public string typeName { get; set; }
-        public fieldDescription[] fields { get; set; }
-        public string[] validStates { get; set; }
-        public string label { get; set; }
-        public string labelPlural { get; set; }
-        public string parentEntity { get; set; }
-        public string displayField { get; set; }
-        public bool disabled { get; set; }
-        public relationDescription[] relations { get; set; }
+        public string TypeName { get; set; }
+        public FieldDescription[] Fields { get; set; }
+        public string[] ValidStates { get; set; }
+        public string Label { get; set; }
+        public string LabelPlural { get; set; }
+        public string ParentEntity { get; set; }
+        public string DisplayField { get; set; }
+        public bool Disabled { get; set; }
+        public RelationDescription[] Relations { get; set; }
 
-        public entityDescription() { }
+        public EntityDescription() { }
 
         public void SortFields()
         {
-            Array.Sort(fields, delegate (fieldDescription x, fieldDescription y) { return x.name.CompareTo(y.name); });
+            Array.Sort(Fields, delegate (FieldDescription x, FieldDescription y) { return x.Name.CompareTo(y.Name); });
         }
     }
 }

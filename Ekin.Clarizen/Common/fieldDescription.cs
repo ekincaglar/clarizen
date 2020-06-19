@@ -1,15 +1,12 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Xml.Serialization;
 
 namespace Ekin.Clarizen
 {
-    public class fieldDescription
+    public class FieldDescription
     {
-        public string name { get; set; }
+        public string Name { get; set; }
+
         /// <summary>
         /// Possible values:
         /// Boolean | String | Integer | Long | Double | DateTime | Date | Entity | Duration | Money | MultiPickList | Binary
@@ -17,30 +14,48 @@ namespace Ekin.Clarizen
         [XmlElement("type")]
         [JsonProperty("type")]
         public string _type { get; set; }
+
         /// <summary>
         /// Possible values:
         /// Text | Numeric | Date | Checkbox | TextArea | Currency | Duration | ReferenceToObject | PickList | Url | Percent | RichText | MultiPickList | Other
         /// </summary>
-        public string presentationType { get; set; }
-        public string label { get; set; }
-        public object defaultValue { get; set; }
-        public bool system { get; set; }
-        public bool calculated { get; set; }
-        public bool nullable { get; set; }
-        public bool createOnly { get; set; }
-        public bool updateable { get; set; }
+        public string PresentationType { get; set; }
+
+        public string Label { get; set; }
+
+        public object DefaultValue { get; set; }
+
+        public bool System { get; set; }
+
+        public bool Calculated { get; set; }
+
+        public bool Nullable { get; set; }
+
+        public bool CreateOnly { get; set; }
+
+        public bool Updateable { get; set; }
+
+
         [XmlElement("internal")]
         [JsonProperty("internal")]
-        public bool _internal { get; set; }
-        public bool custom { get; set; }
-        public bool visible { get; set; }
-        public int decimalPlaces { get; set; }
-        public bool filterable { get; set; }
-        public bool sortable { get; set; }
-        public int maxLength { get; set; }
-        public string[] flags { get; set; }
-        public string[] referencedEntities { get; set; }
+        public bool Internal { get; set; }
 
-        public fieldDescription() { }
+        public bool Custom { get; set; }
+
+        public bool Visible { get; set; }
+
+        public int DecimalPlaces { get; set; }
+
+        public bool Filterable { get; set; }
+
+        public bool Sortable { get; set; }
+
+        public int MaxLength { get; set; }
+
+        public string[] Flags { get; set; }
+
+        public string[] ReferencedEntities { get; set; }
+
+        public FieldDescription() { }
     }
 }

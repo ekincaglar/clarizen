@@ -1,33 +1,28 @@
 ﻿using Ekin.Clarizen.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Data.Queries
 {
-    public class newsFeedQuery : IQuery
+    public class NewsFeedQuery : IQuery
     {
         public string _type { get { return "newsFeedQuery"; } }
 
-        public string mode { get; set; }
-        public string[] fields { get; set; }
-        public string[] feedItemOptions { get; set; }
-        public paging paging { get; set; }
+        public string Mode { get; set; }
+        public string[] Fields { get; set; }
+        public string[] FeedItemOptions { get; set; }
+        public Paging Paging { get; set; }
 
-        public newsFeedQuery(newsFeedMode mode, string[] fields, string[] feedItemOptions, paging paging)
+        public NewsFeedQuery(NewsFeedMode mode, string[] fields, string[] feedItemOptions, Paging paging)
         {
-            this.mode = mode.ToEnumString();
-            this.fields = fields;
-            this.feedItemOptions = feedItemOptions;
-            this.paging = paging;
+            Mode = mode.ToEnumString();
+            Fields = fields;
+            FeedItemOptions = feedItemOptions;
+            Paging = paging;
         }
 
-        public newsFeedQuery(newsFeedMode mode, string[] fields)
+        public NewsFeedQuery(NewsFeedMode mode, string[] fields)
         {
-            this.mode = mode.ToEnumString();
-            this.fields = fields;
+            Mode = mode.ToEnumString();
+            Fields = fields;
         }
-
     }
 }

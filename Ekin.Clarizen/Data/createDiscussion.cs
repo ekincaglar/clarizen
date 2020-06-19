@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class createDiscussion : Call<Result.createDiscussion>
+    public class CreateDiscussion : Call<Result.CreateDiscussion>
     {
-        public createDiscussion(Request.createDiscussion request, CallSettings callSettings)
+        public CreateDiscussion(Request.CreateDiscussion request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/createDiscussion";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/createDiscussion";
+            _method = RequestMethod.Post;
         }
      }
 }

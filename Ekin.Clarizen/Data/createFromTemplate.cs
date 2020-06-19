@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class createFromTemplate : Call<Result.createFromTemplate>
+    public class CreateFromTemplate : Call<Result.CreateFromTemplate>
     {
-        public createFromTemplate(Request.createFromTemplate request, CallSettings callSettings)
+        public CreateFromTemplate(Request.CreateFromTemplate request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/createFromTemplate";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/createFromTemplate";
+            _method = RequestMethod.Post;
         }
     }
 }

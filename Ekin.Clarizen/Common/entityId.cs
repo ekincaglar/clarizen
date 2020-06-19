@@ -5,13 +5,22 @@ namespace Ekin.Clarizen
 {
     public class EntityId
     {
-        public string id { get; set; }
+        public string Id { get; set; }
+
+        [JsonIgnore]
+        public string Id_value
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(Id) && Id.Contains("/") ? Id.Substring(Id.LastIndexOf("/") + 1) : Id;
+            }
+        }
 
         public EntityId() { }
 
         public EntityId(string Id)
         {
-            id = Id;
+            this.Id = Id;
         }
 
         public override bool Equals(object obj)
@@ -21,32 +30,21 @@ namespace Ekin.Clarizen
                 return true;
             }
 
-            var item = obj as EntityId;
+            EntityId item = obj as EntityId;
 
-            if (object.ReferenceEquals(id, null) ||
-                object.ReferenceEquals(item, null) ||
-                object.ReferenceEquals(item.id, null))
+            if (Id is null || item is null || item.Id is null)
             {
                 return false;
             }
 
-            return id.Equals(item.id, StringComparison.InvariantCultureIgnoreCase);
+            return Id.Equals(item.Id, StringComparison.InvariantCultureIgnoreCase);
         }
 
         public override int GetHashCode()
         {
-            return id.GetHashCode();
+            return Id.GetHashCode();
         }
 
-        
-        [JsonIgnore]
-        public string id_value
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(id) && id.Contains("/") ? id.Substring(id.LastIndexOf("/") + 1) : id;
-            }
-        }
     }
 
 

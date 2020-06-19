@@ -1,23 +1,21 @@
 ﻿namespace Ekin.Clarizen.Bulk
 {
-    public class execute : Call<Result.execute>
+    public class Execute : Call<Result.Execute>
     {
-        public execute(Request.execute request, CallSettings callSettings)
+        public Execute(Request.Execute request, CallSettings callSettings)
         {
             _request = request;
 
             _callSettings = callSettings;
-            _callSettings.isBulk = false; // Force this call to be made as a single call
-            if (request.batch != null)
+            _callSettings.IsBulk = false; // Force this call to be made as a single call
+            if (request.Batch != null)
             {
                 _callSettings.Headers = new System.Net.WebHeaderCollection();
-                _callSettings.Headers.Add("CallOptions", string.Format("Batch={0}", ((bool)request.batch) ? "true" : "false"));
+                _callSettings.Headers.Add("CallOptions", string.Format("Batch={0}", request.Batch.GetValueOrDefault() ? "true" : "false"));
             }
 
-            _url = callSettings.serverLocation + "/bulk/execute";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = callSettings.ServerLocation + "/bulk/execute";
+            _method = RequestMethod.Post;
         }
     }
 }

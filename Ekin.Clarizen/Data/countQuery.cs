@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class countQuery : Call<Result.countQuery>
+    public class CountQuery : Call<Result.CountQuery>
     {
-        public countQuery(Request.countQuery request, CallSettings callSettings)
+        public CountQuery(Request.CountQuery request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/countQuery";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/countQuery";
+            _method = RequestMethod.Post;
         }
     }
 }

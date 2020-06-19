@@ -1,31 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Authentication.Request
+﻿namespace Ekin.Clarizen.Authentication.Request
 {
-    public class loginOptions
+    public class LoginOptions
     {
         /// <summary>
         /// (Optional) If you are a certified partner, please provide the partner id you received from Clarizen
         /// </summary>
-        public string partnerId { get; set; }
+        public string PartnerId { get; set; }
         /// <summary>
         /// A string representing your application
         /// </summary>
-        public string applicationId { get; set; }
+        public string ApplicationId { get; set; }
 
-        public loginOptions(string partnerId, string applicationId)
+        public LoginOptions(string partnerId, string applicationId)
         {
-            this.partnerId = partnerId;
-            this.applicationId = applicationId;
+            PartnerId = partnerId;
+            ApplicationId = applicationId;
         }
 
-        public loginOptions()
+        public LoginOptions()
         {
-            this.partnerId = string.Empty;
-            this.applicationId = string.Empty;
+            PartnerId = string.Empty;
+            ApplicationId = string.Empty;
         }
     }
 }

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Request
+﻿namespace Ekin.Clarizen.Data.Request
 {
-    public class objects_post
+    public class Objects_post
     {
-        public object entity { get; set; }
+        public object Entity { get; set; }
 
-        public objects_post(object entity)
+        public Objects_post(object entity)
         {
-            this.entity = entity;
+            Entity = entity;
         }
     }
 }

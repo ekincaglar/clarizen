@@ -1,30 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Files.Request
+﻿namespace Ekin.Clarizen.Files.Request
 {
-    public class upload
+    public class Upload
     {
         /// <summary>
         /// Id of a document to attach to
         /// </summary>
-        public string documentId { get; set; }
+        public string DocumentId { get; set; }
+
         /// <summary>
         /// Additional information about the file
         /// </summary>
-        public fileInformation fileInformation { get; set; }
+        public FileInformation FileInformation { get; set; }
+
         /// <summary>
         /// When the file is stored in Clarizen, provide the Url you received in a previous request to getUploadUrl
         /// </summary>
-        public string uploadUrl { get; set; }
+        public string UploadUrl { get; set; }
 
-        public upload(string documentId, fileInformation fileInformation, string uploadUrl)
+        public Upload(string documentId, FileInformation fileInformation, string uploadUrl)
         {
-            this.documentId = documentId;
-            this.fileInformation = fileInformation;
-            this.uploadUrl = uploadUrl;
+            DocumentId = documentId;
+            FileInformation = fileInformation;
+            UploadUrl = uploadUrl;
         }
     }
 }

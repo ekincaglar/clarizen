@@ -1,14 +1,12 @@
 ﻿namespace Ekin.Clarizen.Utils
 {
-    public class appLogin : Call<Result.appLogin>
+    public class AppLogin : Call<Result.AppLogin>
     {
-        public appLogin(CallSettings callSettings)
+        public AppLogin(CallSettings callSettings)
         {
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/utils/appLogin";
-            _method = requestMethod.Get;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/utils/appLogin";
+            _method = RequestMethod.Get;
         }
     }
 }

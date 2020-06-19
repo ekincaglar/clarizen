@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class groupsQuery : Call<Result.groupsQuery>
+    public class GroupsQuery : Call<Result.GroupsQuery>
     {
-        public groupsQuery(Queries.groupsQuery request, CallSettings callSettings)
+        public GroupsQuery(Queries.GroupsQuery request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/groupsQuery";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/groupsQuery";
+            _method = RequestMethod.Post;
         }
     }
 }

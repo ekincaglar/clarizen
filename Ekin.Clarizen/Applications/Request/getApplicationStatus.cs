@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Applications.Request
+﻿namespace Ekin.Clarizen.Applications.Request
 {
-    public class getApplicationStatus
+    public class GetApplicationStatus
     {
-        public string applicationId { get; set; }
+        public string ApplicationId { get; set; }
 
-        public getApplicationStatus(string applicationId)
+        public GetApplicationStatus(string applicationId)
         {
-            this.applicationId = applicationId;
+            this.ApplicationId = applicationId;
         }
     }
 }

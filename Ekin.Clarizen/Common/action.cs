@@ -1,40 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public class action
+    public class Action
     {
         /// <summary>
         /// The url of the web service to call
         /// </summary>
-        public string url { get; set; }
+        public string Url { get; set; }
         /// <summary>
         /// The http method
         /// Possible values: GET | PUT | POST | DELETE
         /// </summary>
-        public string method { get; set; }
+        public string Method { get; set; }
         /// <summary>
         /// The multiline formula that represents a list of the http headers in the following format: 
         /// HeaderName1: HeaderValue1
         /// HeaderName2: HeaderValue2
         /// </summary>
-        public string headers { get; set; }
+        public string Headers { get; set; }
         /// <summary>
         /// The formula that represents a body of the http request
         /// </summary>
-        public string body { get; set; }
+        public string Body { get; set; }
 
-        public action() { }
+        public Action() { }
 
-        public action (string url, string method, string headers, string body)
+        public Action (string url, string method, string headers, string body)
         {
-            this.url = url;
-            this.method = method;
-            this.headers = headers;
-            this.body = body;
+            this.Url = url;
+            this.Method = method;
+            this.Headers = headers;
+            this.Body = body;
         }
 
     }

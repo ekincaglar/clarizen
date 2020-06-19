@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class expenseQuery : Call<Result.expenseQuery>
+    public class ExpenseQuery : Call<Result.ExpenseQuery>
     {
-        public expenseQuery(Queries.expenseQuery request, CallSettings callSettings)
+        public ExpenseQuery(Queries.ExpenseQuery request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/expenseQuery";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/expenseQuery";
+            _method = RequestMethod.Post;
         }
     }
 }

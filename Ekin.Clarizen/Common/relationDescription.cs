@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public class relationDescription
+    public class RelationDescription
     {
-        public string name { get; set; }
-        public string label { get; set; }
-        public string roleLabel { get; set; }
-        public bool readOnly { get; set; }
-        public string linkTypeName { get; set; }
-        public string relatedTypeName { get; set; }
-        public string sourceFieldName { get; set; }
+        public string Name { get; set; }
+        public string Label { get; set; }
+        public string RoleLabel { get; set; }
+        public bool ReadOnly { get; set; }
+        public string LinkTypeName { get; set; }
+        public string RelatedTypeName { get; set; }
+        public string SourceFieldName { get; set; }
 
-        public relationDescription() { }
+        public RelationDescription() { }
     }
 }

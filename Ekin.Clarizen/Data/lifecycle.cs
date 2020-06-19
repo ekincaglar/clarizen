@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class lifecycle : Call<dynamic>
+    public class Lifecycle : Call<dynamic>
     {
-        public lifecycle(Request.lifecycle request, CallSettings callSettings)
+        public Lifecycle(Request.Lifecycle request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/lifecycle";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/lifecycle";
+            _method = RequestMethod.Post;
         }
     }
 }

@@ -1,30 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Files.Request
+﻿namespace Ekin.Clarizen.Files.Request
 {
-    public class updateImage
+    public class UpdateImage
     {
         /// <summary>
         /// Id of an entity to attach to
         /// </summary>
-        public string entityId { get; set; }
+        public string EntityId { get; set; }
+
         /// <summary>
         /// When the file is stored in Clarizen, provide the Url you received in a previous request to getUploadUrl
         /// </summary>
-        public string uploadUrl { get; set; }
+        public string UploadUrl { get; set; }
+
         /// <summary>
         /// Revert image to default icon
         /// </summary>
-        public bool reset { get; set; }
+        public bool Reset { get; set; }
 
-        public updateImage(string entityId, string uploadUrl, bool reset)
+        public UpdateImage(string entityId, string uploadUrl, bool reset)
         {
-            this.entityId = entityId;
-            this.uploadUrl = uploadUrl;
-            this.reset = reset;
+            EntityId = entityId;
+            UploadUrl = uploadUrl;
+            Reset = reset;
         }
     }
 }

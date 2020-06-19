@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Authentication
 {
-    public class setPassword : Call<dynamic>
+    public class SetPassword : Call<dynamic>
     {
-        public setPassword(Request.setPassword request, CallSettings callSettings)
+        public SetPassword(Request.SetPassword request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/authentication/setPassword";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/authentication/setPassword";
+            _method = RequestMethod.Post;
         }
     }
 }

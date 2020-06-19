@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Result
+﻿namespace Ekin.Clarizen.Data.Result
 {
-    public class executeCustomAction
+    public class ExecuteCustomAction
     {
-        public string message { get; set; }
+        public string Message { get; set; }
     }
 }

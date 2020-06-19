@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Result
+﻿namespace Ekin.Clarizen.Data.Result
 {
-    public class objects_put
+    public class Objects_put
     {
-        public string id { get; set; }
+        public string Id { get; set; }
     }
 }

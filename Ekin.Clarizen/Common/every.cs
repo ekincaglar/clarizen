@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public class every
+    public class Every
     {
-        public string recurrenceType { get; set; }
-        public int period { get; set; }
+        public string RecurrenceType { get; set; }
+        public int Period { get; set; }
 
-        public every() { }
+        public Every() { }
 
     }
 }

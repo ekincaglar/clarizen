@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Ekin.Clarizen.Interfaces;
 using Ekin.Log;
 using Newtonsoft.Json.Linq;
@@ -21,32 +22,32 @@ namespace Ekin.Clarizen
 
         #region Public properties
 
-        public bool removeInvalidFieldsFromJsonResult { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
+        public bool RemoveInvalidFieldsFromJsonResult { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
 
-        public string serverLocation { get; set; }
-        public string sessionId { get; set; }
+        public string ServerLocation { get; set; }
+        public string SessionId { get; set; }
 
         public string ApiKey { get; set; }
         public string Redirect { get; set; }
 
-        public bool isSandbox { get; set; } = false;
+        public bool IsSandbox { get; set; } = false;
         public int TotalAPICallsMadeInCurrentSession { get; set; }
-        public bool serializeNullValues { get; set; } = false;
-        public int retry { get; set; } = 1;
-        public int sleepBetweenRetries { get; set; } = 0;
-        public int? connectionLimit { get; set; } = null;
+        public bool SerializeNullValues { get; set; } = false;
+        public int Retry { get; set; } = 1;
+        public int SleepBetweenRetries { get; set; } = 0;
+        public int? ConnectionLimit { get; set; } = null;
 
         public LogFactory Logs { get; set; }
 
         public BulkOperations Bulk { get; private set; }
         public FileUploadHelper FileUpload { get; private set; }
 
-        public bool isBulk { get; private set; }
-        private List<request> bulkRequests { get; set; }
+        public bool IsBulk { get; private set; }
+        private List<Request> BulkRequests { get; set; }
 
-        public int? timeout { get; set; } = 120000;
+        public int? Timeout { get; set; } = 120000;
 
         #endregion Public properties
 
@@ -73,19 +74,19 @@ namespace Ekin.Clarizen
         {
             return new API()
             {
-                sessionId = this.sessionId,
+                SessionId = this.SessionId,
                 ApiKey = this.ApiKey,
-                isSandbox = this.isSandbox,
-                serverLocation = this.serverLocation,
-                username = this.username,
-                password = this.password,
-                retry = this.retry,
-                sleepBetweenRetries = this.sleepBetweenRetries,
-                serializeNullValues = this.serializeNullValues,
-                timeout = this.timeout,
-                removeInvalidFieldsFromJsonResult = this.removeInvalidFieldsFromJsonResult,
+                IsSandbox = this.IsSandbox,
+                ServerLocation = this.ServerLocation,
+                Username = this.Username,
+                Password = this.Password,
+                Retry = this.Retry,
+                SleepBetweenRetries = this.SleepBetweenRetries,
+                SerializeNullValues = this.SerializeNullValues,
+                Timeout = this.Timeout,
+                RemoveInvalidFieldsFromJsonResult = this.RemoveInvalidFieldsFromJsonResult,
                 Redirect = this.Redirect,
-                connectionLimit = this.connectionLimit
+                ConnectionLimit = this.ConnectionLimit
                 // We don't copy Logs, Bulk and Requester in the clone
             };
         }
@@ -111,30 +112,32 @@ namespace Ekin.Clarizen
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool Login(string username, string password)
+        public async Task<bool> Login(string username, string password)
         {
-            if (string.IsNullOrWhiteSpace(serverLocation))
+            if (string.IsNullOrWhiteSpace(ServerLocation))
             {
                 // First we get the Url where your organization API is located
-                Authentication.getServerDefinition serverDefinition = new Authentication.getServerDefinition(new Ekin.Clarizen.Authentication.Request.getServerDefinition(username, password, new Ekin.Clarizen.Authentication.Request.loginOptions()), isSandbox);
+                Authentication.GetServerDefinition serverDefinition = new Authentication.GetServerDefinition(new Ekin.Clarizen.Authentication.Request.GetServerDefinition(username, password, new Ekin.Clarizen.Authentication.Request.LoginOptions()), IsSandbox);
+                bool executionResult = await serverDefinition.Execute();
                 //TotalAPICallsMadeInCurrentSession++; // Login call doesn't count towards quota (Confirmed by Yaron Perlman on 9 Nov 2016)
-                Logs.Assert(serverDefinition.IsCalledSuccessfully, "Ekin.Clarizen.API", "Login", "Server definition could not be retrieved", serverDefinition.Error);
-                if (serverDefinition.IsCalledSuccessfully)
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Login", "Server definition could not be retrieved", serverDefinition.Error);
+                if (executionResult)
                 {
-                    serverLocation = serverDefinition.Data.serverLocation;
+                    ServerLocation = serverDefinition.Data.ServerLocation;
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(serverLocation))
+            if (!string.IsNullOrWhiteSpace(ServerLocation))
             {
                 // Then we login to the API at the above location
-                Authentication.login CZlogin = new Authentication.login(serverLocation, new Ekin.Clarizen.Authentication.Request.login(username, password, new Ekin.Clarizen.Authentication.Request.loginOptions()));
-                Logs.Assert(CZlogin.IsCalledSuccessfully, "Ekin.Clarizen.API", "Login", $"Login failed for {username}", CZlogin.Error);
-                if (CZlogin.IsCalledSuccessfully)
+                Authentication.Login apiCall = new Authentication.Login(ServerLocation, new Ekin.Clarizen.Authentication.Request.Login(username, password, new Ekin.Clarizen.Authentication.Request.LoginOptions()));
+                bool executionResult = await apiCall.Execute();
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Login", $"Login failed for {username}", apiCall.Error);
+                if (executionResult)
                 {
                     // Upon successful login a unique ID representing the current session is returned.
                     // This ID is then passed on to all the API calls in the Http Header
-                    sessionId = CZlogin.Data.sessionId;
+                    SessionId = apiCall.Data.SessionId;
                     return true;
                 }
             }
@@ -146,12 +149,13 @@ namespace Ekin.Clarizen
         /// Loges the user out and closes the current session
         /// </summary>
         /// <returns></returns>
-        public bool Logout()
+        public async Task<bool> Logout()
         {
-            Authentication.logout CZlogout = new Authentication.logout(serverLocation, sessionId);
+            Authentication.Logout apiCall = new Authentication.Logout(ServerLocation, SessionId);
+            bool executionResult = await apiCall.Execute();
             //TotalAPICallsMadeInCurrentSession++; // Logout call doesn't count towards quota (Confirmed by Yaron Perlman on 9 Nov 2016)
-            Logs.Assert(CZlogout.IsCalledSuccessfully, "Ekin.Clarizen.API", "Logout", "Logout failed");
-            return (CZlogout.IsCalledSuccessfully);
+            Logs.Assert(executionResult, "Ekin.Clarizen.API", "Logout", "Logout failed");
+            return (executionResult);
         }
 
         /// <summary>
@@ -160,23 +164,25 @@ namespace Ekin.Clarizen
         /// <param name="userId">Fully qualified Id of the user. Example: /Organization/SomeOrgId/User/SomeUserId</param>
         /// <param name="newPassword">New password for the user. The Password will be checked for complexity and for history. The user will not be required to change the password after login.</param>
         /// <returns></returns>
-        public bool SetPassword(string userId, string newPassword)
+        public async Task<bool> SetPassword(string userId, string newPassword)
         {
-            Authentication.setPassword op = new Authentication.setPassword(new Authentication.Request.setPassword(userId, newPassword), CallSettings.GetFromAPI(this));
-            Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "setPassword", op.Error);
-            return (op.IsCalledSuccessfully);
+            Authentication.SetPassword apiCall = new Authentication.SetPassword(new Authentication.Request.SetPassword(userId, newPassword), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            Logs.Assert(executionResult, "Ekin.Clarizen.API", "setPassword", apiCall.Error);
+            return (executionResult);
         }
 
         /// <summary>
         /// Returns information about the current session
         /// </summary>
         /// <returns></returns>
-        public Authentication.getSessionInfo GetSessionInfo()
+        public async Task<Authentication.GetSessionInfo> GetSessionInfo()
         {
-            Authentication.getSessionInfo sessionInfo = new Authentication.getSessionInfo(serverLocation, sessionId);
+            Authentication.GetSessionInfo apiCall = new Authentication.GetSessionInfo(ServerLocation, SessionId);
+            bool executionResult = await apiCall.Execute();
             TotalAPICallsMadeInCurrentSession++;
-            Logs.Assert(sessionInfo.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetSessionInfo", "Session info could be retrieved", sessionInfo.Error);
-            return sessionInfo;
+            Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetSessionInfo", "Session info could be retrieved", apiCall.Error);
+            return apiCall;
         }
 
         #endregion Authentication methods
@@ -189,22 +195,23 @@ namespace Ekin.Clarizen
         /// <param name="typeNames"></param>
         /// <param name="flags"></param>
         /// <returns></returns>
-        public Metadata.describeMetadata DescribeMetadata(string[] typeNames, string[] flags)
+        public async Task<Metadata.DescribeMetadata> DescribeMetadata(string[] typeNames, string[] flags)
         {
-            Metadata.describeMetadata metadata = new Metadata.describeMetadata(
-                ((typeNames == null && flags == null) ? new Ekin.Clarizen.Metadata.Request.describeMetadata() :
-                                                        new Ekin.Clarizen.Metadata.Request.describeMetadata(typeNames, flags)),
+            Metadata.DescribeMetadata apiCall = new Metadata.DescribeMetadata(
+                ((typeNames == null && flags == null) ? new Ekin.Clarizen.Metadata.Request.DescribeMetadata() :
+                                                        new Ekin.Clarizen.Metadata.Request.DescribeMetadata(typeNames, flags)),
                 CallSettings.GetFromAPI(this));
-            if (isBulk)
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(metadata.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else
             {
-                Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "DescribeMetadata", "describeMetadata failed", metadata.Error);
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DescribeMetadata", "describeMetadata failed", apiCall.Error);
                 TotalAPICallsMadeInCurrentSession++;
             }
-            return metadata;
+            return apiCall;
         }
 
         /// <summary>
@@ -212,37 +219,38 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="typeNames"></param>
         /// <returns></returns>
-        public Metadata.describeMetadata DescribeMetadata(string[] typeNames)
+        public async Task<Metadata.DescribeMetadata> DescribeMetadata(string[] typeNames)
         {
-            return DescribeMetadata(typeNames, null);
+            return await DescribeMetadata(typeNames, null);
         }
 
         /// <summary>
         /// Returns information about the entity types in your organization
         /// </summary>
         /// <returns></returns>
-        public Metadata.describeMetadata DescribeMetadata()
+        public async Task<Metadata.DescribeMetadata> DescribeMetadata()
         {
-            return DescribeMetadata(null, null);
+            return await DescribeMetadata(null, null);
         }
 
         /// <summary>
         /// Returns the list of entity types available for your organization
         /// </summary>
         /// <returns></returns>
-        public Metadata.listEntities ListEntities()
+        public async Task<Metadata.ListEntities> ListEntities()
         {
-            Metadata.listEntities metadata = new Metadata.listEntities(CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Metadata.ListEntities apiCall = new Metadata.ListEntities(CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(metadata.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "ListEntities", "listEntities failed", metadata.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ListEntities", "listEntities failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return metadata;
+            return apiCall;
         }
 
         /// <summary>
@@ -250,19 +258,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="typeNames"></param>
         /// <returns></returns>
-        public Metadata.describeEntities DescribeEntities(string[] typeNames)
+        public async Task<Metadata.DescribeEntities> DescribeEntities(string[] typeNames)
         {
-            Metadata.describeEntities metadata = new Metadata.describeEntities(new Metadata.Request.describeEntities(typeNames), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Metadata.DescribeEntities apiCall = new Metadata.DescribeEntities(new Metadata.Request.DescribeEntities(typeNames), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(metadata.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "DescribeEntities", "describeEntities failed", metadata.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DescribeEntities", "describeEntities failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return metadata;
+            return apiCall;
         }
 
         /// <summary>
@@ -270,53 +279,55 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="typeNames"></param>
         /// <returns></returns>
-        public Metadata.describeEntityRelations DescribeEntityRelations(string[] typeNames)
+        public async Task<Metadata.DescribeEntityRelations> DescribeEntityRelations(string[] typeNames)
         {
-            Metadata.describeEntityRelations metadata = new Metadata.describeEntityRelations(new Metadata.Request.describeEntityRelations(typeNames), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Metadata.DescribeEntityRelations apiCall = new Metadata.DescribeEntityRelations(new Metadata.Request.DescribeEntityRelations(typeNames), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(metadata.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "DescribeEntityRelations", "describeEntityRelations failed", metadata.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DescribeEntityRelations", "describeEntityRelations failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return metadata;
+            return apiCall;
         }
 
         /// <summary>
         /// Create a workflow rule in Clarizen.
         /// </summary>
-        public Metadata.objects_put CreateWorkflowRule(string forType, string name, string description, string triggerType, string criteria, string action_url, string action_method, string action_headers, string action_body)
+        public async Task<Metadata.Objects_put> CreateWorkflowRule(string forType, string name, string description, string triggerType, string criteria, string action_url, string action_method, string action_headers, string action_body)
         {
-            return CreateWorkflowRule(new Metadata.Request.objects_put(forType, name, description, triggerType, criteria, new action(action_url, action_method, action_headers, action_body)));
+            return await CreateWorkflowRule(new Metadata.Request.Objects_put(forType, name, description, triggerType, criteria, new Action(action_url, action_method, action_headers, action_body)));
         }
 
         /// <summary>
         /// Create a workflow rule in Clarizen.
         /// </summary>
-        public Metadata.objects_put CreateWorkflowRule(string forType, string name, string description, string triggerType, string criteria, action action)
+        public async Task<Metadata.Objects_put> CreateWorkflowRule(string forType, string name, string description, string triggerType, string criteria, Action action)
         {
-            return CreateWorkflowRule(new Metadata.Request.objects_put(forType, name, description, triggerType, criteria, action));
+            return await CreateWorkflowRule(new Metadata.Request.Objects_put(forType, name, description, triggerType, criteria, action));
         }
 
         /// <summary>
         /// Create a workflow rule in Clarizen.
         /// </summary>
-        public Metadata.objects_put CreateWorkflowRule(Metadata.Request.objects_put request)
+        public async Task<Metadata.Objects_put> CreateWorkflowRule(Metadata.Request.Objects_put request)
         {
-            Metadata.objects_put objects = new Metadata.objects_put(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Metadata.Objects_put apiCall = new Metadata.Objects_put(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(objects.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "CreateWorkflowRule", "CreateWorkflowRule call failed", objects.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateWorkflowRule", "CreateWorkflowRule call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return objects;
+            return apiCall;
         }
 
         /// <summary>
@@ -324,19 +335,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Metadata.objects_delete DeleteWorkflowRule(string id)
+        public async Task<Metadata.Objects_delete> DeleteWorkflowRule(string id)
         {
-            Metadata.objects_delete objects = new Metadata.objects_delete(new Metadata.Request.objects_delete(id), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Metadata.Objects_delete apiCall = new Metadata.Objects_delete(new Metadata.Request.Objects_delete(id), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(objects.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "DeleteWorkflowRule", "DeleteWorkflowRule call failed", objects.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DeleteWorkflowRule", "DeleteWorkflowRule call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return objects;
+            return apiCall;
         }
 
         /// <summary>
@@ -344,19 +356,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public Metadata.getSystemSettingsValues GetSystemSettingsValues(string[] settings)
+        public async Task<Metadata.GetSystemSettingsValues> GetSystemSettingsValues(string[] settings)
         {
-            Metadata.getSystemSettingsValues metadata = new Metadata.getSystemSettingsValues(new Metadata.Request.getSystemSettingsValues(settings), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Metadata.GetSystemSettingsValues apiCall = new Metadata.GetSystemSettingsValues(new Metadata.Request.GetSystemSettingsValues(settings), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(metadata.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetSystemSettingsValues", "getSystemSettingsValues failed", metadata.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetSystemSettingsValues", "getSystemSettingsValues failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return metadata;
+            return apiCall;
         }
 
         /// <summary>
@@ -364,19 +377,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public Metadata.setSystemSettingsValues SetSystemSettingsValues(fieldValue[] settings)
+        public async Task<Metadata.SetSystemSettingsValues> SetSystemSettingsValues(FieldValue[] settings)
         {
-            Metadata.setSystemSettingsValues metadata = new Metadata.setSystemSettingsValues(new Metadata.Request.setSystemSettingsValues(settings), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Metadata.SetSystemSettingsValues apiCall = new Metadata.SetSystemSettingsValues(new Metadata.Request.SetSystemSettingsValues(settings), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(metadata.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(metadata.IsCalledSuccessfully, "Ekin.Clarizen.API", "SetSystemSettingsValues", "setSystemSettingsValues call failed", metadata.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "SetSystemSettingsValues", "setSystemSettingsValues call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return metadata;
+            return apiCall;
         }
 
         #endregion Metadata methods
@@ -389,19 +403,20 @@ namespace Ekin.Clarizen
         /// <param name="id">Entity Id of the object to get</param>
         /// <param name="fields">The list of fields to read</param>
         /// <returns></returns>
-        public Data.objects_get GetObject(string id, string[] fields)
+        public async Task<Data.Objects_get> GetObject(string id, string[] fields)
         {
-            Data.objects_get objects = new Data.objects_get(new Data.Request.objects_get(id, fields), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.Objects_get apiCall = new Data.Objects_get(new Data.Request.Objects_get(id, fields), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(objects.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", objects.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return objects;
+            return apiCall;
         }
 
         /// <summary>
@@ -409,9 +424,9 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="id">Entity Id of the object to get</param>
         /// <returns></returns>
-        public Data.objects_get GetObject(string id)
+        public async Task<Data.Objects_get> GetObject(string id)
         {
-            return GetObject(id: id, fields: null);
+            return await GetObject(id: id, fields: null);
         }
 
         /// <summary>
@@ -420,35 +435,37 @@ namespace Ekin.Clarizen
         /// <typeparam name="T">Return type of the operation</typeparam>
         /// <param name="id">Entity Id of the object to get</param>
         /// <returns></returns>
-        public T GetObject<T>(string id)
+        public async Task<T> GetObject<T>(string id)
         {
             string[] fields = typeof(T).GetPropertyList();
-            Data.objects_get objects = new Data.objects_get(new Data.Request.objects_get(id, fields), CallSettings.GetFromAPI(this), true);
-            if (isBulk)
+            Data.Objects_get apiCall = new Data.Objects_get(new Data.Request.Objects_get(id, fields), CallSettings.GetFromAPI(this), true);
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(objects.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", objects.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            if (objects.IsCalledSuccessfully)
+            if (executionResult)
             {
                 try
                 {
-                    Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(objects.Data);
+                    JObject obj = JObject.Parse(apiCall.Data);
                     RemoveInvalidFields(obj);
                     return obj.ToObject<T>();
                 }
                 catch (Exception ex)
                 {
-                    return default(T);
+                    Logs.AddError("Ekin.Clarizen.API", "GetObject", ex);
+                    return default;
                 }
             }
             else
             {
-                return default(T);
+                return default;
             }
         }
 
@@ -458,29 +475,31 @@ namespace Ekin.Clarizen
         /// <param name="id">Entity Id of the object to get</param>
         /// <param name="pocoObject">Return type of the operation</param>
         /// <returns></returns>
-        public dynamic GetObject(string id, Type pocoObject)
+        public async Task<dynamic> GetObject(string id, Type pocoObject)
         {
             string[] fields = pocoObject.GetPropertyList();
-            Data.objects_get objects = new Data.objects_get(new Data.Request.objects_get(id, fields), CallSettings.GetFromAPI(this), true);
-            if (isBulk)
+            Data.Objects_get apiCall = new Data.Objects_get(new Data.Request.Objects_get(id, fields), CallSettings.GetFromAPI(this), true);
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(objects.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", objects.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            if (objects.IsCalledSuccessfully)
+            if (executionResult)
             {
                 try
                 {
-                    Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(objects.Data);
+                    JObject obj = JObject.Parse(apiCall.Data);
                     RemoveInvalidFields(obj);
                     return obj.ToObject(pocoObject);
                 }
                 catch (Exception ex)
                 {
+                    Logs.AddError("Ekin.Clarizen.API", "GetObject", ex);
                     return null;
                 }
             }
@@ -496,19 +515,20 @@ namespace Ekin.Clarizen
         /// <param name="id">When creating an entity, a unique ID is generated and returned as part of the object creation process. e.g. pass /User as id. If needed, you can also set a specific ID to the entity being created as long as you can guarantee this ID is unique, e.g. /User/dc84ee38-12cc-492e-b70d-d7fd660f4ae7.</param>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public Data.objects_put CreateObject(string id, object obj)
+        public async Task<Data.Objects_put> CreateObject(string id, object obj)
         {
-            Data.objects_put objects = new Data.objects_put(id, obj, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.Objects_put apiCall = new Data.Objects_put(id, obj, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(objects.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "CreateObject", "objects_put call failed", objects.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateObject", "objects_put call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return objects;
+            return apiCall;
         }
 
         /// <summary>
@@ -517,19 +537,20 @@ namespace Ekin.Clarizen
         /// <param name="id">Entity Id of the object to update</param>
         /// <param name="obj">Object to update</param>
         /// <returns></returns>
-        public Data.objects_post UpdateObject(string id, object obj)
+        public async Task<Data.Objects_post> UpdateObject(string id, object obj)
         {
-            Data.objects_post objects = new Data.objects_post(id, obj, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.Objects_post apiCall = new Data.Objects_post(id, obj, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(objects.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "UpdateObject", "objects_post call failed", objects.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "UpdateObject", "objects_post call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return objects;
+            return apiCall;
         }
 
         /// <summary>
@@ -537,19 +558,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="id">Entity Id of the object to delete</param>
         /// <returns></returns>
-        public Data.objects_delete DeleteObject(string id)
+        public async Task<Data.Objects_delete> DeleteObject(string id)
         {
-            Data.objects_delete objects = new Data.objects_delete(new Ekin.Clarizen.Data.Request.objects_delete(id), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.Objects_delete apiCall = new Data.Objects_delete(new Ekin.Clarizen.Data.Request.Objects_delete(id), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(objects.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "DeleteObject", "objects_delete call failed", objects.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DeleteObject", "objects_delete call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return objects;
+            return apiCall;
         }
 
         /// <summary>
@@ -558,19 +580,20 @@ namespace Ekin.Clarizen
         /// <param name="entity">Entity to be created. Should include Id field such as /Task</param>
         /// <param name="fields">List of fields to retrieve</param>
         /// <returns></returns>
-        public Data.createAndRetrieve CreateAndRetrieve(object entity, string[] fields)
+        public async Task<Data.CreateAndRetrieve> CreateAndRetrieve(object entity, string[] fields)
         {
-            Data.createAndRetrieve op = new Data.createAndRetrieve(new Data.Request.createAndRetrieve(entity, fields), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.CreateAndRetrieve apiCall = new Data.CreateAndRetrieve(new Data.Request.CreateAndRetrieve(entity, fields), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "CreateAndRetrieve", "createAndRetrieve call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateAndRetrieve", "createAndRetrieve call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -578,19 +601,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.retrieveMultiple RetrieveMultiple(Data.Request.retrieveMultiple request)
+        public async Task<Data.RetrieveMultiple> RetrieveMultiple(Data.Request.RetrieveMultiple request)
         {
-            Data.retrieveMultiple op = new Data.retrieveMultiple(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.RetrieveMultiple apiCall = new Data.RetrieveMultiple(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "RetrieveMultiple", "retrieveMultiple call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "RetrieveMultiple", "retrieveMultiple call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -599,9 +623,9 @@ namespace Ekin.Clarizen
         /// <param name="fields">Fields to retrieve</param>
         /// <param name="ids">Entity Ids</param>
         /// <returns></returns>
-        public Data.retrieveMultiple RetrieveMultiple(string[] fields, string[] ids)
+        public async Task<Data.RetrieveMultiple> RetrieveMultiple(string[] fields, string[] ids)
         {
-            return RetrieveMultiple(new Data.Request.retrieveMultiple(fields, ids));
+            return await RetrieveMultiple(new Data.Request.RetrieveMultiple(fields, ids));
         }
 
         /// <summary>
@@ -610,42 +634,45 @@ namespace Ekin.Clarizen
         /// <param name="entityName"></param>
         /// <param name="pocoObject"></param>
         /// <returns></returns>
-        public GetAllResult GetAll(string entityName, Type pocoObject, ICondition condition = null, int? pageSize = null, int? sleepTime = null)
+        public async Task<GetAllResult> GetAll(string entityName, Type pocoObject, ICondition condition = null, int? pageSize = null, int? sleepTime = null)
         {
             Type listType = typeof(List<>).MakeGenericType(new[] { pocoObject });
             System.Collections.IList list = (System.Collections.IList)Activator.CreateInstance(listType);
             GetAllResult result = new GetAllResult()
             {
-                Errors = new List<error>() { }
+                Errors = new List<Error>() { }
             };
-            paging paging = new paging();
-            paging.limit = pageSize.GetValueOrDefault(0) > 0 ? pageSize.GetValueOrDefault(0) : 1000;
+            Paging paging = new Paging
+            {
+                Limit = pageSize.GetValueOrDefault(0) > 0 ? pageSize.GetValueOrDefault(0) : 1000
+            };
             bool hasMore = true;
             while (hasMore)
             {
-                Data.Queries.entityQuery request =
-                    new Data.Queries.entityQuery(entityName, pocoObject.GetPropertyList(), null, null, null, false, false, paging);
+                Data.Queries.EntityQuery request =
+                    new Data.Queries.EntityQuery(entityName, pocoObject.GetPropertyList(), null, null, null, false, false, paging);
                 if (condition != null)
-                    request.where = condition;
-                Data.entityQuery entityQuery = EntityQuery(request);
-                if (entityQuery.IsCalledSuccessfully)
+                    request.Where = condition;
+                Data.EntityQuery apiCall = await EntityQuery(request);
+                bool executionResult = await apiCall.Execute();
+                if (executionResult)
                 {
-                    foreach (Newtonsoft.Json.Linq.JObject obj in entityQuery.Data.entities)
+                    foreach (JObject obj in apiCall.Data.Entities)
                     {
                         RemoveInvalidFields(obj);
                         list.Add(obj.ToObject(pocoObject));
                     }
-                    paging = entityQuery.Data.paging;
-                    hasMore = entityQuery.Data.paging.hasMore;
+                    paging = apiCall.Data.Paging;
+                    hasMore = apiCall.Data.Paging.HasMore;
                 }
                 else
                 {
-                    result.Errors.Add(new error("", "Entity query failed with error: " + entityQuery.Error));
+                    result.Errors.Add(new Error("", "Entity query failed with error: " + apiCall.Error));
                     hasMore = false;
                 }
                 if (sleepTime.GetValueOrDefault() > 0)
                 {
-                    System.Threading.Thread.Sleep(sleepTime.GetValueOrDefault());
+                    await Task.Delay(sleepTime.GetValueOrDefault());
                 }
             }
             result.Data = list;
@@ -659,80 +686,86 @@ namespace Ekin.Clarizen
         /// <param name="pocoObject"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public GetAllResult GetAll(Interfaces.IClarizenQuery query, Type pocoObject, int? pageSize = null, int? sleepTime = null)
+        public async Task<GetAllResult> GetAll(Interfaces.IClarizenQuery query, Type pocoObject, int? pageSize = null, int? sleepTime = null)
         {
             Type listType = typeof(List<>).MakeGenericType(new[] { pocoObject });
             System.Collections.IList list = (System.Collections.IList)Activator.CreateInstance(listType);
             GetAllResult result = new GetAllResult()
             {
-                Errors = new List<error>() { }
+                Errors = new List<Error>() { }
             };
-            paging paging = new paging();
-            paging.limit = pageSize.GetValueOrDefault(0) > 0 ? pageSize.GetValueOrDefault(0) : 1000;
+            Paging paging = new Paging
+            {
+                Limit = pageSize.GetValueOrDefault(0) > 0 ? pageSize.GetValueOrDefault(0) : 1000
+            };
             bool hasMore = true;
             while (hasMore)
             {
                 CallSettings callSettings = CallSettings.GetFromAPI(this);
-                callSettings.isBulk = false;
-                Data.query Query = new Data.query(new Data.Request.query(query.ToCZQL(), paging), callSettings);
-                if (Query.IsCalledSuccessfully)
+                callSettings.IsBulk = false;
+                Data.Query apiCall = new Data.Query(new Data.Request.Query(query.ToCZQL(), paging), callSettings);
+                bool executionResult = await apiCall.Execute();
+                if (executionResult)
                 {
-                    foreach (Newtonsoft.Json.Linq.JObject obj in Query.Data.entities)
+                    foreach (JObject obj in apiCall.Data.Entities)
                     {
                         RemoveInvalidFields(obj);
                         list.Add(obj.ToObject(pocoObject));
                     }
-                    paging = Query.Data.paging;
-                    hasMore = Query.Data.paging.hasMore;
+                    paging = apiCall.Data.Paging;
+                    hasMore = apiCall.Data.Paging.HasMore;
                 }
                 else
                 {
-                    string message = "Query failed with error" + (callSettings.retry > 1 ? $" after {callSettings.retry} retries" : "") + ": " + Query.Error;
-                    result.Errors.Add(new error("", message));
+                    string message = "Query failed with error" + (callSettings.Retry > 1 ? $" after {callSettings.Retry} retries" : "") + ": " + apiCall.Error;
+                    result.Errors.Add(new Error("", message));
                     hasMore = false;
                 }
                 if (sleepTime.GetValueOrDefault() > 0)
                 {
-                    System.Threading.Thread.Sleep(sleepTime.GetValueOrDefault());
+                    await Task.Delay(sleepTime.GetValueOrDefault());
                 }
             }
             result.Data = list;
             return result;
         }
 
-        public GetAllResult GetAllByFields(string entityName, string[] fields, ICondition condition = null, int? pageSize = null, int? sleepTime = null)
+        public async Task<GetAllResult> GetAllByFields(string entityName, string[] fields, ICondition condition = null, int? pageSize = null, int? sleepTime = null)
         {
             List<dynamic> list = new List<dynamic>();
             GetAllResult result = new GetAllResult()
             {
-                Errors = new List<error>() { }
+                Errors = new List<Error>() { }
             };
-            paging paging = new paging();
-            paging.limit = pageSize.GetValueOrDefault(0) > 0 ? pageSize.GetValueOrDefault(0) : 5000;
+            Paging paging = new Paging
+            {
+                Limit = pageSize.GetValueOrDefault(0) > 0 ? pageSize.GetValueOrDefault(0) : 5000
+            };
             bool hasMore = true;
             while (hasMore)
             {
-                Ekin.Clarizen.Data.Queries.entityQuery request = new Ekin.Clarizen.Data.Queries.entityQuery(entityName, fields, null, null, null, false, false, paging);
+                Ekin.Clarizen.Data.Queries.EntityQuery request = new Ekin.Clarizen.Data.Queries.EntityQuery(entityName, fields, null, null, null, false, false, paging);
                 if (condition != null)
-                    request.where = condition;
-                Ekin.Clarizen.Data.entityQuery entityQuery = EntityQuery(request);
-                if (entityQuery.IsCalledSuccessfully)
+                    request.Where = condition;
+                Ekin.Clarizen.Data.EntityQuery apiCall = await EntityQuery(request);
+                bool executionResult = await apiCall.Execute();
+                if (executionResult)
                 {
-                    foreach (Newtonsoft.Json.Linq.JObject obj in entityQuery.Data.entities)
+                    foreach (JObject obj in apiCall.Data.Entities)
                     {
                         list.Add(obj);
                     }
-                    paging = entityQuery.Data.paging;
-                    hasMore = entityQuery.Data.paging.hasMore;
+                    paging = apiCall.Data.Paging;
+                    hasMore = apiCall.Data.Paging.HasMore;
                 }
                 else
                 {
-                    result.Errors.Add(new error("", "Entity query failed with error: " + entityQuery.Error));
+                    result.Errors.Add(new Error("", "Entity query failed with error: " + apiCall.Error));
                     hasMore = false;
                 }
                 if (sleepTime.GetValueOrDefault() > 0)
                 {
-                    System.Threading.Thread.Sleep(sleepTime.GetValueOrDefault());
+                    await Task.Delay(sleepTime.GetValueOrDefault());
                 }
             }
             result.Data = list;
@@ -741,7 +774,7 @@ namespace Ekin.Clarizen
 
         private void RemoveInvalidFields(JObject obj)
         {
-            if (removeInvalidFieldsFromJsonResult)
+            if (RemoveInvalidFieldsFromJsonResult)
             {
                 //ignore the fields which have isError text as a value
                 if (obj.Properties().Any(i => i.Value != null && i.Value.ToString().Contains("isError")))
@@ -769,19 +802,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="query">findUserQuery, entityQuery, expenseQuery, timesheetQuery, aggregateQuery, relationQuery, cZQLQuery, entityFeedQuery, groupsQuery, newsFeedQuery, repliesQuery</param>
         /// <returns></returns>
-        public Data.countQuery Count(IQuery query)
+        public async Task<Data.CountQuery> Count(IQuery query)
         {
-            Data.countQuery entities = new Data.countQuery(new Data.Request.countQuery(query), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.CountQuery apiCall = new Data.CountQuery(new Data.Request.CountQuery(query), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(entities.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(entities.IsCalledSuccessfully, "Ekin.Clarizen.API", "Count", "countQuery call failed", entities.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Count", "countQuery call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return entities;
+            return apiCall;
         }
 
         /// <summary>
@@ -789,37 +823,39 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.entityQuery EntityQuery(Data.Queries.entityQuery request)
+        public async Task<Data.EntityQuery> EntityQuery(Data.Queries.EntityQuery request)
         {
-            Data.entityQuery entities = new Data.entityQuery(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.EntityQuery apiCall = new Data.EntityQuery(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(entities.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(entities.IsCalledSuccessfully, "Ekin.Clarizen.API", "EntityQuery", "entityQuery call failed", entities.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "EntityQuery", "entityQuery call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return entities;
+            return apiCall;
         }
 
         /// <summary>
         /// Retrieve entities from multiple organizations in Clarizen for a specific user and according to a certain criteria
         /// </summary>
-        public Data.crossOrgEntityQuery CrossOrgEntityQuery(Data.Queries.crossOrgEntityQuery request)
+        public async Task<Data.CrossOrgEntityQuery> CrossOrgEntityQuery(Data.Queries.CrossOrgEntityQuery request)
         {
-            Data.crossOrgEntityQuery entities = new Data.crossOrgEntityQuery(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.CrossOrgEntityQuery apiCall = new Data.CrossOrgEntityQuery(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(entities.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(entities.IsCalledSuccessfully, "Ekin.Clarizen.API", "CrossOrgEntityQuery", "crossOrgEntityQuery call failed", entities.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CrossOrgEntityQuery", "crossOrgEntityQuery call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return entities;
+            return apiCall;
         }
 
         /// <summary>
@@ -828,9 +864,9 @@ namespace Ekin.Clarizen
         /// <param name="typeName">The main entity type to query (e.g. WorkItem, User etc.)</param>
         /// <param name="fields">A list of field names to retrieve</param>
         /// <returns></returns>
-        public Data.entityQuery GetAllEntities(string typeName, string[] fields)
+        public async Task<Data.EntityQuery> GetAllEntities(string typeName, string[] fields)
         {
-            return EntityQuery(new Data.Queries.entityQuery(typeName, fields));
+            return await EntityQuery(new Data.Queries.EntityQuery(typeName, fields));
         }
 
         /// <summary>
@@ -838,19 +874,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.groupsQuery GroupsQuery(Data.Queries.groupsQuery request)
+        public async Task<Data.GroupsQuery> GroupsQuery(Data.Queries.GroupsQuery request)
         {
-            Data.groupsQuery entities = new Data.groupsQuery(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.GroupsQuery apiCall = new Data.GroupsQuery(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(entities.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(entities.IsCalledSuccessfully, "Ekin.Clarizen.API", "GroupsQuery", "groupsQuery call failed", entities.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GroupsQuery", "groupsQuery call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return entities;
+            return apiCall;
         }
 
         /// <summary>
@@ -858,9 +895,9 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="fields">Field names to return</param>
         /// <returns></returns>
-        public Data.groupsQuery GroupsQuery(string[] fields)
+        public async Task<Data.GroupsQuery> GroupsQuery(string[] fields)
         {
-            return GroupsQuery(new Data.Queries.groupsQuery(fields));
+            return await GroupsQuery(new Data.Queries.GroupsQuery(fields));
         }
 
         /// <summary>
@@ -868,19 +905,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.aggregateQuery AggregateQuery(Data.Queries.aggregateQuery request)
+        public async Task<Data.AggregateQuery> AggregateQuery(Data.Queries.AggregateQuery request)
         {
-            Data.aggregateQuery op = new Data.aggregateQuery(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.AggregateQuery apiCall = new Data.AggregateQuery(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "AggregateQuery", "aggregateQuery call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "AggregateQuery", "aggregateQuery call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -888,19 +926,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.relationQuery RelationQuery(Data.Queries.relationQuery request)
+        public async Task<Data.RelationQuery> RelationQuery(Data.Queries.RelationQuery request)
         {
-            Data.relationQuery op = new Data.relationQuery(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.RelationQuery apiCall = new Data.RelationQuery(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "RelationQuery", "relationQuery call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "RelationQuery", "relationQuery call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -908,19 +947,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.newsFeedQuery NewsFeedQuery(Data.Queries.newsFeedQuery request)
+        public async Task<Data.NewsFeedQuery> NewsFeedQuery(Data.Queries.NewsFeedQuery request)
         {
-            Data.newsFeedQuery op = new Data.newsFeedQuery(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.NewsFeedQuery apiCall = new Data.NewsFeedQuery(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "NewsFeedQuery", "newsFeedQuery call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "NewsFeedQuery", "newsFeedQuery call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -931,9 +971,9 @@ namespace Ekin.Clarizen
         /// <param name="feedItemOptions"></param>
         /// <param name="paging">Paging setting for the query</param>
         /// <returns></returns>
-        public Data.newsFeedQuery NewsFeedQuery(newsFeedMode mode, string[] fields, string[] feedItemOptions, paging paging)
+        public async Task<Data.NewsFeedQuery> NewsFeedQuery(NewsFeedMode mode, string[] fields, string[] feedItemOptions, Paging paging)
         {
-            return NewsFeedQuery(new Data.Queries.newsFeedQuery(mode, fields, feedItemOptions, paging));
+            return await NewsFeedQuery(new Data.Queries.NewsFeedQuery(mode, fields, feedItemOptions, paging));
         }
 
         /// <summary>
@@ -942,9 +982,9 @@ namespace Ekin.Clarizen
         /// <param name="mode">Mode of the news feed query: Following or All</param>
         /// <param name="fields">List of Fields the query should return</param>
         /// <returns></returns>
-        public Data.newsFeedQuery NewsFeedQuery(newsFeedMode mode, string[] fields)
+        public async Task<Data.NewsFeedQuery> NewsFeedQuery(NewsFeedMode mode, string[] fields)
         {
-            return NewsFeedQuery(new Data.Queries.newsFeedQuery(mode, fields));
+            return await NewsFeedQuery(new Data.Queries.NewsFeedQuery(mode, fields));
         }
 
         /// <summary>
@@ -952,19 +992,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.entityFeedQuery EntityFeedQuery(Data.Queries.entityFeedQuery request)
+        public async Task<Data.EntityFeedQuery> EntityFeedQuery(Data.Queries.EntityFeedQuery request)
         {
-            Data.entityFeedQuery op = new Data.entityFeedQuery(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.EntityFeedQuery apiCall = new Data.EntityFeedQuery(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "EntityFeedQuery", "entityFeedQuery call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "EntityFeedQuery", "entityFeedQuery call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -975,9 +1016,9 @@ namespace Ekin.Clarizen
         /// <param name="feedItemOptions"></param>
         /// <param name="paging"></param>
         /// <returns></returns>
-        public Data.entityFeedQuery EntityFeedQuery(string entityId, string[] fields, string[] feedItemOptions, paging paging)
+        public async Task<Data.EntityFeedQuery> EntityFeedQuery(string entityId, string[] fields, string[] feedItemOptions, Paging paging)
         {
-            return EntityFeedQuery(new Data.Queries.entityFeedQuery(entityId, fields, feedItemOptions, paging));
+            return await EntityFeedQuery(new Data.Queries.EntityFeedQuery(entityId, fields, feedItemOptions, paging));
         }
 
         /// <summary>
@@ -986,9 +1027,9 @@ namespace Ekin.Clarizen
         /// <param name="entityId"></param>
         /// <param name="fields">List of Fields the query should return</param>
         /// <returns></returns>
-        public Data.entityFeedQuery EntityFeedQuery(string entityId, string[] fields)
+        public async Task<Data.EntityFeedQuery> EntityFeedQuery(string entityId, string[] fields)
         {
-            return EntityFeedQuery(new Data.Queries.entityFeedQuery(entityId, fields));
+            return await EntityFeedQuery(new Data.Queries.EntityFeedQuery(entityId, fields));
         }
 
         /// <summary>
@@ -996,19 +1037,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.repliesQuery RepliesQuery(Data.Queries.repliesQuery request)
+        public async Task<Data.RepliesQuery> RepliesQuery(Data.Queries.RepliesQuery request)
         {
-            Data.repliesQuery op = new Data.repliesQuery(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.RepliesQuery apiCall = new Data.RepliesQuery(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "RepliesQuery", "repliesQuery call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "RepliesQuery", "repliesQuery call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -1019,9 +1061,9 @@ namespace Ekin.Clarizen
         /// <param name="feedItemOptions"></param>
         /// <param name="paging">Paging setting for the query</param>
         /// <returns></returns>
-        public Data.repliesQuery RepliesQuery(string postId, string[] fields, string[] feedItemOptions, paging paging)
+        public async Task<Data.RepliesQuery> RepliesQuery(string postId, string[] fields, string[] feedItemOptions, Paging paging)
         {
-            return RepliesQuery(new Data.Queries.repliesQuery(postId, fields, feedItemOptions, paging));
+            return await RepliesQuery(new Data.Queries.RepliesQuery(postId, fields, feedItemOptions, paging));
         }
 
         /// <summary>
@@ -1030,9 +1072,9 @@ namespace Ekin.Clarizen
         /// <param name="postId">Id of the discussion post</param>
         /// <param name="fields">List of Fields the query should return</param>
         /// <returns></returns>
-        public Data.repliesQuery RepliesQuery(string postId, string[] fields)
+        public async Task<Data.RepliesQuery> RepliesQuery(string postId, string[] fields)
         {
-            return RepliesQuery(new Data.Queries.repliesQuery(postId, fields));
+            return await RepliesQuery(new Data.Queries.RepliesQuery(postId, fields));
         }
 
         /// <summary>
@@ -1040,34 +1082,36 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.expenseQuery ExpenseQuery(Data.Queries.expenseQuery request)
+        public async Task<Data.ExpenseQuery> ExpenseQuery(Data.Queries.ExpenseQuery request)
         {
-            Data.expenseQuery op = new Data.expenseQuery(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.ExpenseQuery apiCall = new Data.ExpenseQuery(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "ExpenseQuery", "expenseQuery call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ExpenseQuery", "expenseQuery call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
-        public Data.timesheetQuery TimesheetQuery(Data.Queries.timesheetQuery request)
+        public async Task<Data.TimesheetQuery> TimesheetQuery(Data.Queries.TimesheetQuery request)
         {
-            Data.timesheetQuery op = new Data.timesheetQuery(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.TimesheetQuery apiCall = new Data.TimesheetQuery(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "TimesheetQuery", "timesheetQuery call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "TimesheetQuery", "timesheetQuery call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         #endregion Data - Query methods
@@ -1079,19 +1123,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.search Search(Data.Request.search request)
+        public async Task<Data.Search> Search(Data.Request.Search request)
         {
-            Data.search entities = new Data.search(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.Search apiCall = new Data.Search(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(entities.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(entities.IsCalledSuccessfully, "Ekin.Clarizen.API", "Search", "search call failed", entities.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Search", "search call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return entities;
+            return apiCall;
         }
 
         /// <summary>
@@ -1099,9 +1144,9 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="q">The search query to perform</param>
         /// <returns></returns>
-        public Data.search Search(string q)
+        public async Task<Data.Search> Search(string q)
         {
-            return Search(new Data.Request.search(q));
+            return await Search(new Data.Request.Search(q));
         }
 
         /// <summary>
@@ -1110,9 +1155,9 @@ namespace Ekin.Clarizen
         /// <param name="q">The search query to perform</param>
         /// <param name="paging">Paging setting for the query</param>
         /// <returns></returns>
-        public Data.search Search(string q, paging paging)
+        public async Task<Data.Search> Search(string q, Paging paging)
         {
-            return Search(new Data.Request.search(q, paging));
+            return await Search(new Data.Request.Search(q, paging));
         }
 
         /// <summary>
@@ -1122,9 +1167,9 @@ namespace Ekin.Clarizen
         /// <param name="typeName">The Entity Type to search. If omitted, search on all types</param>
         /// <param name="fields">The list of fields to return. Only valid when specifying a TypeName. When searching in all types the fields returned are fixed</param>
         /// <returns></returns>
-        public Data.search Search(string q, string typeName, string[] fields)
+        public async Task<Data.Search> Search(string q, string typeName, string[] fields)
         {
-            return Search(new Data.Request.search(q, typeName, fields));
+            return await Search(new Data.Request.Search(q, typeName, fields));
         }
 
         /// <summary>
@@ -1135,9 +1180,9 @@ namespace Ekin.Clarizen
         /// <param name="fields">The list of fields to return. Only valid when specifying a TypeName. When searching in all types the fields returned are fixed</param>
         /// <param name="paging">Paging setting for the query</param>
         /// <returns></returns>
-        public Data.search Search(string q, string typeName, string[] fields, paging paging)
+        public async Task<Data.Search> Search(string q, string typeName, string[] fields, Paging paging)
         {
-            return Search(new Data.Request.search(q, typeName, fields, paging));
+            return await Search(new Data.Request.Search(q, typeName, fields, paging));
         }
 
         /// <summary>
@@ -1148,9 +1193,9 @@ namespace Ekin.Clarizen
         /// <param name="notify">Entity Ids for users or groups to notify</param>
         /// <param name="topics">Entity Ids</param>
         /// <returns></returns>
-        public Data.createDiscussion CreateDiscussion(object entity, string[] relatedEntities, string[] notify, string[] topics)
+        public async Task<Data.CreateDiscussion> CreateDiscussion(object entity, string[] relatedEntities, string[] notify, string[] topics)
         {
-            return CreateDiscussion(new Data.Request.createDiscussion(entity, relatedEntities, notify, topics));
+            return await CreateDiscussion(new Data.Request.CreateDiscussion(entity, relatedEntities, notify, topics));
         }
 
         /// <summary>
@@ -1160,9 +1205,9 @@ namespace Ekin.Clarizen
         /// <param name="relatedEntities">Entity Ids</param>
         /// <param name="notify">Entity Ids for users or groups to notify</param>
         /// <returns></returns>
-        public Data.createDiscussion CreateDiscussion(object entity, string[] relatedEntities, string[] notify)
+        public async Task<Data.CreateDiscussion> CreateDiscussion(object entity, string[] relatedEntities, string[] notify)
         {
-            return CreateDiscussion(new Data.Request.createDiscussion(entity, relatedEntities, notify));
+            return await CreateDiscussion(new Data.Request.CreateDiscussion(entity, relatedEntities, notify));
         }
 
         /// <summary>
@@ -1171,9 +1216,9 @@ namespace Ekin.Clarizen
         /// <param name="entity">Discussion message to be created</param>
         /// <param name="relatedEntities">Entity Ids</param>
         /// <returns></returns>
-        public Data.createDiscussion CreateDiscussion(object entity, string[] relatedEntities)
+        public async Task<Data.CreateDiscussion> CreateDiscussion(object entity, string[] relatedEntities)
         {
-            return CreateDiscussion(new Data.Request.createDiscussion(entity, relatedEntities));
+            return await CreateDiscussion(new Data.Request.CreateDiscussion(entity, relatedEntities));
         }
 
         /// <summary>
@@ -1181,9 +1226,9 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="entity">Discussion message to be created</param>
         /// <returns></returns>
-        public Data.createDiscussion CreateDiscussion(object entity)
+        public async Task<Data.CreateDiscussion> CreateDiscussion(object entity)
         {
-            return CreateDiscussion(new Data.Request.createDiscussion(entity));
+            return await CreateDiscussion(new Data.Request.CreateDiscussion(entity));
         }
 
         /// <summary>
@@ -1191,19 +1236,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.createDiscussion CreateDiscussion(Data.Request.createDiscussion request)
+        public async Task<Data.CreateDiscussion> CreateDiscussion(Data.Request.CreateDiscussion request)
         {
-            Data.createDiscussion op = new Data.createDiscussion(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.CreateDiscussion apiCall = new Data.CreateDiscussion(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "CreateDiscussion", "createDiscussion call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateDiscussion", "createDiscussion call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -1211,19 +1257,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.lifecycle Lifecycle(Data.Request.lifecycle request)
+        public async Task<Data.Lifecycle> Lifecycle(Data.Request.Lifecycle request)
         {
-            Data.lifecycle op = new Data.lifecycle(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.Lifecycle apiCall = new Data.Lifecycle(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "Lifecycle", "lifecycle call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Lifecycle", "lifecycle call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -1232,9 +1279,9 @@ namespace Ekin.Clarizen
         /// <param name="ids">A list of objects (Entity Ids) to perform the operation on</param>
         /// <param name="operation">The operation to perform ('Activate', 'Cancel' etc.)</param>
         /// <returns></returns>
-        public Data.lifecycle Lifecycle(string[] ids, string operation)
+        public async Task<Data.Lifecycle> Lifecycle(string[] ids, string operation)
         {
-            return Lifecycle(new Data.Request.lifecycle(ids, operation));
+            return await Lifecycle(new Data.Request.Lifecycle(ids, operation));
         }
 
         /// <summary>
@@ -1243,19 +1290,20 @@ namespace Ekin.Clarizen
         /// <param name="ids">List of objects to perform the operation on</param>
         /// <param name="state">The new state</param>
         /// <returns></returns>
-        public Data.changeState ChangeState(string[] ids, string state)
+        public async Task<Data.ChangeState> ChangeState(string[] ids, string state)
         {
-            Data.changeState objects = new Data.changeState(new Data.Request.changeState(ids, state), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.ChangeState apiCall = new Data.ChangeState(new Data.Request.ChangeState(ids, state), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(objects.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "ChangeState", "changeState call failed", objects.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ChangeState", "changeState call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return objects;
+            return apiCall;
         }
 
         /// <summary>
@@ -1263,19 +1311,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.executeCustomAction ExecuteCustomAction(Data.Request.executeCustomAction request)
+        public async Task<Data.ExecuteCustomAction> ExecuteCustomAction(Data.Request.ExecuteCustomAction request)
         {
-            Data.executeCustomAction objects = new Data.executeCustomAction(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.ExecuteCustomAction apiCall = new Data.ExecuteCustomAction(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(objects.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(objects.IsCalledSuccessfully, "Ekin.Clarizen.API", "ExecuteCustomAction", "executeCustomAction call failed", objects.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ExecuteCustomAction", "executeCustomAction call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return objects;
+            return apiCall;
         }
 
         /// <summary>
@@ -1285,9 +1334,9 @@ namespace Ekin.Clarizen
         /// <param name="customAction"></param>
         /// <param name="values"></param>
         /// <returns></returns>
-        public Data.executeCustomAction ExecuteCustomAction(string targetId, string customAction, fieldValue[] values)
+        public async Task<Data.ExecuteCustomAction> ExecuteCustomAction(string targetId, string customAction, FieldValue[] values)
         {
-            return ExecuteCustomAction(new Data.Request.executeCustomAction(targetId, customAction, values));
+            return await ExecuteCustomAction(new Data.Request.ExecuteCustomAction(targetId, customAction, values));
         }
 
         /// <summary>
@@ -1295,19 +1344,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="typeName"></param>
         /// <returns></returns>
-        public Data.getTemplateDescriptions GetTemplateDescriptions(string typeName)
+        public async Task<Data.GetTemplateDescriptions> GetTemplateDescriptions(string typeName)
         {
-            Data.getTemplateDescriptions op = new Data.getTemplateDescriptions(new Data.Request.getTemplateDescriptions(typeName), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.GetTemplateDescriptions apiCall = new Data.GetTemplateDescriptions(new Data.Request.GetTemplateDescriptions(typeName), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetTemplateDescriptions", "getTemplateDescriptions call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetTemplateDescriptions", "getTemplateDescriptions call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -1315,19 +1365,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Data.createFromTemplate CreateFromTemplate(object entity, string templateName, string parentId)
+        public async Task<Data.CreateFromTemplate> CreateFromTemplate(object entity, string templateName, string parentId)
         {
-            Data.createFromTemplate op = new Data.createFromTemplate(new Data.Request.createFromTemplate(entity, templateName, parentId), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.CreateFromTemplate apiCall = new Data.CreateFromTemplate(new Data.Request.CreateFromTemplate(entity, templateName, parentId), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "CreateFromTemplate", "createFromTemplate call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateFromTemplate", "createFromTemplate call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -1335,34 +1386,36 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="id">The id of the entity (organization or user) to get the calendar info for</param>
         /// <returns></returns>
-        public Data.getCalendarInfo GetCalendarInfo(string id)
+        public async Task<Data.GetCalendarInfo> GetCalendarInfo(string id)
         {
-            Data.getCalendarInfo op = new Data.getCalendarInfo(new Data.Request.getCalendarInfo(id), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.GetCalendarInfo apiCall = new Data.GetCalendarInfo(new Data.Request.GetCalendarInfo(id), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetCalendarInfo", "getCalendarInfo call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetCalendarInfo", "getCalendarInfo call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
-        public Data.getCalendarExceptions GetCalendarExceptions(string id, DateTime fromDate, DateTime toDate)
+        public async Task<Data.GetCalendarExceptions> GetCalendarExceptions(string id, DateTime fromDate, DateTime toDate)
         {
-            Data.getCalendarExceptions op = new Data.getCalendarExceptions(new Data.Request.getCalendarExceptions(id, fromDate, toDate), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.GetCalendarExceptions apiCall = new Data.GetCalendarExceptions(new Data.Request.GetCalendarExceptions(id, fromDate, toDate), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetCalendarExceptions", "GetCalendarExceptions call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetCalendarExceptions", "GetCalendarExceptions call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -1372,19 +1425,20 @@ namespace Ekin.Clarizen
         /// <param name="startDate">The start of the date range (inclusive)</param>
         /// <param name="endDate">The end of the date range (exclusive)</param>
         /// <returns></returns>
-        public Data.getMissingTimesheets GetMissingTimesheets(string user, DateTime startDate, DateTime endDate)
+        public async Task<Data.GetMissingTimesheets> GetMissingTimesheets(string user, DateTime startDate, DateTime endDate)
         {
-            Data.getMissingTimesheets op = new Data.getMissingTimesheets(new Data.Request.getMissingTimesheets(user, startDate, endDate), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.GetMissingTimesheets apiCall = new Data.GetMissingTimesheets(new Data.Request.GetMissingTimesheets(user, startDate, endDate), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetMissingTimesheets", "GetMissingTimesheets call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetMissingTimesheets", "GetMissingTimesheets call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         #endregion Data - Other methods
@@ -1396,19 +1450,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public Data.query ExecuteQuery(Data.Request.query query)
+        public async Task<Data.Query> ExecuteQuery(Data.Request.Query query)
         {
-            Data.query CZQuery = new Data.query(query, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Data.Query apiCall = new Data.Query(query, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(CZQuery.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(CZQuery.IsCalledSuccessfully, "Ekin.Clarizen.API", "ExecuteQuery", "query call failed", CZQuery.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ExecuteQuery", "query call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return CZQuery;
+            return apiCall;
         }
 
         /// <summary>
@@ -1416,9 +1471,9 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public Data.query ExecuteQuery(Interfaces.IClarizenQuery query)
+        public async Task<Data.Query> ExecuteQuery(Interfaces.IClarizenQuery query)
         {
-            return ExecuteQuery(new Data.Request.query(query.ToCZQL()));
+            return await ExecuteQuery(new Data.Request.Query(query.ToCZQL()));
         }
 
         #endregion CZQL
@@ -1430,8 +1485,8 @@ namespace Ekin.Clarizen
         /// </summary>
         public void StartBulkService()
         {
-            isBulk = true;
-            bulkRequests = new List<request> { };
+            IsBulk = true;
+            BulkRequests = new List<Request> { };
         }
 
         /// <summary>
@@ -1441,31 +1496,32 @@ namespace Ekin.Clarizen
         /// <param name="batch"></param>
         /// <param name="includeRequestsInResponses">Embed requests in responses so that when there is an error in a bulk operation you can look into the request that caused it</param>
         /// <returns></returns>
-        public Bulk.execute CommitBulkService(bool transactional = false, bool? batch = null, bool? includeRequestsInResponses = null, int? timeout = null)
+        public async Task<Bulk.Execute> CommitBulkService(bool transactional = false, bool? batch = null, bool? includeRequestsInResponses = null, int? timeout = null)
         {
-            Logs.Assert(isBulk, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service not started");
-            if (isBulk)
+            Logs.Assert(IsBulk, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service not started");
+            if (IsBulk)
             {
                 CallSettings callSettings = CallSettings.GetFromAPI(this);
-                callSettings.timeout = timeout;
-                Bulk.execute bulkService = new Bulk.execute(new Bulk.Request.execute(bulkRequests, transactional, batch), callSettings);
-                Logs.Assert(bulkService.IsCalledSuccessfully, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service error", bulkService.Error);
+                callSettings.Timeout = timeout;
+                Bulk.Execute apiCall = new Bulk.Execute(new Bulk.Request.Execute(BulkRequests, transactional, batch), callSettings);
+                bool executionResult = await apiCall.Execute();
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service error", apiCall.Error);
                 TotalAPICallsMadeInCurrentSession++;
-                if (bulkService.IsCalledSuccessfully)
+                if (executionResult)
                 {
-                    if (bulkService.Data.responses?.Length > 0)
+                    if (apiCall.Data.Responses?.Length > 0)
                     {
-                        for (int n = 0; n < bulkService.Data.responses.Length; n++)
+                        for (int n = 0; n < apiCall.Data.Responses.Length; n++)
                         {
-                            if (bulkService.Data.responses[n].statusCode == 200)
-                                bulkService.Data.responses[n].CastBody(bulkRequests[n].resultType);
+                            if (apiCall.Data.Responses[n].StatusCode == 200)
+                                apiCall.Data.Responses[n].CastBody(BulkRequests[n].ResultType);
                             else
-                                bulkService.Data.responses[n].CastBodyToError();
+                                apiCall.Data.Responses[n].CastBodyToError();
 
                             if (includeRequestsInResponses.GetValueOrDefault(false))
                             {
                                 // For every request in the payload Clarizen returns a response so their indexes must match
-                                bulkService.Data.responses[n].request = bulkRequests[n];
+                                apiCall.Data.Responses[n].Request = BulkRequests[n];
                             }
                         }
                     }
@@ -1474,7 +1530,7 @@ namespace Ekin.Clarizen
                         Logs.AddError("Ekin.Clarizen.API", "CommitBulkService", "Bulk service executed successfully but no response was received from Clarizen");
                     }
                 }
-                return bulkService;
+                return apiCall;
             }
             return null;
         }
@@ -1484,8 +1540,8 @@ namespace Ekin.Clarizen
         /// </summary>
         public void CancelBulkService()
         {
-            isBulk = false;
-            bulkRequests = new List<request> { };
+            IsBulk = false;
+            BulkRequests = new List<Request> { };
         }
 
         #endregion Bulk Service
@@ -1496,19 +1552,20 @@ namespace Ekin.Clarizen
         /// Converts an API session to a web application session. Calling this method returns a url to the application that will not require credentials to login
         /// </summary>
         /// <returns></returns>
-        public Utils.appLogin AppLogin()
+        public async Task<Utils.AppLogin> AppLogin()
         {
-            Utils.appLogin util = new Utils.appLogin(CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Utils.AppLogin apiCall = new Utils.AppLogin(CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(util.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(util.IsCalledSuccessfully, "Ekin.Clarizen.API", "AppLogin", "appLogin call failed", util.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "AppLogin", "appLogin call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return util;
+            return apiCall;
         }
 
         /// <summary>
@@ -1520,53 +1577,56 @@ namespace Ekin.Clarizen
         /// <param name="relatedEntityId">Entity Id of the related object</param>
         /// <param name="accessType">Public or Private</param>
         /// <returns></returns>
-        public Utils.sendEMail SendEmail(recipient[] recipients, string subject, string body, string relatedEntityId, Utils.Request.sendEMail.CZAccessType accessType)
+        public async Task<Utils.SendEmail> SendEmail(Recipient[] recipients, string subject, string body, string relatedEntityId, Utils.Request.SendEmail.CZAccessType accessType)
         {
-            Utils.sendEMail util = new Utils.sendEMail(new Utils.Request.sendEMail(recipients, subject, body, relatedEntityId, accessType), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Utils.SendEmail apiCall = new Utils.SendEmail(new Utils.Request.SendEmail(recipients, subject, body, relatedEntityId, accessType), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(util.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(util.IsCalledSuccessfully, "Ekin.Clarizen.API", "SendEmail", "sendEMail call failed", util.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "SendEmail", "SendEmail call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return util;
+            return apiCall;
         }
 
         #endregion Utils
 
         #region Applications
 
-        public Applications.getApplicationStatus GetApplicationStatus(string applicationId)
+        public async Task<Applications.GetApplicationStatus> GetApplicationStatus(string applicationId)
         {
-            Applications.getApplicationStatus op = new Applications.getApplicationStatus(new Applications.Request.getApplicationStatus(applicationId), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Applications.GetApplicationStatus apiCall = new Applications.GetApplicationStatus(new Applications.Request.GetApplicationStatus(applicationId), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetApplicationStatus", "getApplicationStatus call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetApplicationStatus", "getApplicationStatus call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
-        public Applications.installApplication InstallApplication(string applicationId, bool autoEnable)
+        public async Task<Applications.InstallApplication> InstallApplication(string applicationId, bool autoEnable)
         {
-            Applications.installApplication op = new Applications.installApplication(new Applications.Request.installApplication(applicationId, autoEnable), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Applications.InstallApplication apiCall = new Applications.InstallApplication(new Applications.Request.InstallApplication(applicationId, autoEnable), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "InstallApplication", "installApplication call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "InstallApplication", "installApplication call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         #endregion Applications
@@ -1579,38 +1639,40 @@ namespace Ekin.Clarizen
         /// <param name="documentId">Entity Id</param>
         /// <param name="redirect"></param>
         /// <returns></returns>
-        public Files.download Download(string documentId, bool redirect)
+        public async Task<Files.Download> Download(string documentId, bool redirect)
         {
-            Files.download op = new Files.download(new Files.Request.download(documentId, redirect), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Files.Download apiCall = new Files.Download(new Files.Request.Download(documentId, redirect), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "Download", "download call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Download", "download call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
         /// Get a URL for uploading files. After POSTing a file to this URL, perform an Upload operation and pass this URL in the UploadUrl parameter.
         /// </summary>
         /// <returns></returns>
-        public Files.getUploadUrl GetUploadUrl()
+        public async Task<Files.GetUploadUrl> GetUploadUrl()
         {
-            Files.getUploadUrl op = new Files.getUploadUrl(CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Files.GetUploadUrl apiCall = new Files.GetUploadUrl(CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "GetUploadUrl", "getUploadUrl call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetUploadUrl", "getUploadUrl call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -1618,19 +1680,20 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public Files.upload Upload(Files.Request.upload request)
+        public async Task<Files.Upload> Upload(Files.Request.Upload request)
         {
-            Files.upload op = new Files.upload(request, CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Files.Upload apiCall = new Files.Upload(request, CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "Upload", "upload call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Upload", "upload call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         /// <summary>
@@ -1640,18 +1703,18 @@ namespace Ekin.Clarizen
         /// <param name="fileInformation">Additional information about the file</param>
         /// <param name="uploadUrl">When the file is stored in Clarizen, provide the Url you received in a previous request to getUploadUrl</param>
         /// <returns></returns>
-        public Files.upload Upload(string documentId, fileInformation fileInformation, string uploadUrl)
+        public async Task<Files.Upload> Upload(string documentId, FileInformation fileInformation, string uploadUrl)
         {
-            return Upload(new Files.Request.upload(documentId, fileInformation, uploadUrl));
+            return await Upload(new Files.Request.Upload(documentId, fileInformation, uploadUrl));
         }
 
         /// <summary>
         /// Upload file to a document in Clarizen
         /// </summary>
         /// <returns></returns>
-        public Files.upload Upload(string documentId, storageType storage, string url, string fileName, string subType, string extendedInfo, string uploadUrl)
+        public async Task<Files.Upload> Upload(string documentId, StorageType storage, string url, string fileName, string subType, string extendedInfo, string uploadUrl)
         {
-            return Upload(new Files.Request.upload(documentId, new fileInformation(storage, url, fileName, subType, extendedInfo), uploadUrl));
+            return await Upload(new Files.Request.Upload(documentId, new FileInformation(storage, url, fileName, subType, extendedInfo), uploadUrl));
         }
 
         /// <summary>
@@ -1661,19 +1724,20 @@ namespace Ekin.Clarizen
         /// <param name="uploadUrl">When the file is stored in Clarizen, provide the Url you received in a previous request to getUploadUrl</param>
         /// <param name="reset">Revert image to default icon</param>
         /// <returns></returns>
-        public Files.updateImage UpdateImage(string entityId, string uploadUrl, bool reset)
+        public async Task<Files.UpdateImage> UpdateImage(string entityId, string uploadUrl, bool reset)
         {
-            Files.updateImage op = new Files.updateImage(new Files.Request.updateImage(entityId, uploadUrl, reset), CallSettings.GetFromAPI(this));
-            if (isBulk)
+            Files.UpdateImage apiCall = new Files.UpdateImage(new Files.Request.UpdateImage(entityId, uploadUrl, reset), CallSettings.GetFromAPI(this));
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
             {
-                bulkRequests.Add(op.BulkRequest);
+                BulkRequests.Add(apiCall.BulkRequest);
             }
             else 
             { 
-                Logs.Assert(op.IsCalledSuccessfully, "Ekin.Clarizen.API", "UpdateImage", "updateImage call failed", op.Error); 
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "UpdateImage", "updateImage call failed", apiCall.Error); 
                 TotalAPICallsMadeInCurrentSession++; 
             }
-            return op;
+            return apiCall;
         }
 
         #endregion Files

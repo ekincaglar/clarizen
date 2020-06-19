@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class newsFeedQuery : Call<Result.newsFeedQuery>
+    public class NewsFeedQuery : Call<Result.NewsFeedQuery>
     {
-        public newsFeedQuery(Queries.newsFeedQuery request, CallSettings callSettings)
+        public NewsFeedQuery(Queries.NewsFeedQuery request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/newsFeedQuery";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/newsFeedQuery";
+            _method = RequestMethod.Post;
         }
     }
 }

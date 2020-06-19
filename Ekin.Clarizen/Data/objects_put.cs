@@ -1,16 +1,14 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class objects_put : Call<Result.objects_put>
+    public class Objects_put : Call<Result.Objects_put>
     {
-        public objects_put(string id, object obj, CallSettings callSettings)
+        public Objects_put(string id, object obj, CallSettings callSettings)
         {
             _request = obj;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/objects" +
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/objects" +
                          (id.Substring(0, 1) != "/" ? "/" : "") + id;
-            _method = requestMethod.Put;
-
-            var result = Execute();
+            _method = RequestMethod.Put;
         }
     }
 }

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public class parameters
+    public class Parameters
     {
         /// <summary>
         /// Bind parameter values in JSON format i.e. {
@@ -13,13 +8,13 @@ namespace Ekin.Clarizen
         /// param2: value2
         /// }
         /// </summary>
-        public object objectFields { get; set; }
+        public object ObjectFields { get; set; }
 
-        public parameters() { }
+        public Parameters() { }
 
-        public parameters(object objectFields)
+        public Parameters(object objectFields)
         {
-            this.objectFields = objectFields;
+            ObjectFields = objectFields;
         }
     }
 }

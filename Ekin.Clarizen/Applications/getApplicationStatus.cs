@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Applications
 {
-    public class getApplicationStatus : Call<Result.getApplicationStatus>
+    public class GetApplicationStatus : Call<Result.GetApplicationStatus>
     {
-        public getApplicationStatus(Request.getApplicationStatus request, CallSettings callSettings)
+        public GetApplicationStatus(Request.GetApplicationStatus request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/applications/getApplicationStatus";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/applications/getApplicationStatus";
+            _method = RequestMethod.Post;
         }
     }
 }

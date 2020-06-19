@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Authentication.Request
+﻿namespace Ekin.Clarizen.Authentication.Request
 {
-    public class setPassword
+    public class SetPassword
     {
         /// <summary>
         /// Fully qualified Id of the user, e.g. /Organization/SomeOrgId/User/SomeUserId
         /// </summary>
-        public string userId;
+        public string UserId;
 
         /// <summary>
         /// The password
         /// </summary>
-        public string newPassword;
+        public string NewPassword;
 
-        public setPassword(string userId, string newPassword)
+        public SetPassword(string userId, string newPassword)
         {
-            this.userId = userId;
-            this.newPassword = newPassword;
+            UserId = userId;
+            NewPassword = newPassword;
         }
     }
 }

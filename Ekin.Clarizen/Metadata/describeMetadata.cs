@@ -2,16 +2,14 @@
 
 namespace Ekin.Clarizen.Metadata
 {
-    public class describeMetadata : Call<Result.describeMetadata>
+    public class DescribeMetadata : Call<Result.DescribeMetadata>
     {
-        public describeMetadata(Request.describeMetadata request, CallSettings callSettings)
+        public DescribeMetadata(Request.DescribeMetadata request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/metadata/describeMetadata" + (request != null ? "?" + request.ToQueryString() : string.Empty);
-            _method = requestMethod.Get;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/metadata/describeMetadata" + (request != null ? "?" + request.ToQueryString() : string.Empty);
+            _method = RequestMethod.Get;
         }
     }
 }

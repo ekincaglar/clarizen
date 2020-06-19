@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class executeCustomAction : Call<Result.executeCustomAction>
+    public class ExecuteCustomAction : Call<Result.ExecuteCustomAction>
     {
-        public executeCustomAction(Request.executeCustomAction request, CallSettings callSettings)
+        public ExecuteCustomAction(Request.ExecuteCustomAction request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/executeCustomAction";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/executeCustomAction";
+            _method = RequestMethod.Post;
         }
     }
 }

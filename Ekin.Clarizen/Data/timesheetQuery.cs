@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class timesheetQuery : Call<Result.timesheetQuery>
+    public class TimesheetQuery : Call<Result.TimesheetQuery>
     {
-        public timesheetQuery(Queries.timesheetQuery request, CallSettings callSettings)
+        public TimesheetQuery(Queries.TimesheetQuery request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/timesheetQuery";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/timesheetQuery";
+            _method = RequestMethod.Post;
         }
     }
 }

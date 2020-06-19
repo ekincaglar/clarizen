@@ -1,26 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public enum storageType
+    public enum StorageType
     {
         Server, Url, Link
     }
 
-    public static class storageTypeExtensions
+    public static class StorageTypeExtensions
     {
-        public static string ToEnumString(this storageType me)
+        public static string ToEnumString(this StorageType me)
         {
             switch (me)
             {
-                case storageType.Server: return "Server";
-                case storageType.Url: return "Url";
-                case storageType.Link: return "Link";
+                case StorageType.Server: return "Server";
+                case StorageType.Url: return "Url";
+                case StorageType.Link: return "Link";
                 default: return "ERROR";
             }
         }

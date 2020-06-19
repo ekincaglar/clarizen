@@ -1,16 +1,10 @@
-﻿using Ekin.Clarizen.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Metadata.Result
+﻿namespace Ekin.Clarizen.Metadata.Result
 {
-    public class getSystemSettingsValues
+    public class GetSystemSettingsValues
     {
         /// <summary>
         /// Array of objects representing the values of each system setting. The value type (e.g. boolean, int etc.) depends on the system setting
         /// </summary>
-        public object[] values { get; set; }
+        public object[] Values { get; set; }
     }
 }

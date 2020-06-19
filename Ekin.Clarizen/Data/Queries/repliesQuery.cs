@@ -1,33 +1,28 @@
 ﻿using Ekin.Clarizen.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Data.Queries
 {
-    public class repliesQuery : IQuery
+    public class RepliesQuery : IQuery
     {
         public string _type { get { return "repliesQuery"; } }
 
-        public string postId { get; set; }
-        public string[] fields { get; set; }
-        public string[] feedItemOptions { get; set; }
-        public paging paging { get; set; }
+        public string PostId { get; set; }
+        public string[] Fields { get; set; }
+        public string[] FeedItemOptions { get; set; }
+        public Paging Paging { get; set; }
 
-        public repliesQuery(string postId, string[] fields, string[] feedItemOptions, paging paging)
+        public RepliesQuery(string postId, string[] fields, string[] feedItemOptions, Paging paging)
         {
-            this.postId = postId;
-            this.fields = fields;
-            this.feedItemOptions = feedItemOptions;
-            this.paging = paging;
+            PostId = postId;
+            Fields = fields;
+            FeedItemOptions = feedItemOptions;
+            Paging = paging;
         }
 
-        public repliesQuery(string postId, string[] fields)
+        public RepliesQuery(string postId, string[] fields)
         {
-            this.postId = postId;
-            this.fields = fields;
+            PostId = postId;
+            Fields = fields;
         }
-
     }
 }

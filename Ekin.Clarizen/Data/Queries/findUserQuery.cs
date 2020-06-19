@@ -1,33 +1,27 @@
 ﻿using Ekin.Clarizen.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Data.Queries
 {
     /// <summary>
     /// Finds a user based on several criterias 
     /// </summary>
-    public class findUserQuery : IQuery
+    public class FindUserQuery : IQuery
     {
         public string _type { get { return "findUserQuery"; } }
 
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string eMail { get; set; }
-        public bool fuzzySearchUserName { get; set; }
-        public bool includeSuspendedUsers { get; set; }
-        public string[] fields { get; set; }
-        public orderBy[] orders { get; set; }
-        public paging paging { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public bool FuzzySearchUserName { get; set; }
+        public bool IncludeSuspendedUsers { get; set; }
+        public string[] Fields { get; set; }
+        public OrderBy[] Orders { get; set; }
+        public Paging Paging { get; set; }
 
-        public findUserQuery(string firstName, string lastName)
+        public FindUserQuery(string firstName, string lastName)
         {
-            this.firstName = firstName;
-            this.lastName = lastName;
+            FirstName = firstName;
+            LastName = lastName;
         }
-
     }
-
 }

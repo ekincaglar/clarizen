@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Metadata.Request
+﻿namespace Ekin.Clarizen.Metadata.Request
 {
-    public class describeEntities
+    public class DescribeEntities
     {
         /// <summary>
         /// The types of entities to describe
         /// </summary>
-        public string[] typeNames { get; set; }
+        public string[] TypeNames { get; set; }
 
-        public describeEntities(string[] typeNames)
+        public DescribeEntities(string[] typeNames)
         {
-            this.typeNames = typeNames;
+            TypeNames = typeNames;
         }
     }
 }

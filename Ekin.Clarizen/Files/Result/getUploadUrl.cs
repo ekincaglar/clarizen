@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Files.Result
+﻿namespace Ekin.Clarizen.Files.Result
 {
-    public class getUploadUrl
+    public class GetUploadUrl
     {
-        public string uploadUrl { get; set; }
+        public string UploadUrl { get; set; }
     }
 }

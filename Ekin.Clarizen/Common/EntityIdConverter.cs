@@ -10,7 +10,7 @@ namespace Ekin.Clarizen
         {
             if (value is EntityId)
             {
-                writer.WriteValue(((EntityId)value).id);
+                writer.WriteValue(((EntityId)value).Id);
             }
             else
             {
@@ -35,7 +35,7 @@ namespace Ekin.Clarizen
                     }
                 }
             }
-            catch (Exception e)
+            catch
             {
                 if (reader.Value != null && !string.IsNullOrEmpty(reader.Value.ToString()))
                 {

@@ -2,16 +2,14 @@
 
 namespace Ekin.Clarizen.Metadata
 {
-    public class getSystemSettingsValues : Call<Result.describeMetadata>
+    public class GetSystemSettingsValues : Call<Result.DescribeMetadata>
     {
-        public getSystemSettingsValues(Request.getSystemSettingsValues request, CallSettings callSettings)
+        public GetSystemSettingsValues(Request.GetSystemSettingsValues request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/metadata/getSystemSettingsValues?" + request.ToQueryString();
-            _method = requestMethod.Get;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/metadata/getSystemSettingsValues?" + request.ToQueryString();
+            _method = RequestMethod.Get;
         }
     }
 }

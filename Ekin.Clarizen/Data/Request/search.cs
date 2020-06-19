@@ -1,53 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Request
+﻿namespace Ekin.Clarizen.Data.Request
 {
-    public class search
+    public class Search
     {
         /// <summary>
         /// The search query to perform
         /// </summary>
-        public string q { get; set; }
+        public string Q { get; set; }
         /// <summary>
         /// (Optional) The Entity Type to search. If omitted, search on all types
         /// </summary>
-        public string typeName { get; set; }
+        public string TypeName { get; set; }
         /// <summary>
         /// The list of fields to return. Only valid when specifying a TypeName. When searching in all types the fields returned are fixed
         /// </summary>
-        public string[] fields { get; set; }
+        public string[] Fields { get; set; }
         /// <summary>
         /// Paging setting for the query
         /// </summary>
-        public paging paging { get; set; }
+        public Paging Paging { get; set; }
 
-        public search(string q, string typeName, string[] fields, paging paging)
+        public Search(string q, string typeName, string[] fields, Paging paging)
         {
-            this.q = q;
-            this.typeName = typeName;
-            this.fields = fields;
-            this.paging = paging;
+            Q = q;
+            TypeName = typeName;
+            Fields = fields;
+            Paging = paging;
         }
 
-        public search(string q, string typeName, string[] fields)
+        public Search(string q, string typeName, string[] fields)
         {
-            this.q = q;
-            this.typeName = typeName;
-            this.fields = fields;
+            Q = q;
+            TypeName = typeName;
+            Fields = fields;
         }
 
-        public search(string q)
+        public Search(string q)
         {
-            this.q = q;
+            Q = q;
         }
 
-        public search(string q, paging paging)
+        public Search(string q, Paging paging)
         {
-            this.q = q;
-            this.paging = paging;
+            Q = q;
+            Paging = paging;
         }
 
     }

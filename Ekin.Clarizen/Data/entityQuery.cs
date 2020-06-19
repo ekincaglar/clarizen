@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class entityQuery : Call<Result.entityQuery>
+    public class EntityQuery : Call<Result.EntityQuery>
     {
-        public entityQuery(Queries.entityQuery request, CallSettings callSettings)
+        public EntityQuery(Queries.EntityQuery request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/entityQuery";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/entityQuery";
+            _method = RequestMethod.Post;
         }
     }
 }

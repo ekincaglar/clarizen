@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Result
+﻿namespace Ekin.Clarizen.Data.Result
 {
-    public class countQuery
+    public class CountQuery
     {
-        public long count { get; set; }
+        public long Count { get; set; }
     }
 }

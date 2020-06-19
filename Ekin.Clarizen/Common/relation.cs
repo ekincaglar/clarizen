@@ -1,43 +1,43 @@
 ﻿using Ekin.Clarizen.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen
 {
-    public class relation
+    public class Relation
     {
         /// <summary>
         /// Relation name
         /// </summary>
-        public string name { get; set; }
+        public string Name { get; set; }
+
         /// <summary>
         /// A list of field names to retrieve
         /// </summary>
-        public string[] fields { get; set; }
+        public string[] Fields { get; set; }
+
         /// <summary>
         /// The query criteria
         /// </summary>
-        public ICondition where { get; set; }
+        public ICondition Where { get; set; }
+
         /// <summary>
         /// Optionaly order the result
         /// </summary>
-        public orderBy[] orders { get; set; }
+        public OrderBy[] Orders { get; set; }
+
         /// <summary>
         /// The query result of link objects
         /// </summary>
-        public bool fromLink { get; set; }
+        public bool FromLink { get; set; }
 
-        public relation() { }
+        public Relation() { }
 
-        public relation(string name, string[] fields, ICondition where, orderBy[] orders, bool fromLink)
+        public Relation(string name, string[] fields, ICondition where, OrderBy[] orders, bool fromLink)
         {
-            this.name = name;
-            this.fields = fields;
-            this.where = where;
-            this.orders = orders;
-            this.fromLink = fromLink;
+            Name = name;
+            Fields = fields;
+            Where = where;
+            Orders = orders;
+            FromLink = fromLink;
         }
 
     }

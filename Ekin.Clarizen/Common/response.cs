@@ -1,28 +1,24 @@
-﻿using Ekin.Clarizen.Interfaces;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen
 {
-    public class response
+    public class Response
     {
         /// <summary>
         /// Status code (200 for OK, 500 for error)
         /// </summary>
-        public int statusCode { get; set; }
+        public int StatusCode { get; set; }
         /// <summary>
         /// Response body as a JSON string
         /// </summary>
-        public dynamic body { get; set; }
+        public dynamic Body { get; set; }
 
         /// <summary>
         /// There is an option to embed requests in responses so that when there is an error in a bulk operation you can look into the request that caused it
         /// </summary>
-        public request request { get; set; }
+        public Request Request { get; set; }
 
         #region Type Casting
 
@@ -35,7 +31,7 @@ namespace Ekin.Clarizen
             {
                 if (type != null)
                 {
-                    body = (body as JObject).ToObject(type);
+                    Body = (Body as JObject).ToObject(type);
                     BodyType = type.FullName;
                 }
             }
@@ -47,12 +43,12 @@ namespace Ekin.Clarizen
 
         public void CastBodyToError()
         {
-            CastBody(typeof(error));
+            CastBody(typeof(Error));
         }
 
         private string SerializeBody()
         {
-            return JsonConvert.SerializeObject(body);
+            return JsonConvert.SerializeObject(Body);
         }
 
         #endregion

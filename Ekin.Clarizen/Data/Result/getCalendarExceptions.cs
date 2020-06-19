@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Result
+﻿namespace Ekin.Clarizen.Data.Result
 {
-    public class getCalendarExceptions
+    public class GetCalendarExceptions
     {
-        public calendarException[] calendarExceptions { get; set; }
-        public exceptionDate[] exceptionDates { get; set; }
+        public CalendarException[] CalendarExceptions { get; set; }
+        public ExceptionDate[] ExceptionDates { get; set; }
 
-        public getCalendarExceptions() { }
+        public GetCalendarExceptions() { }
     }
 }

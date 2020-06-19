@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public class fieldValue
+    public class FieldValue
     {
-        public string fieldName { get; set; }
-        public string value { get; set; }
+        public string FieldName { get; set; }
+        public string Value { get; set; }
 
-        public fieldValue() { }
+        public FieldValue() { }
 
-        public fieldValue(string fieldName, string value)
+        public FieldValue(string fieldName, string value)
         {
-            this.fieldName = fieldName;
-            this.value = value;
+            FieldName = fieldName;
+            Value = value;
         }
     }
 }

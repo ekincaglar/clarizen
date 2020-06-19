@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Result
+﻿namespace Ekin.Clarizen.Data.Result
 {
-    public class getCalendarInfo
+    public class GetCalendarInfo
     {
-        public string weekStartsOn { get; set; }
-        public dayInformation[] weekDayInformation { get; set; }
-        public dayInformation defaultWorkingDay { get; set; }
-        public int workingDaysPerMonth { get; set; }
+        public string WeekStartsOn { get; set; }
+        public DayInformation[] WeekDayInformation { get; set; }
+        public DayInformation DefaultWorkingDay { get; set; }
+        public int WorkingDaysPerMonth { get; set; }
 
-        public getCalendarInfo() { }
+        public GetCalendarInfo() { }
     }
 }

@@ -1,14 +1,12 @@
 ﻿namespace Ekin.Clarizen.Metadata
 {
-    public class listEntities : Call<Result.listEntities>
+    public class ListEntities : Call<Result.ListEntities>
     {
-        public listEntities(CallSettings callSettings)
+        public ListEntities(CallSettings callSettings)
         {
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/metadata/listEntities";
-            _method = requestMethod.Get;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/metadata/listEntities";
+            _method = RequestMethod.Get;
         }
     }
 }

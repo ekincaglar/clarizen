@@ -11,19 +11,34 @@ namespace Ekin.Clarizen
         #region Local/Internal Properties
 
         internal string _url { get; set; }
-        internal requestMethod _method { get; set; }
+        internal RequestMethod _method { get; set; }
         internal object _request { get; set; }
         internal CallSettings _callSettings { get; set; }
         internal bool _returnRawResponse { get; set; }
 
         #endregion
-        
+
         #region Public Properties
 
-        public bool IsCalledSuccessfully { get; set; }
-        public string Error { get; set; }
-        public request BulkRequest { get; set; }
-        public T Data { get; set; }
+        /// <summary>
+        /// Returns true if the Http call to Clarizen was completed successfully, even if the result of the call has errors that Clarizen returned
+        /// </summary>
+        public bool IsCalledSuccessfully { get; set; } = false;
+
+        /// <summary>
+        /// Error message returned by Clarizen or the REST adapter
+        /// </summary>
+        public string Error { get; set; } = default;
+
+        /// <summary>
+        /// This is a queue item for bulk requests
+        /// </summary>
+        public Request BulkRequest { get; set; } = null;
+
+        /// <summary>
+        /// The data returned by the Clarizen API call
+        /// </summary>
+        public T Data { get; set; } = default;
 
         #endregion
 
@@ -32,31 +47,17 @@ namespace Ekin.Clarizen
 
         }
 
+        /// <summary>
+        /// Make a REST call to Clarizen's API
+        /// </summary>
+        /// <returns>Returns true if the Http call to Clarizen was completed successfully, even if the result of the call has errors that Clarizen returned</returns>
         public async Task<bool> Execute()
         {
             #region If the call is bulk, add this to the Bulk Request and exit this function
 
-            if (_callSettings != null && _callSettings.isBulk)
+            if (_callSettings != null && _callSettings.IsBulk)
             {
-                //switch (_method)
-                //{
-                //    case requestMethod.Get:
-                //    case requestMethod.Delete:
-                //        //BulkRequest = new request(_url, _method);
-                //        //BulkRequest = new request(_url, _method, null, typeof(T));
-                //        BulkRequest = new request(_url, _method, typeof(T));
-                //        break;
-
-                //    case requestMethod.Post:
-                //        //this.BulkRequest = new request(_url, _method, _request, null);
-                //        this.BulkRequest = new request(_url, _method, _request, typeof(T));
-                //        break;
-
-                //    case requestMethod.Put:
-                //        BulkRequest = new request(_url, _method, _request, typeof(T));
-                //        break;
-                //}
-                this.BulkRequest = new request(_url, _method, _request, typeof(T));
+                this.BulkRequest = new Request(_url, _method, _request, typeof(T));
                 return true;
             }
 
@@ -72,27 +73,27 @@ namespace Ekin.Clarizen
             }
             else
             {
-                restClient = new Ekin.Rest.Client(_url, _callSettings.GetHeaders(), _callSettings.timeout.GetValueOrDefault(120000), _callSettings.retry, _callSettings.sleepBetweenRetries);
+                restClient = new Ekin.Rest.Client(_url, _callSettings.GetHeaders(), _callSettings.Timeout.GetValueOrDefault(120000), _callSettings.Retry, _callSettings.SleepBetweenRetries);
             }
-            restClient.ErrorType = typeof(error);
+            restClient.ErrorType = typeof(Error);
 
             // Make the call
             Ekin.Rest.Response response = null;
             switch (_method)
             {
-                case requestMethod.Get:
+                case RequestMethod.Get:
                     response = await restClient.Get();
                     break;
 
-                case requestMethod.Post:
-                    response = await restClient.Post(_request, (_callSettings?.serializeNullValues).GetValueOrDefault(false));
+                case RequestMethod.Post:
+                    response = await restClient.Post(_request, (_callSettings?.SerializeNullValues).GetValueOrDefault(false));
                     break;
 
-                case requestMethod.Put:
-                    response = await restClient.Put(_request, (_callSettings?.serializeNullValues).GetValueOrDefault(false));
+                case RequestMethod.Put:
+                    response = await restClient.Put(_request, (_callSettings?.SerializeNullValues).GetValueOrDefault(false));
                     break;
 
-                case requestMethod.Delete:
+                case RequestMethod.Delete:
                     response = await restClient.Delete();
                     break;
 
@@ -112,8 +113,6 @@ namespace Ekin.Clarizen
                 {
                     try
                     {
-                        //Data = JsonConvert.DeserializeObject<T>(response.Content);
-
                         Data = JsonConvert.DeserializeObject<T>(response.Content, new JsonSerializerSettings()
                         {
                             Error = HandleDeserializationError
@@ -130,8 +129,8 @@ namespace Ekin.Clarizen
             }
             else if (response.InternalError != null)
             {
-                error internalError = response.InternalError as error;
-                if (_method == requestMethod.Get && internalError?.errorCode != null && internalError.errorCode.Equals("EntityNotFound"))
+                Error internalError = response.InternalError as Error;
+                if (_method == RequestMethod.Get && internalError?.ErrorCode != null && internalError.ErrorCode.Equals("EntityNotFound"))
                 {
                     // Clarizen returns Http 500 when an entity of the given type is not found
                     // In the body of the response "errorCode": "EntityNotFound" is returned
@@ -143,9 +142,9 @@ namespace Ekin.Clarizen
                     IsCalledSuccessfully = false;
                 }
 
-                if (_callSettings?.timeout != null)
+                if (_callSettings?.Timeout != null)
                 {
-                    Error = $"{response.GetFormattedErrorMessage()}. Timeout set to {TimeSpan.FromMilliseconds(_callSettings.timeout.GetValueOrDefault(120000)).ToHumanReadableString()}.";
+                    Error = $"{response.GetFormattedErrorMessage()}. Timeout set to {TimeSpan.FromMilliseconds(_callSettings.Timeout.GetValueOrDefault(120000)).ToHumanReadableString()}.";
                 }
                 else
                 {
@@ -162,6 +161,11 @@ namespace Ekin.Clarizen
             #endregion
         }
 
+        /// <summary>
+        /// Handles Newtonsoft.Json's deserialization error
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="errorArgs"></param>
         public void HandleDeserializationError(object sender, ErrorEventArgs errorArgs)
         {
             Error = errorArgs.ErrorContext.Error.Message;

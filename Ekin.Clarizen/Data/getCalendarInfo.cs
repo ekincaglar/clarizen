@@ -2,11 +2,11 @@
 
 namespace Ekin.Clarizen.Data
 {
-    public class getCalendarInfo : Call<Result.getCalendarInfo>
+    public class GetCalendarInfo : Call<Result.GetCalendarInfo>
     {
-        public getCalendarInfo(Request.getCalendarInfo request, CallSettings callSettings)
+        public GetCalendarInfo(Request.GetCalendarInfo request, CallSettings callSettings)
         {
-            if (request == null || String.IsNullOrEmpty(request.id))
+            if (request == null || String.IsNullOrEmpty(request.Id))
             {
                 IsCalledSuccessfully = false;
                 this.Error = "Entity id must be provided";
@@ -15,10 +15,8 @@ namespace Ekin.Clarizen.Data
 
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/getCalendarInfo?userId=" + request.id;
-            _method = requestMethod.Get;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/getCalendarInfo?userId=" + request.Id;
+            _method = RequestMethod.Get;
         }
     }
 }

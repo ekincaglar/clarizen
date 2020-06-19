@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Utils.Result
+﻿namespace Ekin.Clarizen.Utils.Result
 {
-    public class appLogin
+    public class AppLogin
     {
         /// <summary>
         /// A Url that can be used to enter the web application without requireing credentials
         /// </summary>
-        public string url { get; set; }
+        public string Url { get; set; }
     }
 }

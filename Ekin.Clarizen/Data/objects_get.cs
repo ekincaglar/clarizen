@@ -2,11 +2,11 @@
 
 namespace Ekin.Clarizen.Data
 {
-    public class objects_get : Call<dynamic>
+    public class Objects_get : Call<dynamic>
     {
-        public objects_get(Request.objects_get request, CallSettings callSettings, bool returnRawResponse = false)
+        public Objects_get(Request.Objects_get request, CallSettings callSettings, bool returnRawResponse = false)
         {
-            if (request == null || String.IsNullOrEmpty(request.id))
+            if (request == null || String.IsNullOrEmpty(request.Id))
             {
                 IsCalledSuccessfully = false;
                 this.Error = "Object id must be provided in the request";
@@ -16,13 +16,11 @@ namespace Ekin.Clarizen.Data
             _request = request;
             _callSettings = callSettings;
             _returnRawResponse = returnRawResponse;
-            _url =  (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/objects" +
-                    (request.id.Substring(0, 1) != "/" ? "/" : "") + request.id +
+            _url =  (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/objects" +
+                    (request.Id.Substring(0, 1) != "/" ? "/" : "") + request.Id +
                     //(request.fields != null ? "?" + request.fields.ToQueryString() : string.Empty);
-                    (request.fields != null ? "?fields=" + GetFieldList(request.fields) : string.Empty);
-            _method = requestMethod.Get;
-
-            var result = Execute();
+                    (request.Fields != null ? "?fields=" + GetFieldList(request.Fields) : string.Empty);
+            _method = RequestMethod.Get;
         }
 
         private string GetFieldList(string[] fields)

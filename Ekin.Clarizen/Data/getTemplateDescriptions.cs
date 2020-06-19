@@ -1,10 +1,10 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class getTemplateDescriptions : Call<Result.getTemplateDescriptions>
+    public class GetTemplateDescriptions : Call<Result.GetTemplateDescriptions>
     {
-        public getTemplateDescriptions(Request.getTemplateDescriptions request, CallSettings callSettings)
+        public GetTemplateDescriptions(Request.GetTemplateDescriptions request, CallSettings callSettings)
         {
-            if (request == null || string.IsNullOrWhiteSpace(request.typeName))
+            if (request == null || string.IsNullOrWhiteSpace(request.TypeName))
             {
                 IsCalledSuccessfully = false;
                 this.Error = "Type name must be provided";
@@ -13,10 +13,8 @@
 
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/getTemplateDescriptions?typeName=" + request.typeName;
-            _method = requestMethod.Get;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/getTemplateDescriptions?typeName=" + request.TypeName;
+            _method = RequestMethod.Get;
         }
     }
 }

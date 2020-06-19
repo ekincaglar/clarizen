@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Files.Request
+﻿namespace Ekin.Clarizen.Files.Request
 {
-    public class download
+    public class Download
     {
         /// <summary>
         /// Entity Id
         /// </summary>
-        public string documentId { get; set; }
-        public bool redirect { get; set; }
+        public string DocumentId { get; set; }
 
-        public download(string documentId, bool redirect)
+        public bool Redirect { get; set; }
+
+        public Download(string documentId, bool redirect)
         {
-            this.documentId = documentId;
-            this.redirect = redirect;
+            DocumentId = documentId;
+            Redirect = redirect;
         }
     }
 }

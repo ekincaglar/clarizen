@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Files
 {
-    public class updateImage : Call<Result.updateImage>
+    public class UpdateImage : Call<Result.UpdateImage>
     {
-        public updateImage(Request.updateImage request, CallSettings callSettings)
+        public UpdateImage(Request.UpdateImage request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/files/updateImage";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/files/updateImage";
+            _method = RequestMethod.Post;
         }
     }
 }

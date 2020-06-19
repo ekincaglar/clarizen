@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Request
+﻿namespace Ekin.Clarizen.Data.Request
 {
-    public class createAndRetrieve
+    public class CreateAndRetrieve
     {
-        public object entity { get; set; }
-        public string[] fields { get; set; }
+        public object Entity { get; set; }
+        public string[] Fields { get; set; }
 
-        public createAndRetrieve(object entity, string[] fields)
+        public CreateAndRetrieve(object entity, string[] fields)
         {
-            this.entity = entity;
-            this.fields = fields;
+            Entity = entity;
+            Fields = fields;
         }
     }
 }

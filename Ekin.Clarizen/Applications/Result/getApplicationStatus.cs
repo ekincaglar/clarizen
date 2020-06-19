@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Applications.Result
+﻿namespace Ekin.Clarizen.Applications.Result
 {
-    public class getApplicationStatus
+    public class GetApplicationStatus
     {
-        public bool installed { get; set; }
-        public string version { get; set; }
+        public bool Installed { get; set; }
+        public string Version { get; set; }
+
+        public GetApplicationStatus() { }
     }
 }

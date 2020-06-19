@@ -1,14 +1,12 @@
 ﻿namespace Ekin.Clarizen.Files
 {
-    public class getUploadUrl : Call<Result.getUploadUrl>
+    public class GetUploadUrl : Call<Result.GetUploadUrl>
     {
-        public getUploadUrl(CallSettings callSettings)
+        public GetUploadUrl(CallSettings callSettings)
         {
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/files/getUploadUrl";
-            _method = requestMethod.Get;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/files/getUploadUrl";
+            _method = RequestMethod.Get;
         }
     }
 }

@@ -2,11 +2,11 @@
 
 namespace Ekin.Clarizen.Data
 {
-    public class search : Call<Result.search>
+    public class Search : Call<Result.Search>
     {
-        public search(Request.search request, CallSettings callSettings)
+        public Search(Request.Search request, CallSettings callSettings)
         {
-            if (request == null || string.IsNullOrWhiteSpace(request.q))
+            if (request == null || string.IsNullOrWhiteSpace(request.Q))
             {
                 IsCalledSuccessfully = false;
                 this.Error = "Search query must be provided";
@@ -15,13 +15,11 @@ namespace Ekin.Clarizen.Data
 
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/search?q=" + request.q +
-                    (request.fields != null ? "&" + request.fields.ToQueryString() : string.Empty) +
-                    (!string.IsNullOrWhiteSpace(request.typeName) ? "&" + request.typeName.ToQueryString() : string.Empty) +
-                    (request.paging != null ? "&" + request.paging.ToQueryString() : string.Empty);
-            _method = requestMethod.Get;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/search?q=" + request.Q +
+                    (request.Fields != null ? "&" + request.Fields.ToQueryString() : string.Empty) +
+                    (!string.IsNullOrWhiteSpace(request.TypeName) ? "&" + request.TypeName.ToQueryString() : string.Empty) +
+                    (request.Paging != null ? "&" + request.Paging.ToQueryString() : string.Empty);
+            _method = RequestMethod.Get;
         }
     }
 }

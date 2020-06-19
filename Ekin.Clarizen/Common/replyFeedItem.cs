@@ -1,46 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public class replyFeedItem
+    public class ReplyFeedItem
     {
         /// <summary>
         /// The discussion message entity
         /// </summary>
-        public dynamic message { get; set; }
+        public dynamic Message { get; set; }
+
         /// <summary>
         /// Boolean flag which indicates whether the current user likes this message
         /// </summary>
-        public bool likedByMe { get; set; }
+        public bool LikedByMe { get; set; }
+
         /// <summary>
         /// Related items mentioned in this message
         /// </summary>
-        public dynamic[] relatedEntities { get; set; }
+        public dynamic[] RelatedEntities { get; set; }
+
         /// <summary>
         /// Users or groups notified in this message
         /// </summary>
-        public dynamic[] notify { get; set; }
+        public dynamic[] Notify { get; set; }
+
         /// <summary>
         /// Topics in this message
         /// </summary>
-        public dynamic[] topics { get; set; }
-        public string bodyMarkup { get; set; }
-        public string summary { get; set; }
+        public dynamic[] Topics { get; set; }
 
-        public replyFeedItem() { }
+        public string BodyMarkup { get; set; }
 
-        //public replyFeedItem(dynamic message, bool likedByMe, dynamic[] relatedEntities, dynamic[] notify, dynamic[] topics, string bodyMarkup, string summary)
-        //{
-        //    this.message = message;
-        //    this.likedByMe = likedByMe;
-        //    this.relatedEntities = relatedEntities;
-        //    this.notify = notify;
-        //    this.topics = topics;
-        //    this.bodyMarkup = bodyMarkup;
-        //    this.summary = summary;
-        //}
+        public string Summary { get; set; }
+
+        public ReplyFeedItem() { }
     }
 }

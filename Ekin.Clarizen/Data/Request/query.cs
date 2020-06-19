@@ -1,41 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Request
+﻿namespace Ekin.Clarizen.Data.Request
 {
-    public class query
+    public class Query
     {
         /// <summary>
         /// The CZQL Query to perform
         /// </summary>
-        public string q { get; set; }
+        public string Q { get; set; }
         /// <summary>
         /// Values for bind parameters
         /// </summary>
-        public object[] parameters { get; set; }
+        public object[] Parameters { get; set; }
         /// <summary>
         /// paging setting for the query
         /// </summary>
-        public paging paging { get; set; }
+        public Paging Paging { get; set; }
 
-        public query(string q, object[] parameters, paging paging)
+        public Query(string q, object[] parameters, Paging paging)
         {
-            this.q = q;
-            this.parameters = parameters;
-            this.paging = paging;
+            Q = q;
+            Parameters = parameters;
+            Paging = paging;
         }
 
-        public query(string q, paging paging)
+        public Query(string q, Paging paging)
         {
-            this.q = q;
-            this.paging = paging;
+            Q = q;
+            Paging = paging;
         }
 
-        public query(string q)
+        public Query(string q)
         {
-            this.q = q;
+            Q = q;
         }
 
     }

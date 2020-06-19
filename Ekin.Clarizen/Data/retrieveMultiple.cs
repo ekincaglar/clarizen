@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class retrieveMultiple : Call<Result.retrieveMultiple>
+    public class RetrieveMultiple : Call<Result.RetrieveMultiple>
     {
-        public retrieveMultiple(Request.retrieveMultiple request, CallSettings callSettings)
+        public RetrieveMultiple(Request.RetrieveMultiple request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/retrieveMultiple";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/retrieveMultiple";
+            _method = RequestMethod.Post;
         }
     }
 }

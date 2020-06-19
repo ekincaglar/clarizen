@@ -1,13 +1,7 @@
-﻿using Ekin.Clarizen.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Metadata.Result
+﻿namespace Ekin.Clarizen.Metadata.Result
 {
-    public class describeEntityRelations
+    public class DescribeEntityRelations
     {
-        public entityRelationsDescription[] entityRelations { get; set; }
+        public EntityRelationsDescription[] EntityRelations { get; set; }
     }
 }

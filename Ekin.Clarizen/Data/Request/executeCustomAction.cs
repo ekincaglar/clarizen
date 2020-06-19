@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Request
+﻿namespace Ekin.Clarizen.Data.Request
 {
-    public class executeCustomAction
+    public class ExecuteCustomAction
     {
-        public string targetId { get; set; }
-        public string customAction { get; set; }
-        public fieldValue[] values { get; set; }
+        public string TargetId { get; set; }
+        public string CustomAction { get; set; }
+        public FieldValue[] Values { get; set; }
 
-        public executeCustomAction(string targetId, string customAction, fieldValue[] values)
+        public ExecuteCustomAction(string targetId, string customAction, FieldValue[] values)
         {
-            this.targetId = targetId;
-            this.customAction = customAction;
-            this.values = values;
+            TargetId = targetId;
+            CustomAction = customAction;
+            Values = values;
         }
     }
 }

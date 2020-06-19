@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public class fileInformation
+    public class FileInformation
     {
-        public string storage { get; set; }
-        public string url { get; set; }
-        public string fileName { get; set; }
-        public string subType { get; set; }
-        public string extendedInfo { get; set; }
+        public string Storage { get; set; }
+        public string Url { get; set; }
+        public string FileName { get; set; }
+        public string SubType { get; set; }
+        public string ExtendedInfo { get; set; }
 
-        public fileInformation() { }
+        public FileInformation() { }
 
-        public fileInformation(storageType storage, string url, string fileName, string subType, string extendedInfo)
+        public FileInformation(StorageType storage, string url, string fileName, string subType, string extendedInfo)
         {
-            this.storage = storage.ToEnumString();
-            this.url = url;
-            this.fileName = fileName;
-            this.subType = subType;
-            this.extendedInfo = extendedInfo;
+            Storage = storage.ToEnumString();
+            Url = url;
+            FileName = fileName;
+            SubType = subType;
+            ExtendedInfo = extendedInfo;
         }
     }
 }

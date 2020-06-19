@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Metadata.Request
+﻿namespace Ekin.Clarizen.Metadata.Request
 {
-    public class describeMetadata
+    public class DescribeMetadata
     {
         /// <summary>
         /// The types of entities to describe. if null, will return information about all entities in the organization
         /// </summary>
-        public string[] typeNames { get; set; }
+        public string[] TypeNames { get; set; }
+
         /// <summary>
         /// (Optional) Flags that define which information to return. If null, result will include only the basic information about each entity type Supported flags: fields, relations
         /// </summary>
-        public string[] flags { get; set; }
+        public string[] Flags { get; set; }
 
-        public describeMetadata(string[] typeNames, string[] flags)
+        public DescribeMetadata(string[] typeNames, string[] flags)
         {
-            this.typeNames = typeNames;
-            this.flags = flags;
+            TypeNames = typeNames;
+            Flags = flags;
         }
 
-        public describeMetadata()
+        public DescribeMetadata()
         {
-            this.typeNames = new string[] { };
-            this.flags = new string[] { };
+            TypeNames = new string[] { };
+            Flags = new string[] { };
         }
-
     }
 }

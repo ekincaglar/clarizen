@@ -1,65 +1,67 @@
 ﻿using Ekin.Clarizen.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Data.Queries
 {
-    public class relationQuery
+    public class RelationQuery
     {
         /// <summary>
         /// Represents the unique Id of an entity in Clarizen
         /// Format: /typeName/entityId (e.g. /task/3F2504E0-4F89-42D3-9A0C-0305E82C3301)
         /// </summary>
-        public string entityId { get; set; }
+        public string EntityId { get; set; }
+
         /// <summary>
         /// Relation name to retrieve
         /// </summary>
-        public string relationName { get; set; }
+        public string RelationName { get; set; }
+
         /// <summary>
         /// A list of field names to retrieve
         /// </summary>
-        public string[] fields { get; set; }
+        public string[] Fields { get; set; }
+
         /// <summary>
         /// Optionaly order the result
         /// </summary>
-        public orderBy[] orders { get; set; }
+        public OrderBy[] Orders { get; set; }
+
         /// <summary>
         /// The query criteria
         /// </summary>
-        public ICondition where { get; set; }
+        public ICondition Where { get; set; }
+
         /// <summary>
         /// The query relations
         /// </summary>
-        public relation[] relations { get; set; }
+        public Relation[] Relations { get; set; }
+
         /// <summary>
         /// The query result of link objects
         /// </summary>
-        public bool fromLink { get; set; }
+        public bool FromLink { get; set; }
+
         /// <summary>
         /// Paging setting for the query
         /// </summary>
-        public paging paging { get; set; }
+        public Paging Paging { get; set; }
 
-        public relationQuery(string entityId, string relationName, string[] fields, orderBy[] orders, ICondition where, relation[] relations, bool fromLink, paging paging)
+        public RelationQuery(string entityId, string relationName, string[] fields, OrderBy[] orders, ICondition where, Relation[] relations, bool fromLink, Paging paging)
         {
-            this.entityId = entityId;
-            this.relationName = relationName;
-            this.fields = fields;
-            this.orders = orders;
-            this.where = where;
-            this.relations = relations;
-            this.fromLink = fromLink;
-            this.paging = paging;
+            EntityId = entityId;
+            RelationName = relationName;
+            Fields = fields;
+            Orders = orders;
+            Where = where;
+            Relations = relations;
+            FromLink = fromLink;
+            Paging = paging;
         }
 
-        // TODO Not working with these fields only
-        public relationQuery(string entityId, string relationName, string[] fields)
+        public RelationQuery(string entityId, string relationName, string[] fields)
         {
-            this.entityId = entityId;
-            this.relationName = relationName;
-            this.fields = fields;
+            EntityId = entityId;
+            RelationName = relationName;
+            Fields = fields;
         }
     }
 }

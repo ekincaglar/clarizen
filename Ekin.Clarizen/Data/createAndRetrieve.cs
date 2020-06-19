@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class createAndRetrieve : Call<Result.createAndRetrieve>
+    public class CreateAndRetrieve : Call<Result.CreateAndRetrieve>
     {
-        public createAndRetrieve(Request.createAndRetrieve request, CallSettings callSettings)
+        public CreateAndRetrieve(Request.CreateAndRetrieve request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/createAndRetrieve";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/createAndRetrieve";
+            _method = RequestMethod.Post;
         }
     }
 }

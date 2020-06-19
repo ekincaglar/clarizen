@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public enum requestMethod { Get, Post, Put, Delete }
+    public enum RequestMethod { Get, Post, Put, Delete }
 
-    public static class requestMethodExtensions
+    public static class RequestMethodExtensions
     {
-        public static string ToEnumString(this requestMethod me)
+        public static string ToEnumString(this RequestMethod me)
         {
             switch (me)
             {
-                case requestMethod.Get: return "GET";
-                case requestMethod.Post: return "POST";
-                case requestMethod.Put: return "PUT";
-                case requestMethod.Delete: return "DELETE";
+                case RequestMethod.Get: return "GET";
+                case RequestMethod.Post: return "POST";
+                case RequestMethod.Put: return "PUT";
+                case RequestMethod.Delete: return "DELETE";
                 default: return "ERROR";
             }
         }

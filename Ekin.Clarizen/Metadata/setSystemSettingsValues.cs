@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Metadata
 {
-    public class setSystemSettingsValues : Call<dynamic>
+    public class SetSystemSettingsValues : Call<dynamic>
     {
-        public setSystemSettingsValues(Request.setSystemSettingsValues request, CallSettings callSettings)
+        public SetSystemSettingsValues(Request.SetSystemSettingsValues request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/metadata/setSystemSettingsValues";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/metadata/setSystemSettingsValues";
+            _method = RequestMethod.Post;
         }
     }
 }

@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class aggregateQuery : Call<Result.aggregateQuery>
+    public class AggregateQuery : Call<Result.AggregateQuery>
     {
-        public aggregateQuery(Queries.aggregateQuery request, CallSettings callSettings)
+        public AggregateQuery(Queries.AggregateQuery request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/aggregateQuery";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/aggregateQuery";
+            _method = RequestMethod.Post;
         }
     }
 }

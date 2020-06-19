@@ -1,53 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Data.Request
+﻿namespace Ekin.Clarizen.Data.Request
 {
-    public class createDiscussion
+    public class CreateDiscussion
     {
         /// <summary>
         /// Discussion message to be created
         /// </summary>
-        public object entity { get; set; }
+        public object Entity { get; set; }
         /// <summary>
         /// Entity Ids
         /// </summary>
-        public string[] relatedEntities { get; set; }
+        public string[] RelatedEntities { get; set; }
         /// <summary>
         /// Entity Ids for users or groups to notify
         /// </summary>
-        public string[] notify { get; set; }
+        public string[] Notify { get; set; }
         /// <summary>
         /// Entity Ids
         /// </summary>
-        public string[] topics { get; set; }
+        public string[] Topics { get; set; }
 
-        public createDiscussion(object entity, string[] relatedEntities, string[] notify, string[] topics)
+        public CreateDiscussion(object entity, string[] relatedEntities, string[] notify, string[] topics)
         {
-            this.entity = entity;
-            this.relatedEntities = relatedEntities;
-            this.notify = notify;
-            this.topics = topics;
+            Entity = entity;
+            RelatedEntities = relatedEntities;
+            Notify = notify;
+            Topics = topics;
         }
 
-        public createDiscussion(object entity, string[] relatedEntities, string[] notify)
+        public CreateDiscussion(object entity, string[] relatedEntities, string[] notify)
         {
-            this.entity = entity;
-            this.relatedEntities = relatedEntities;
-            this.notify = notify;
+            Entity = entity;
+            RelatedEntities = relatedEntities;
+            Notify = notify;
         }
 
-        public createDiscussion(object entity, string[] relatedEntities)
+        public CreateDiscussion(object entity, string[] relatedEntities)
         {
-            this.entity = entity;
-            this.relatedEntities = relatedEntities;
+            Entity = entity;
+            RelatedEntities = relatedEntities;
         }
 
-        public createDiscussion(object entity)
+        public CreateDiscussion(object entity)
         {
-            this.entity = entity;
+            Entity = entity;
         }
     }
 }

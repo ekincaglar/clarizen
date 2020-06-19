@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Applications
 {
-    public class installApplication : Call<dynamic>
+    public class InstallApplication : Call<dynamic>
     {
-        public installApplication(Request.installApplication request, CallSettings callSettings)
+        public InstallApplication(Request.InstallApplication request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/applications/installApplication";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/applications/installApplication";
+            _method = RequestMethod.Post;
         }
     }
 }

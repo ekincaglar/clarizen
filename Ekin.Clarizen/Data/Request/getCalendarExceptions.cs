@@ -1,43 +1,38 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Xml.Serialization;
+﻿using System;
 
 namespace Ekin.Clarizen.Data.Request
 {
-    public class getCalendarExceptions
+    public class GetCalendarExceptions
     {
         /// <summary>
         /// (Optional) If EntityId is specified, the result will contain information about the claendar of the specified user or project, otherwise it will be of the organizational calendar
         /// </summary>
-        public string entityId { get; set; }
+        public string EntityId { get; set; }
 
         /// <summary>
         /// The start of the date range
         /// </summary>
-        public DateTime fromDate { get; set; }
+        public DateTime FromDate { get; set; }
 
         /// <summary>
         /// The end of the date range
         /// </summary>
-        public DateTime toDate { get; set; }
+        public DateTime ToDate { get; set; }
 
-        public getCalendarExceptions() { }
+        public GetCalendarExceptions() { }
 
-        public getCalendarExceptions(string entityId, DateTime fromDate, DateTime toDate)
+        public GetCalendarExceptions(string entityId, DateTime fromDate, DateTime toDate)
         {
-            this.entityId = entityId;
-            this.fromDate = fromDate;
-            this.toDate = toDate;
+            EntityId = entityId;
+            FromDate = fromDate;
+            ToDate = toDate;
         }
 
-        public getCalendarExceptions(DateTime fromDate, DateTime toDate)
+        public GetCalendarExceptions(DateTime fromDate, DateTime toDate)
         {
-            this.entityId = null;
-            this.fromDate = fromDate;
-            this.toDate = toDate;
+            EntityId = null;
+            FromDate = fromDate;
+            ToDate = toDate;
         }
     }
 }

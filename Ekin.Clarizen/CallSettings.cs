@@ -2,17 +2,17 @@
 {
     public class CallSettings
     {
-        public string serverLocation { get; set; }
-        public string sessionId { get; set; }
-        public string apiKey { get; set; }
-        public int? timeout { get; set; } = null;
-        public bool isBulk { get; set; } = false;
-        public bool serializeNullValues { get; set; } = false;
-        public int retry { get; set; } = 1;
-        public int sleepBetweenRetries { get; set; } = 0;
-        public string requester { get; set; }
-        public string redirect { get; set; }
-        public int? connectionLimit { get; set; } = null;
+        public string ServerLocation { get; set; }
+        public string SessionId { get; set; }
+        public string ApiKey { get; set; }
+        public int? Timeout { get; set; } = null;
+        public bool IsBulk { get; set; } = false;
+        public bool SerializeNullValues { get; set; } = false;
+        public int Retry { get; set; } = 1;
+        public int SleepBetweenRetries { get; set; } = 0;
+        public string Requester { get; set; }
+        public string Redirect { get; set; }
+        public int? ConnectionLimit { get; set; } = null;
         public System.Net.WebHeaderCollection Headers { get; set; } = null;
 
         public CallSettings()
@@ -25,17 +25,17 @@
             {
                 return new CallSettings()
                 {
-                    serverLocation = api.serverLocation,
-                    sessionId = api.sessionId,
-                    apiKey = api.ApiKey,
-                    isBulk = api.isBulk,
-                    serializeNullValues = api.serializeNullValues,
-                    retry = api.retry,
-                    sleepBetweenRetries = api.sleepBetweenRetries,
-                    timeout = (timeout != null) ? timeout : api.timeout,
-                    requester = api.Requester,
-                    redirect = api.Redirect,
-                    connectionLimit = api.connectionLimit
+                    ServerLocation = api.ServerLocation,
+                    SessionId = api.SessionId,
+                    ApiKey = api.ApiKey,
+                    IsBulk = api.IsBulk,
+                    SerializeNullValues = api.SerializeNullValues,
+                    Retry = api.Retry,
+                    SleepBetweenRetries = api.SleepBetweenRetries,
+                    Timeout = (timeout != null) ? timeout : api.Timeout,
+                    Requester = api.Requester,
+                    Redirect = api.Redirect,
+                    ConnectionLimit = api.ConnectionLimit
                 };
             }
             else
@@ -51,21 +51,21 @@
         public System.Net.WebHeaderCollection GetHeaders()
         {
             System.Net.WebHeaderCollection headers = new System.Net.WebHeaderCollection();
-            if (!string.IsNullOrWhiteSpace(apiKey))
+            if (!string.IsNullOrWhiteSpace(ApiKey))
             {
-                headers.Add(System.Net.HttpRequestHeader.Authorization, string.Format("ApiKey {0}", apiKey));
+                headers.Add(System.Net.HttpRequestHeader.Authorization, string.Format("ApiKey {0}", ApiKey));
             }
-            else if (!string.IsNullOrWhiteSpace(sessionId))
+            else if (!string.IsNullOrWhiteSpace(SessionId))
             {
-                headers.Add(System.Net.HttpRequestHeader.Authorization, string.Format("Session {0}", sessionId));
+                headers.Add(System.Net.HttpRequestHeader.Authorization, string.Format("Session {0}", SessionId));
             }
-            if (!string.IsNullOrWhiteSpace(requester))
+            if (!string.IsNullOrWhiteSpace(Requester))
             {
-                headers.Add("ClzApiRequester", requester);
+                headers.Add("ClzApiRequester", Requester);
             }
-            if (!string.IsNullOrWhiteSpace(redirect))
+            if (!string.IsNullOrWhiteSpace(Redirect))
             {
-                headers.Add("x-redirect", redirect);
+                headers.Add("x-redirect", Redirect);
             }
             if (Headers != null)
             {

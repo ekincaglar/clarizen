@@ -80,35 +80,35 @@ namespace Ekin.Clarizen
 
             Document document = new Document
             {
-                id = "/Document",
+                Id = "/Document",
                 Name = DocumentName,
                 FileType = FileType,
                 DocumentType = DocumentType
             };
 
-            Ekin.Clarizen.Data.objects_put clarizenDocument = ClarizenAPI.CreateObject(document.id, document);
-            if (!clarizenDocument.IsCalledSuccessfully || clarizenDocument.Data == null || string.IsNullOrWhiteSpace(clarizenDocument.Data.id))
+            Ekin.Clarizen.Data.Objects_put clarizenDocument = await ClarizenAPI.CreateObject(document.Id, document);
+            if (!clarizenDocument.IsCalledSuccessfully || clarizenDocument.Data == null || string.IsNullOrWhiteSpace(clarizenDocument.Data.Id))
             {
                 Logs.AddError("Ekin.Clarizen.FileUploadHelper", "Upload", "Blank document couldn't be created in Clarizen. Error: " + clarizenDocument.Error);
                 return false;
             }
             else
             {
-                document.id = clarizenDocument.Data.id;
+                document.Id = clarizenDocument.Data.Id;
             }
 
             #endregion Create a Document entity
 
             #region Get Upload URL from Clarizen
 
-            Ekin.Clarizen.Files.getUploadUrl uploadUrlCall = ClarizenAPI.GetUploadUrl();
-            if (!uploadUrlCall.IsCalledSuccessfully || uploadUrlCall.Data == null || string.IsNullOrWhiteSpace(uploadUrlCall.Data.uploadUrl))
+            Ekin.Clarizen.Files.GetUploadUrl uploadUrlCall = await ClarizenAPI.GetUploadUrl();
+            if (!uploadUrlCall.IsCalledSuccessfully || uploadUrlCall.Data == null || string.IsNullOrWhiteSpace(uploadUrlCall.Data.UploadUrl))
             {
                 Logs.AddError("Ekin.Clarizen.FileUploadHelper", "Upload", "Document upload url couldn't be retrieved from Clarizen. Error: " + uploadUrlCall.Error);
                 return false;
             }
 
-            string uploadUrl = uploadUrlCall.Data.uploadUrl;
+            string uploadUrl = uploadUrlCall.Data.UploadUrl;
 
             #endregion Get Upload URL from Clarizen
 
@@ -146,14 +146,15 @@ namespace Ekin.Clarizen
 
             var subType = "";
             var extendedInfo = "";
-            var fileInformation = new fileInformation(storageType.Server, document.id, FileName, subType, extendedInfo);
-            var uploadRequest = new Ekin.Clarizen.Files.Request.upload(document.id, fileInformation, uploadUrl);
+            var fileInformation = new FileInformation(StorageType.Server, document.Id, FileName, subType, extendedInfo);
+            var uploadRequest = new Ekin.Clarizen.Files.Request.Upload(document.Id, fileInformation, uploadUrl);
             CallSettings callSettings = CallSettings.GetFromAPI(ClarizenAPI);
-            callSettings.isBulk = false;
-            var uploadResult = new Ekin.Clarizen.Files.upload(uploadRequest, callSettings);
-            if (!uploadResult.IsCalledSuccessfully)
+            callSettings.IsBulk = false;
+            var uploadCall = new Ekin.Clarizen.Files.Upload(uploadRequest, callSettings);
+            bool uploadResult = await uploadCall.Execute();
+            if (!uploadResult)
             {
-                Logs.AddError("Ekin.Clarizen.FileUploadHelper", "Upload", "Document couldn't be uploaded to Clarizen. Error: " + uploadResult.Error);
+                Logs.AddError("Ekin.Clarizen.FileUploadHelper", "Upload", "Document couldn't be uploaded to Clarizen. Error: " + uploadCall.Error);
                 return false;
             }
 
@@ -165,13 +166,13 @@ namespace Ekin.Clarizen
             {
                 AttachmentLink attachmentLink = new AttachmentLink
                 {
-                    id = "/AttachmentLink",
+                    Id = "/AttachmentLink",
                     Entity = LinkedEntity,
-                    Document = new EntityId(document.id)
+                    Document = new EntityId(document.Id)
                 };
 
-                Ekin.Clarizen.Data.objects_put clarizenDocumentLink = ClarizenAPI.CreateObject(attachmentLink.id, attachmentLink);
-                if (!clarizenDocumentLink.IsCalledSuccessfully || clarizenDocumentLink.Data == null || clarizenDocumentLink.Data.id == null)
+                Ekin.Clarizen.Data.Objects_put clarizenDocumentLink = await ClarizenAPI.CreateObject(attachmentLink.Id, attachmentLink);
+                if (!clarizenDocumentLink.IsCalledSuccessfully || clarizenDocumentLink.Data == null || clarizenDocumentLink.Data.Id == null)
                 {
                     Logs.AddError("Ekin.Clarizen.FileUploadHelper", "Upload", "Document successfully created in Clarizen but it could not be linked to the System Admin user. Error: " + clarizenDocumentLink.Error);
                     return false;

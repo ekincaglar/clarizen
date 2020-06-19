@@ -1,18 +1,16 @@
 ﻿namespace Ekin.Clarizen.Authentication
 {
-    public class logout : Call<dynamic>
+    public class Logout : Call<dynamic>
     {
-        public logout(string serverLocation, string sessionId)
+        public Logout(string serverLocation, string sessionId)
         {
             _callSettings = new CallSettings
             {
-                sessionId = sessionId,
-                isBulk = false  // Force this call to be made as a single call
+                SessionId = sessionId,
+                IsBulk = false  // Force this call to be made as a single call
             };
             _url = serverLocation + "/authentication/logout";
-            _method = requestMethod.Get;
-
-            var result = Execute();
+            _method = RequestMethod.Get;
         }
     }
 }

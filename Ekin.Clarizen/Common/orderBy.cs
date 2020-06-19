@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public class orderBy
+    public class OrderBy
     {
-        public string fieldName { get; set; }
+        public string FieldName { get; set; }
         /// <summary>
         /// Possible values: Ascending | Descending
         /// </summary>
-        public string order { get; set; }
+        public string Order { get; set; }
 
-        public orderBy() { }
+        public OrderBy() { }
 
-        public orderBy(string fieldName, string order)
+        public OrderBy(string fieldName, string order)
         {
-            this.fieldName = fieldName;
-            this.order = order;
+            FieldName = fieldName;
+            Order = order;
         }
     }
 }

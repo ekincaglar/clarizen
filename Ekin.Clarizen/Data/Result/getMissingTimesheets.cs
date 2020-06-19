@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Ekin.Clarizen.Data.Result
 {
-    public class getMissingTimesheets
+    public class GetMissingTimesheets
     {
-        public List<dayOfMissingTimesheets> missingTimesheets { get; set; }
+        public List<DayOfMissingTimesheets> MissingTimesheets { get; set; }
 
-        public getMissingTimesheets() { }
+        public GetMissingTimesheets() { }
     }
 }

@@ -96,8 +96,7 @@ namespace Ekin.Clarizen
             }
             else if (prop.PropertyType == typeof(double) || prop.PropertyType == typeof(double?))
             {
-                double number;
-                bool isValid = double.TryParse(value.ToString(), out number);
+                bool isValid = double.TryParse(value.ToString(), out double number);
                 if (isValid)
                 {
                     prop.SetValue(entity, double.Parse(value.ToString()), null);
@@ -105,8 +104,7 @@ namespace Ekin.Clarizen
             }
             else if (prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?))
             {
-                DateTime date;
-                bool isValid = DateTime.TryParse(value.ToString(), out date);
+                bool isValid = DateTime.TryParse(value.ToString(), out DateTime date);
                 if (isValid)
                 {
                     prop.SetValue(entity, date, null);
@@ -130,8 +128,7 @@ namespace Ekin.Clarizen
             }
             else if (prop.PropertyType == typeof(Guid))
             {
-                Guid guid;
-                bool isValid = Guid.TryParse(value.ToString(), out guid);
+                bool isValid = Guid.TryParse(value.ToString(), out Guid guid);
                 if (isValid)
                 {
                     prop.SetValue(entity, guid, null);
@@ -174,7 +171,7 @@ namespace Ekin.Clarizen
                     object value1 = propInfo.GetValue(obj, null);
                     object value2 = propInfo.GetValue(target, null);
 
-                    if ((object.ReferenceEquals(value1, null) ^ object.ReferenceEquals(value2, null)))
+                    if ((value1 is null ^ value2 is null))
                     {
                         return false;
                     }
@@ -199,14 +196,16 @@ namespace Ekin.Clarizen
             {
                 foreach (PropertyInfo propInfo in propInfos)
                 {
-                    Variance v = new Variance();
-                    v.Prop = propInfo.Name;
-                    v.valA = propInfo.GetValue(val1);
-                    v.valB = propInfo.GetValue(val2);
-                    if ((object.ReferenceEquals(v.valA, null) ^ object.ReferenceEquals(v.valB, null)) ||
+                    Variance v = new Variance
+                    {
+                        Prop = propInfo.Name,
+                        ValA = propInfo.GetValue(val1),
+                        ValB = propInfo.GetValue(val2)
+                    };
+                    if ((v.ValA is null ^ v.ValB is null) ||
                         ((IncludeJsonIgnoreAttributes || propInfo.GetCustomAttribute(typeof(Newtonsoft.Json.JsonIgnoreAttribute)) != null) &&
                         (IncludeIdField || propInfo.Name.ToLower() != "id") &&
-                        v.valA != null && !v.valA.Equals(v.valB)))
+                        v.ValA != null && !v.ValA.Equals(v.ValB)))
                     {
                         variances.Add(v);
                     }
@@ -224,9 +223,9 @@ namespace Ekin.Clarizen
         public static T Clone<T>(this T source)
         {
             // Don't serialize a null object, simply return the default for that object
-            if (Object.ReferenceEquals(source, null))
+            if (source == null)
             {
-                return default(T);
+                return default;
             }
 
             // initialize inner objects individually
@@ -261,7 +260,7 @@ namespace Ekin.Clarizen
                 File.WriteAllText(fileName, output);
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
@@ -275,16 +274,16 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public static T DeSerializeObject<T>(string fileName)
         {
-            if (string.IsNullOrEmpty(fileName)) { return default(T); }
+            if (string.IsNullOrEmpty(fileName)) { return default; }
 
             try
             {
                 string input = File.ReadAllText(fileName);
                 return JsonConvert.DeserializeObject<T>(input);
             }
-            catch (Exception ex)
+            catch
             {
-                return default(T);
+                return default;
             }
         }
 
@@ -325,7 +324,7 @@ namespace Ekin.Clarizen
         /// <param name="root_id">Root element id</param>
         ///
         /// <returns>Tree of items</returns>
-        public static IEnumerable<TreeItem<T>> GenerateTree<T, K>(this IEnumerable<T> collection, Func<T, K> id_selector, Func<T, K> parent_id_selector, K root_id = default(K))
+        public static IEnumerable<TreeItem<T>> GenerateTree<T, K>(this IEnumerable<T> collection, Func<T, K> id_selector, Func<T, K> parent_id_selector, K root_id = default)
         {
             foreach (var c in collection.Where(c => parent_id_selector(c) != null && parent_id_selector(c).Equals(root_id)))
             {
@@ -350,10 +349,10 @@ namespace Ekin.Clarizen
                 WebException ex = Error as WebException;
                 return String.Format("[{0}] {1}", ex.StatusCode(), ex.Message);
             }
-            else if (Error is error)
+            else if (Error is Error)
             {
-                error err = Error as error;
-                return err.formatted;
+                Error err = Error as Error;
+                return err.Formatted;
             }
             return string.Empty;
         }
@@ -362,8 +361,12 @@ namespace Ekin.Clarizen
         {
             if (ex.Status == WebExceptionStatus.ProtocolError)
             {
-                var response = ex.Response as HttpWebResponse;
-                if (response != null)
+                //HttpWebResponse response = ex.Response as HttpWebResponse;
+                //if (response != null)
+                //{
+                //    return (int)response.StatusCode;
+                //}
+                if (ex.Response is HttpWebResponse response)
                 {
                     return (int)response.StatusCode;
                 }
@@ -387,8 +390,8 @@ namespace Ekin.Clarizen
     public class Variance
     {
         public string Prop { get; set; }
-        public object valA { get; set; }
-        public object valB { get; set; }
+        public object ValA { get; set; }
+        public object ValB { get; set; }
     }
 
     public class TreeItem<T>

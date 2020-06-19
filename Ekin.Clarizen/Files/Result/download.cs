@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen.Files.Result
+﻿namespace Ekin.Clarizen.Files.Result
 {
-    public class download
+    public class Download
     {
-        public fileInformation fileInformation { get; set; }
+        public FileInformation FileInformation { get; set; }
     }
 }

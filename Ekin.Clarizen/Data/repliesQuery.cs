@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class repliesQuery : Call<Result.repliesQuery>
+    public class RepliesQuery : Call<Result.RepliesQuery>
     {
-        public repliesQuery(Queries.repliesQuery request, CallSettings callSettings)
+        public RepliesQuery(Queries.RepliesQuery request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/repliesQuery";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/repliesQuery";
+            _method = RequestMethod.Post;
         }
     }
 }

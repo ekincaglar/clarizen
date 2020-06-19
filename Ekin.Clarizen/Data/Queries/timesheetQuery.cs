@@ -1,61 +1,69 @@
 ﻿using Ekin.Clarizen.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Data.Queries
 {
-    public class timesheetQuery
+    public class TimesheetQuery
     {
         /// <summary>
         /// Entity Id
         /// </summary>
-        public string projectId { get; set; }
+        public string ProjectId { get; set; }
+
         /// <summary>
         /// Entity Id
         /// </summary>
-        public string customerId { get; set; }
-        public bool iAmTheApprover { get; set; }
+        public string CustomerId { get; set; }
+
+        public bool IAmTheApprover { get; set; }
+
         /// <summary>
         /// Array of entity Ids
         /// </summary>
-        public string[] workItems { get; set; }
+        public string[] WorkItems { get; set; }
+
         /// <summary>
         /// UnSubmitted | PendingApproval | Approved | All
         /// </summary>
-        public string timesheetState { get; set; }
+        public string TimesheetState { get; set; }
+
         /// <summary>
         /// The main entity type to query (e.g. WorkItem, User etc.)
         /// </summary>
-        public string typeName { get; set; }
+        public string TypeName { get; set; }
+
         /// <summary>
         /// A list of field names to retrieve
         /// </summary>
-        public string[] fields { get; set; }
+        public string[] Fields { get; set; }
+
         /// <summary>
         /// Optionaly order the result
         /// </summary>
-        public orderBy[] orders { get; set; }
+        public OrderBy[] Orders { get; set; }
+
         /// <summary>
         /// The query criteria
         /// </summary>
-        public ICondition where { get; set; }
+        public ICondition Where { get; set; }
+
         /// <summary>
         /// The query relations
         /// </summary>
-        public relation[] relations { get; set; }
+        public Relation[] Relations { get; set; }
+
         /// <summary>
         /// If set to true, the query is performed on Deleted entities
         /// </summary>
-        public bool deleted { get; set; }
-        public bool originalExternalID { get; set; }
+        public bool Deleted { get; set; }
+
+        public bool OriginalExternalID { get; set; }
+
         /// <summary>
         /// Paging setting for the query
         /// </summary>
-        public paging paging { get; set; }
+        public Paging Paging { get; set; }
 
-        public timesheetQuery()
+        public TimesheetQuery()
         {
 
         }

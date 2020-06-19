@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen
 {
-    public class repeat
+    public class Repeat
     {
-        public every every { get; set; }
-        public int occurrences { get; set; }
-        public DateTime endBy { get; set; }
+        public Every Every { get; set; }
+        public int Occurrences { get; set; }
+        public DateTime EndBy { get; set; }
 
-        public repeat() { }
+        public Repeat() { }
 
     }
 }

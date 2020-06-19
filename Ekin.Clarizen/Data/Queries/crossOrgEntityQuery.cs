@@ -1,58 +1,54 @@
 ﻿using Ekin.Clarizen.Interfaces;
 using Ekin.Clarizen.Data.Queries.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Data.Queries
 {
-    public class crossOrgEntityQuery : IQuery
+    public class CrossOrgEntityQuery : IQuery
     {
         public string _type { get { return "crossOrgEntityQuery"; } }
 
-        public string typeName { get; set; }
-        public UserDateFilter organizationFilter { get; set; }
-        public string[] fields { get; set; }
-        public orderBy[] orders { get; set; }
-        public ICondition where { get; set; }
-        public relation[] relations { get; set; }   // NOT TESTED
-        public bool deleted { get; set; }
-        public bool originalExternalID { get; set; }
-        public paging paging { get; set; }
+        public string TypeName { get; set; }
+        public UserDateFilter OrganizationFilter { get; set; }
+        public string[] Fields { get; set; }
+        public OrderBy[] Orders { get; set; }
+        public ICondition Where { get; set; }
+        public Relation[] Relations { get; set; }
+        public bool Deleted { get; set; }
+        public bool OriginalExternalID { get; set; }
+        public Paging Paging { get; set; }
 
-        public crossOrgEntityQuery(string typeName)
+        public CrossOrgEntityQuery(string typeName)
         {
-            this.typeName = typeName;
+            TypeName = typeName;
         }
 
-        public crossOrgEntityQuery(string typeName, UserDateFilter organizationFilter, string[] fields)
+        public CrossOrgEntityQuery(string typeName, UserDateFilter organizationFilter, string[] fields)
         {
-            this.typeName = typeName;
-            this.fields = fields;
-            this.organizationFilter = organizationFilter;
+            TypeName = typeName;
+            Fields = fields;
+            OrganizationFilter = organizationFilter;
         }
 
-        public crossOrgEntityQuery(string typeName, UserDateFilter organizationFilter, string[] fields, ICondition where, paging paging)
+        public CrossOrgEntityQuery(string typeName, UserDateFilter organizationFilter, string[] fields, ICondition where, Paging paging)
         {
-            this.typeName = typeName;
-            this.organizationFilter = organizationFilter;
-            this.fields = fields;
-            this.where = where;
-            this.paging = paging;
+            TypeName = typeName;
+            OrganizationFilter = organizationFilter;
+            Fields = fields;
+            Where = where;
+            Paging = paging;
         }
 
-        public crossOrgEntityQuery(string typeName, UserDateFilter organizationFilter, string[] fields, orderBy[] orders, ICondition where, relation[] relations, bool deleted, bool originalExternalID, paging paging)
+        public CrossOrgEntityQuery(string typeName, UserDateFilter organizationFilter, string[] fields, OrderBy[] orders, ICondition where, Relation[] relations, bool deleted, bool originalExternalID, Paging paging)
         {
-            this.typeName = typeName;
-            this.organizationFilter = organizationFilter;
-            this.fields = fields;
-            this.orders = orders;
-            this.where = where;
-            this.relations = relations;
-            this.deleted = deleted;
-            this.originalExternalID = originalExternalID;
-            this.paging = paging;
+            TypeName = typeName;
+            OrganizationFilter = organizationFilter;
+            Fields = fields;
+            Orders = orders;
+            Where = where;
+            Relations = relations;
+            Deleted = deleted;
+            OriginalExternalID = originalExternalID;
+            Paging = paging;
         }
     }
 }

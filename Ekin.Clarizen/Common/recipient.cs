@@ -1,34 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
-    public class recipient
+    public class Recipient
     {
         /// <summary>
         /// Possible values: To | CC
         /// </summary>
-        public string recipientType { get; set; }
+        public string RecipientType { get; set; }
+
         /// <summary>
         /// EntityId, e.g. /User/theuserguidhere
         /// </summary>
-        public string user { get; set; }
+        public string User { get; set; }
+
         /// <summary>
         /// Email address
         /// </summary>
-        public string eMail { get; set; }
+        public string Email { get; set; }
 
         public enum CZRecipientType { To, CC }
 
-        public recipient() { }
+        public Recipient() { }
 
-        public recipient(CZRecipientType recipientType, string eMail, string clarizenUserId)
+        public Recipient(CZRecipientType recipientType, string eMail, string clarizenUserId)
         {
-            this.recipientType = (recipientType == CZRecipientType.CC ? "CC" : "To");
-            this.eMail = eMail;
-            this.user = clarizenUserId;
+            this.RecipientType = (recipientType == CZRecipientType.CC ? "CC" : "To");
+            this.Email = eMail;
+            this.User = clarizenUserId;
         }
     }
 }

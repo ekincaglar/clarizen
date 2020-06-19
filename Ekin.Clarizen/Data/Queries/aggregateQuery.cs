@@ -1,57 +1,52 @@
 ﻿using Ekin.Clarizen.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ekin.Clarizen.Data.Queries
 {
-    public class aggregateQuery : IQuery
+    public class AggregateQuery : IQuery
     {
         public string _type { get { return "aggregateQuery"; } }
 
         /// <summary>
         /// The main entity type to query (e.g. WorkItem , User etc.)
         /// </summary>
-        public string typeName { get; set; }
+        public string TypeName { get; set; }
         /// <summary>
         /// A list of field names to group results by
         /// </summary>
-        public string[] groupBy { get; set; }
+        public string[] GroupBy { get; set; }
         /// <summary>
         /// Optionaly order the result
         /// </summary>
-        public orderBy[] orders { get; set; }
+        public OrderBy[] Orders { get; set; }
         /// <summary>
         /// The query criteria
         /// </summary>
-        public ICondition where { get; set; }
+        public ICondition Where { get; set; }
         /// <summary>
         /// List of aggregations to perform
         /// </summary>
-        public fieldAggregation[] aggregations { get; set; }
+        public FieldAggregation[] Aggregations { get; set; }
         /// <summary>
         /// Paging setting for the query
         /// </summary>
-        public paging paging { get; set; }
+        public Paging Paging { get; set; }
 
-        public aggregateQuery(string typeName, string[] groupBy, orderBy[] orders, ICondition where, fieldAggregation[] aggregations, paging paging)
+        public AggregateQuery(string typeName, string[] groupBy, OrderBy[] orders, ICondition where, FieldAggregation[] aggregations, Paging paging)
         {
-            this.typeName = typeName;
-            this.groupBy = groupBy;
-            this.orders = orders;
-            this.where = where;
-            this.aggregations = aggregations;
-            this.paging = paging;
+            TypeName = typeName;
+            GroupBy = groupBy;
+            Orders = orders;
+            Where = where;
+            Aggregations = aggregations;
+            Paging = paging;
         }
 
-        public aggregateQuery(string typeName, fieldAggregation[] aggregations, string[] groupBy, orderBy[] orders)
+        public AggregateQuery(string typeName, FieldAggregation[] aggregations, string[] groupBy, OrderBy[] orders)
         {
-            this.typeName = typeName;
-            this.aggregations = aggregations;
-            this.groupBy = groupBy;
-            this.orders = orders;
+            TypeName = typeName;
+            Aggregations = aggregations;
+            GroupBy = groupBy;
+            Orders = orders;
         }
-
     }
 }

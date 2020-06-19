@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Data
 {
-    public class relationQuery : Call<Result.relationQuery>
+    public class RelationQuery : Call<Result.RelationQuery>
     {
-        public relationQuery(Queries.relationQuery request, CallSettings callSettings)
+        public RelationQuery(Queries.RelationQuery request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/data/relationQuery";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/relationQuery";
+            _method = RequestMethod.Post;
         }
     }
 }

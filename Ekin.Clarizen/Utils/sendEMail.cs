@@ -1,15 +1,13 @@
 ﻿namespace Ekin.Clarizen.Utils
 {
-    public class sendEMail : Call<dynamic>
+    public class SendEmail : Call<dynamic>
     {
-        public sendEMail(Request.sendEMail request, CallSettings callSettings)
+        public SendEmail(Request.SendEmail request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
-            _url = (callSettings.isBulk ? string.Empty : callSettings.serverLocation) + "/utils/sendEMail";
-            _method = requestMethod.Post;
-
-            var result = Execute();
+            _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/utils/sendEMail";
+            _method = RequestMethod.Post;
         }
     }
 }
