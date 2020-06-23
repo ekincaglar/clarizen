@@ -16,7 +16,7 @@ namespace Ekin.Clarizen.Data
             _request = request;
             _callSettings = callSettings;
             _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/getCalendarInfo?userId=" + request.Id;
-            _method = RequestMethod.Get;
+            _method = System.Net.Http.HttpMethod.Get;
         }
     }
 }

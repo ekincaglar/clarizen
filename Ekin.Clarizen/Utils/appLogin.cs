@@ -6,7 +6,7 @@
         {
             _callSettings = callSettings;
             _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/utils/appLogin";
-            _method = RequestMethod.Get;
+            _method = System.Net.Http.HttpMethod.Get;
         }
     }
 }

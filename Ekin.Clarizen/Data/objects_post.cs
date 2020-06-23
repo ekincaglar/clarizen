@@ -1,4 +1,6 @@
-﻿namespace Ekin.Clarizen.Data
+﻿using System.Net.Http;
+
+namespace Ekin.Clarizen.Data
 {
     public class Objects_post : Call<dynamic>
     {
@@ -8,7 +10,7 @@
             _callSettings = callSettings;
             _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/objects" +
                    (id.Length > 0 && id.Substring(0, 1) != "/" ? "/" : "") + id;
-            _method = RequestMethod.Post;
+            _method = System.Net.Http.HttpMethod.Post;
         }
     }
 }

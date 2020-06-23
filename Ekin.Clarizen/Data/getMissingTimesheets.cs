@@ -19,7 +19,7 @@
                 request.StartDate,
                 request.EndDate,
                 (request.Tolerance == null) ? "" : "?tolerance=" + request.Tolerance.ToString());
-            _method = RequestMethod.Get;
+            _method = System.Net.Http.HttpMethod.Get;
         }
     }
 }

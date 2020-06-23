@@ -14,7 +14,7 @@
             _request = request;
             _callSettings = callSettings;
             _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/getTemplateDescriptions?typeName=" + request.TypeName;
-            _method = RequestMethod.Get;
+            _method = System.Net.Http.HttpMethod.Get;
         }
     }
 }

@@ -13,7 +13,7 @@
             _url = isSandbox ?
                 "https://apie.clarizentb.com/V2.0/services/authentication/getServerDefinition" :
                 "https://api.clarizen.com/V2.0/services/authentication/getServerDefinition";
-            _method = RequestMethod.Post;
+            _method = System.Net.Http.HttpMethod.Post;
         }
     }
 }

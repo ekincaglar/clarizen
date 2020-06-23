@@ -1,5 +1,4 @@
 ﻿using System;
-using Ekin.Rest;
 
 namespace Ekin.Clarizen.Files
 {
@@ -19,7 +18,7 @@ namespace Ekin.Clarizen.Files
             _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/files/download?documentId=" +
                     (request.DocumentId.Substring(0, 1) != "/" ? "/" : "") + request.DocumentId +
                     (request.Redirect ? "&" + request.Redirect.ToQueryString() : string.Empty);
-            _method = RequestMethod.Get;
+            _method = System.Net.Http.HttpMethod.Get;
         }
     }
 }

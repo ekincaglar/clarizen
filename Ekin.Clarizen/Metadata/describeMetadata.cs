@@ -1,6 +1,4 @@
-﻿using Ekin.Rest;
-
-namespace Ekin.Clarizen.Metadata
+﻿namespace Ekin.Clarizen.Metadata
 {
     public class DescribeMetadata : Call<Result.DescribeMetadata>
     {
@@ -9,7 +7,7 @@ namespace Ekin.Clarizen.Metadata
             _request = request;
             _callSettings = callSettings;
             _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/metadata/describeMetadata" + (request != null ? "?" + request.ToQueryString() : string.Empty);
-            _method = RequestMethod.Get;
+            _method = System.Net.Http.HttpMethod.Get;
         }
     }
 }

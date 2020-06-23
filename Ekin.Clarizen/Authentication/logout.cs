@@ -10,7 +10,7 @@
                 IsBulk = false  // Force this call to be made as a single call
             };
             _url = serverLocation + "/authentication/logout";
-            _method = RequestMethod.Get;
+            _method = System.Net.Http.HttpMethod.Get;
         }
     }
 }

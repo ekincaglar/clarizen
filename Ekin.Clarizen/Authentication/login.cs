@@ -11,7 +11,7 @@
                 SerializeNullValues = true
             };
             _url = serverLocation + "/authentication/login";
-            _method = RequestMethod.Post;
+            _method = System.Net.Http.HttpMethod.Post;
         }
     }
 }

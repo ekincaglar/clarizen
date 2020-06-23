@@ -1,4 +1,6 @@
-﻿namespace Ekin.Clarizen.Data
+﻿using System.Net.Http;
+
+namespace Ekin.Clarizen.Data
 {
     public class EntityFeedQuery : Call<Result.EntityFeedQuery>
     {
@@ -7,7 +9,7 @@
             _request = request;
             _callSettings = callSettings;
             _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/entityFeedQuery";
-            _method = RequestMethod.Post;
+            _method = System.Net.Http.HttpMethod.Post;
         }
     }
 }

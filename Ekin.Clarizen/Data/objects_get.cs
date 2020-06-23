@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 
 namespace Ekin.Clarizen.Data
 {
@@ -20,7 +21,7 @@ namespace Ekin.Clarizen.Data
                     (request.Id.Substring(0, 1) != "/" ? "/" : "") + request.Id +
                     //(request.fields != null ? "?" + request.fields.ToQueryString() : string.Empty);
                     (request.Fields != null ? "?fields=" + GetFieldList(request.Fields) : string.Empty);
-            _method = RequestMethod.Get;
+            _method = System.Net.Http.HttpMethod.Get;
         }
 
         private string GetFieldList(string[] fields)

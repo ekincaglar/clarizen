@@ -1,6 +1,4 @@
-﻿using Ekin.Rest;
-
-namespace Ekin.Clarizen.Data
+﻿namespace Ekin.Clarizen.Data
 {
     public class Search : Call<Result.Search>
     {
@@ -19,7 +17,7 @@ namespace Ekin.Clarizen.Data
                     (request.Fields != null ? "&" + request.Fields.ToQueryString() : string.Empty) +
                     (!string.IsNullOrWhiteSpace(request.TypeName) ? "&" + request.TypeName.ToQueryString() : string.Empty) +
                     (request.Paging != null ? "&" + request.Paging.ToQueryString() : string.Empty);
-            _method = RequestMethod.Get;
+            _method = System.Net.Http.HttpMethod.Get;
         }
     }
 }

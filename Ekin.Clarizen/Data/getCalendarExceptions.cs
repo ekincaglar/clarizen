@@ -20,7 +20,7 @@ namespace Ekin.Clarizen.Data
                    string.IsNullOrWhiteSpace(request.EntityId) ? "" : "entityId=" + request.EntityId + "&",
                    request.FromDate,
                    request.ToDate);
-            _method = RequestMethod.Get;
+            _method = System.Net.Http.HttpMethod.Get;
         }
     }
 }

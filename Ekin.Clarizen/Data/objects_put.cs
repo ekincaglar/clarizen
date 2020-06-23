@@ -8,7 +8,7 @@
             _callSettings = callSettings;
             _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/objects" +
                          (id.Substring(0, 1) != "/" ? "/" : "") + id;
-            _method = RequestMethod.Put;
+            _method = System.Net.Http.HttpMethod.Put;
         }
     }
 }

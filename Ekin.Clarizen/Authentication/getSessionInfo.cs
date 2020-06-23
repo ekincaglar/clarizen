@@ -11,7 +11,7 @@
                 SerializeNullValues = true
             };
             _url = serverLocation + "/authentication/getSessionInfo";
-            _method = RequestMethod.Get;
+            _method = System.Net.Http.HttpMethod.Get;
         }
     }
 }

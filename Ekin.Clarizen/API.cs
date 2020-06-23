@@ -493,9 +493,16 @@ namespace Ekin.Clarizen
             {
                 try
                 {
-                    JObject obj = JObject.Parse(apiCall.Data);
-                    RemoveInvalidFields(obj);
-                    return obj.ToObject(pocoObject);
+                    if (apiCall.Data != null)
+                    {
+                        JObject obj = JObject.Parse(apiCall.Data);
+                        RemoveInvalidFields(obj);
+                        return obj.ToObject(pocoObject);
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 catch (Exception ex)
                 {

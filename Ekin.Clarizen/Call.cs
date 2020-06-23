@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Ekin.Clarizen.Interfaces;
+using Ekin.Clarizen.RestClient;
+using Ekin.Log;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -10,8 +14,9 @@ namespace Ekin.Clarizen
     {
         #region Local/Internal Properties
 
+        internal HttpClient _httpClient { get; set; }
         internal string _url { get; set; }
-        internal RequestMethod _method { get; set; }
+        internal HttpMethod _method { get; set; }
         internal object _request { get; set; }
         internal CallSettings _callSettings { get; set; }
         internal bool _returnRawResponse { get; set; }
@@ -44,7 +49,11 @@ namespace Ekin.Clarizen
 
         public Call()
         {
-
+            _httpClient = HttpClientExtensions.Client;
+        }
+        public Call(HttpClient Client)
+        {
+            _httpClient = Client;
         }
 
         /// <summary>
@@ -63,57 +72,116 @@ namespace Ekin.Clarizen
 
             #endregion
 
+            #region Create the Http request
+
+            string contentBody = string.Empty;
+
+            if (_method == HttpMethod.Post || _method == HttpMethod.Put)
+            {
+                try
+                {
+                    JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = (_callSettings?.AllowReferenceLoops).GetValueOrDefault(false) ? ReferenceLoopHandling.Serialize : ReferenceLoopHandling.Error,
+                        NullValueHandling = (_callSettings?.SerializeNullValues).GetValueOrDefault(false) ? NullValueHandling.Include : NullValueHandling.Ignore
+                    };
+
+                    contentBody = JsonConvert.SerializeObject(_request, serializerSettings);
+                }
+                catch(Exception ex)
+                {
+                    IsCalledSuccessfully = false;
+                    Error = "JSON Serialization Error: " + ex.ToString();
+                }
+            }
+
+            var requestMessage = new System.Net.Http.HttpRequestMessage
+            {
+                RequestUri = new Uri(_url),
+                Method = _method,
+                Content = _method == HttpMethod.Post || _method == HttpMethod.Put ? new StringContent(contentBody, Encoding.UTF8, "application/json") : null
+            };
+
+            //requestMessage.Headers.Add("ContentType", "application/json; charset=utf-8");
+            requestMessage.Headers.Add("Accept", "application/json");
+            requestMessage.Headers.Add("Accept-Encoding", "gzip, deflate");
+
+            if (_callSettings != null)
+            {
+                #region Headers
+                if (!string.IsNullOrWhiteSpace(_callSettings.ApiKey))
+                {
+                    requestMessage.Headers.Add("Authorization", string.Format("ApiKey {0}", _callSettings.ApiKey));
+                }
+                else if (!string.IsNullOrWhiteSpace(_callSettings.SessionId))
+                {
+                    requestMessage.Headers.Add("Authorization", string.Format("Session {0}", _callSettings.SessionId));
+                }
+                if (!string.IsNullOrWhiteSpace(_callSettings.Requester))
+                {
+                    requestMessage.Headers.Add("ClzApiRequester", _callSettings.Requester);
+                }
+                if (!string.IsNullOrWhiteSpace(_callSettings.Redirect))
+                {
+                    requestMessage.Headers.Add("x-redirect", _callSettings.Redirect);
+                }
+                if (_callSettings.IsBatch != null)
+                {
+                    requestMessage.Headers.Add("CallOptions", string.Format("Batch={0}", _callSettings.IsBatch.GetValueOrDefault() ? "true" : "false"));
+                }
+                #endregion
+
+                #region Timeout
+                if (_callSettings.Timeout != null)
+                {
+                    requestMessage.SetTimeout(TimeSpan.FromMilliseconds(_callSettings.Timeout.GetValueOrDefault()));
+                }
+                #endregion
+
+                #region Retry
+                requestMessage.SetRetry(_callSettings.Retry);
+
+                if (_callSettings.SleepBetweenRetries > 0)
+                {
+                    requestMessage.SetSleepBetweenRetries(TimeSpan.FromMilliseconds(_callSettings.SleepBetweenRetries));
+                }
+                #endregion
+            }
+
+            #endregion
+
             #region Call the Clarizen API
 
-            // Set the Client
-            Ekin.Rest.Client restClient = null;
-            if (_callSettings == null)
+            HttpResponseMessage response = null;
+            string content = string.Empty;
+
+            try
             {
-                restClient = new Ekin.Rest.Client(_url);
+                response = await _httpClient.SendAsync(requestMessage).ConfigureAwait(false);
+                content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             }
-            else
+            catch (Exception ex)
             {
-                restClient = new Ekin.Rest.Client(_url, _callSettings.GetHeaders(), _callSettings.Timeout.GetValueOrDefault(120000), _callSettings.Retry, _callSettings.SleepBetweenRetries);
-            }
-            restClient.ErrorType = typeof(Error);
-
-            // Make the call
-            Ekin.Rest.Response response = null;
-            switch (_method)
-            {
-                case RequestMethod.Get:
-                    response = await restClient.Get();
-                    break;
-
-                case RequestMethod.Post:
-                    response = await restClient.Post(_request, (_callSettings?.SerializeNullValues).GetValueOrDefault(false));
-                    break;
-
-                case RequestMethod.Put:
-                    response = await restClient.Put(_request, (_callSettings?.SerializeNullValues).GetValueOrDefault(false));
-                    break;
-
-                case RequestMethod.Delete:
-                    response = await restClient.Delete();
-                    break;
-
+                Error = ex.ToString();
+                IsCalledSuccessfully = false;
+                return IsCalledSuccessfully;
             }
 
             #endregion
 
             #region Parse and return the result
 
-            if (response.Status == System.Net.HttpStatusCode.OK)
+            if (response.IsSuccessStatusCode)
             {
                 if (_returnRawResponse)
                 {
-                    Data = response.Content as dynamic;
+                    Data = content as dynamic;
                 }
                 else
                 {
                     try
                     {
-                        Data = JsonConvert.DeserializeObject<T>(response.Content, new JsonSerializerSettings()
+                        Data = JsonConvert.DeserializeObject<T>(content, new JsonSerializerSettings()
                         {
                             Error = HandleDeserializationError
                         });
@@ -127,33 +195,33 @@ namespace Ekin.Clarizen
                     }
                 }
             }
-            else if (response.InternalError != null)
-            {
-                Error internalError = response.InternalError as Error;
-                if (_method == RequestMethod.Get && internalError?.ErrorCode != null && internalError.ErrorCode.Equals("EntityNotFound"))
-                {
-                    // Clarizen returns Http 500 when an entity of the given type is not found
-                    // In the body of the response "errorCode": "EntityNotFound" is returned
-                    // This is where we handle that case
-                    IsCalledSuccessfully = true;
-                }
-                else
-                {
-                    IsCalledSuccessfully = false;
-                }
-
-                if (_callSettings?.Timeout != null)
-                {
-                    Error = $"{response.GetFormattedErrorMessage()}. Timeout set to {TimeSpan.FromMilliseconds(_callSettings.Timeout.GetValueOrDefault(120000)).ToHumanReadableString()}.";
-                }
-                else
-                {
-                    Error = response.GetFormattedErrorMessage();
-                }
-            }
             else
             {
-                IsCalledSuccessfully = false;
+                Ekin.Clarizen.Error clarizenError = null;
+                try
+                {
+                    clarizenError = JsonConvert.DeserializeObject<Ekin.Clarizen.Error>(content);
+                }
+                catch
+                {
+
+                }
+                if (clarizenError != null)
+                {
+                    Error = clarizenError.Formatted;
+                    if (_method == HttpMethod.Get && clarizenError.ErrorCode != null && clarizenError.ErrorCode.Equals("EntityNotFound"))
+                    {
+                        // Clarizen returns Http 500 when an entity of the given type is not found
+                        // In the body of the response "errorCode": "EntityNotFound" is returned
+                        // This is where we handle that case
+                        IsCalledSuccessfully = true;
+                    }
+                }
+                else
+                {
+                    Error = content;
+                    IsCalledSuccessfully = false;
+                }
             }
 
             return IsCalledSuccessfully;

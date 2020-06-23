@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Net.Http;
 
 namespace Ekin.Clarizen
 {
@@ -23,25 +24,25 @@ namespace Ekin.Clarizen
         [JsonIgnore]
         public Type ResultType { get; set; }
 
-        public Request(string url, RequestMethod method, object body, Type resultType)
+        public Request(string url, HttpMethod method, object body, Type resultType)
         {
             SetParams(url, method, body, resultType);
         }
 
-        public Request(string url, RequestMethod method, Type resultType)
+        public Request(string url, HttpMethod method, Type resultType)
         {
             SetParams(url, method, null, resultType);
         }
 
-        public Request(string url, RequestMethod method)
+        public Request(string url, HttpMethod method)
         {
             SetParams(url, method, null, null);
         }
 
-        private void SetParams(string url, RequestMethod method, object body, Type resultType)
+        private void SetParams(string url, HttpMethod method, object body, Type resultType)
         {
             Url = url;
-            Method = method.ToEnumString();
+            Method = method.Method;
             Body = body;
             ResultType = resultType;
         }

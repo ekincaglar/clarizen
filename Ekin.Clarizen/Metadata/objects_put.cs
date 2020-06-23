@@ -7,7 +7,7 @@
             _request = request;
             _callSettings = callSettings;
             _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/metadata/objects";
-            _method = RequestMethod.Put;
+            _method = System.Net.Http.HttpMethod.Put;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Ekin.Clarizen.Metadata
             _callSettings = callSettings;
             _url = (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/metadata/objects" +
                    (request.Id.Substring(0, 1) != "/" ? "/" : "") + request.Id;
-            _method = RequestMethod.Delete;
+            _method = System.Net.Http.HttpMethod.Delete;
         }
     }
 }
