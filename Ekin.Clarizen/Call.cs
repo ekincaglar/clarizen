@@ -14,12 +14,12 @@ namespace Ekin.Clarizen
     {
         #region Local/Internal Properties
 
-        internal HttpClient _httpClient { get; set; }
-        internal string _url { get; set; }
-        internal HttpMethod _method { get; set; }
-        internal object _request { get; set; }
-        internal CallSettings _callSettings { get; set; }
-        internal bool _returnRawResponse { get; set; }
+        public HttpClient _httpClient { get; set; }
+        public string _url { get; set; }
+        public HttpMethod _method { get; set; }
+        public object _request { get; set; }
+        public CallSettings _callSettings { get; set; }
+        public bool _returnRawResponse { get; set; }
 
         #endregion
 
@@ -159,6 +159,12 @@ namespace Ekin.Clarizen
             {
                 response = await _httpClient.SendAsync(requestMessage).ConfigureAwait(false);
                 content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            }
+            catch (TimeoutException ex)
+            {
+                Error = ex.Message; // Timeout exceptions are formatted inside ClarizenCallHandler
+                IsCalledSuccessfully = false;
+                return IsCalledSuccessfully;
             }
             catch (Exception ex)
             {

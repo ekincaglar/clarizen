@@ -9,6 +9,10 @@
             _callSettings = callSettings;
             _callSettings.IsBulk = false; // Force this call to be made as a single call
             _callSettings.IsBatch = request.Batch.GetValueOrDefault();
+            if (_callSettings.Timeout == null)
+            {
+                callSettings.Timeout = 120000;
+            }
             _url = callSettings.ServerLocation + "/bulk/execute";
             _method = System.Net.Http.HttpMethod.Post;
         }

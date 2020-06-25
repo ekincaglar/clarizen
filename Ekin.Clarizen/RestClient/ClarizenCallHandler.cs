@@ -11,16 +11,17 @@ namespace Ekin.Clarizen.RestClient
 {
     public class ClarizenCallHandler : DelegatingHandler
     {
-        public TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromSeconds(100);
+        public TimeSpan DefaultTimeout { get; set; } = TimeSpan.FromSeconds(120);
 
         protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             int retry = request.GetRetry().GetValueOrDefault();
             TimeSpan? sleepBetweenRetries = request.GetSleepBetweenRetries();
-            using (var cts = GetCancellationTokenSource(request, cancellationToken))
+            TimeSpan timeout = request.GetTimeout() ?? DefaultTimeout;
+            HttpResponseMessage response = null;
+            for (int i = 0; i < retry; i++)
             {
-                HttpResponseMessage response = null;
-                for (int i = 0; i < retry; i++)
+                using (var cts = GetCancellationTokenSource(timeout, cancellationToken))
                 {
                     try
                     {
@@ -34,7 +35,8 @@ namespace Ekin.Clarizen.RestClient
                     {
                         if (i == retry - 1)
                         {
-                            throw new TimeoutException();
+                            string retries = retry > 1 ? $" after {retry} retries" : string.Empty;
+                            throw new TimeoutException($"Timeout error: {request.RequestUri} did not respond in {timeout.ToHumanReadableString()}{retries}.");
                         }
                     }
                     catch (HttpRequestException ex)
@@ -49,13 +51,13 @@ namespace Ekin.Clarizen.RestClient
                         await Task.Delay(sleepBetweenRetries.GetValueOrDefault());
                     }
                 }
-                return response;
             }
+            return response;
+
         }
 
-        private CancellationTokenSource GetCancellationTokenSource(HttpRequestMessage request, CancellationToken cancellationToken)
+        private CancellationTokenSource GetCancellationTokenSource(TimeSpan timeout, CancellationToken cancellationToken)
         {
-            var timeout = request.GetTimeout() ?? DefaultTimeout;
             if (timeout == Timeout.InfiniteTimeSpan)
             {
                 // No need to create a CTS if there's no timeout
