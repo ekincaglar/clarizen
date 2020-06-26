@@ -25,7 +25,7 @@ namespace Ekin.Clarizen.RestClient
                 {
                     try
                     {
-                        response = await base.SendAsync(request, cts?.Token ?? cancellationToken);
+                        response = await base.SendAsync(request, cts?.Token ?? cancellationToken).ConfigureAwait(false);
                         if (response.IsSuccessStatusCode)
                         {
                             return response;
@@ -39,29 +39,44 @@ namespace Ekin.Clarizen.RestClient
                             throw new TimeoutException($"Timeout error: {request.RequestUri} did not respond in {timeout.ToHumanReadableString()}{retries}.");
                         }
                     }
+                    catch (TaskCanceledException ex)
+                    {
+                        if (i == retry - 1)
+                        {
+                            string retries = retry > 1 ? $" and {retry} retries" : string.Empty;
+                            throw new TaskCanceledException($"Task cancelled after {timeout.ToHumanReadableString()}{retries}.", ex);
+                        }
+                    }
                     catch (HttpRequestException ex)
                     {
                         if (i == retry - 1)
                         {
-                            throw ex;
+                            string retries = retry > 1 ? $" and {retry} retries" : string.Empty;
+                            throw new HttpRequestException($"HttpRequestException received after {timeout.ToHumanReadableString()}{retries}.", ex);
                         }
                     }
-                    if (sleepBetweenRetries != null)
+                    catch (Exception ex)
                     {
-                        await Task.Delay(sleepBetweenRetries.GetValueOrDefault());
+                        if (i == retry - 1)
+                        {
+                            string retries = retry > 1 ? $" and {retry} retries" : string.Empty;
+                            throw new HttpRequestException($"Following exception received after {timeout.ToHumanReadableString()}{retries}.", ex);
+                        }
                     }
+                }
+                if (sleepBetweenRetries != null)
+                {
+                    await Task.Delay(sleepBetweenRetries.GetValueOrDefault());
                 }
             }
             return response;
-
         }
 
         private CancellationTokenSource GetCancellationTokenSource(TimeSpan timeout, CancellationToken cancellationToken)
         {
             if (timeout == Timeout.InfiniteTimeSpan)
             {
-                // No need to create a CTS if there's no timeout
-                return null;
+                return null;  // No need to create a CTS if there's no timeout
             }
             else
             {
