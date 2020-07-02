@@ -182,6 +182,7 @@ namespace Ekin.Clarizen
                 if (_returnRawResponse)
                 {
                     Data = content as dynamic;
+                    IsCalledSuccessfully = true;
                 }
                 else
                 {
