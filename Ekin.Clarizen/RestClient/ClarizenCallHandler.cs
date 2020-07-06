@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,6 +15,7 @@ namespace Ekin.Clarizen.RestClient
             int retry = request.GetRetry().GetValueOrDefault();
             TimeSpan? sleepBetweenRetries = request.GetSleepBetweenRetries();
             TimeSpan timeout = request.GetTimeout() ?? DefaultTimeout;
+            Stopwatch stopWatch = new Stopwatch();
             HttpResponseMessage response = null;
             for (int i = 0; i < retry; i++)
             {
@@ -25,43 +23,34 @@ namespace Ekin.Clarizen.RestClient
                 {
                     try
                     {
+                        if (stopWatch.IsRunning) stopWatch.Reset();
+                        stopWatch.Start();
                         response = await base.SendAsync(request, cts?.Token ?? cancellationToken).ConfigureAwait(false);
                         if (response.IsSuccessStatusCode)
                         {
                             return response;
                         }
                     }
-                    catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
-                    {
-                        if (i == retry - 1)
-                        {
-                            string retries = retry > 1 ? $" after {retry} retries" : string.Empty;
-                            throw new TimeoutException($"Timeout error: {request.RequestUri} did not respond in {timeout.ToHumanReadableString()}{retries}.");
-                        }
-                    }
-                    catch (TaskCanceledException ex)
-                    {
-                        if (i == retry - 1)
-                        {
-                            string retries = retry > 1 ? $" and {retry} retries" : string.Empty;
-                            throw new TaskCanceledException($"Task cancelled after {timeout.ToHumanReadableString()}{retries}.", ex);
-                        }
-                    }
-                    catch (HttpRequestException ex)
-                    {
-                        if (i == retry - 1)
-                        {
-                            string retries = retry > 1 ? $" and {retry} retries" : string.Empty;
-                            throw new HttpRequestException($"HttpRequestException received after {timeout.ToHumanReadableString()}{retries}.", ex);
-                        }
-                    }
                     catch (Exception ex)
                     {
                         if (i == retry - 1)
                         {
-                            string retries = retry > 1 ? $" and {retry} retries" : string.Empty;
-                            throw new HttpRequestException($"Following exception received after {timeout.ToHumanReadableString()}{retries}.", ex);
+                            stopWatch.Stop();
+                            string requestDuration = retry > 1 ? $"in {stopWatch.Elapsed.ToHumanReadableString()} after {retry} retries of {timeout.ToHumanReadableString()} each, with {sleepBetweenRetries.GetValueOrDefault().ToHumanReadableString()} between retries" : $"in {stopWatch.Elapsed.ToHumanReadableString()} (Timeout set to {timeout.ToHumanReadableString()})";
+
+                            if ((ex is OperationCanceledException || ex is TaskCanceledException) && !cancellationToken.IsCancellationRequested)
+                            {
+                                throw new TimeoutException($"Timeout error: {request.RequestUri} did not respond {requestDuration}.");
+                            }
+                            else
+                            {
+                                throw new HttpRequestException($"{request.RequestUri} threw the following exception {requestDuration}.", ex);
+                            }
                         }
+                    }
+                    finally
+                    {
+                        stopWatch.Stop();
                     }
                 }
                 if (sleepBetweenRetries != null)
