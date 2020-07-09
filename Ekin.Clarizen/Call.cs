@@ -47,6 +47,14 @@ namespace Ekin.Clarizen
 
         #endregion
 
+        #region Events
+
+        public event EventHandler SessionTimeout;
+
+        public event EventHandler CallQuotaExceeded;
+
+        #endregion
+
         public Call()
         {
             _httpClient = HttpClientExtensions.Client;
@@ -215,13 +223,37 @@ namespace Ekin.Clarizen
                 }
                 if (clarizenError != null)
                 {
-                    Error = clarizenError.Formatted;
-                    if (_method == HttpMethod.Get && clarizenError.ErrorCode != null && clarizenError.ErrorCode.Equals("EntityNotFound"))
+                    if (clarizenError.Message.Contains("API calls quota exceeded", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        // Clarizen returns Http 500 when an entity of the given type is not found
-                        // In the body of the response "errorCode": "EntityNotFound" is returned
-                        // This is where we handle that case
-                        IsCalledSuccessfully = true;
+                        clarizenError.ErrorCode = "CallQuotaExceeded";
+                    }
+                    if (string.IsNullOrWhiteSpace(clarizenError.ReferenceId))
+                    {
+                        clarizenError.ReferenceId = "Not specified";
+                    }
+                    Error = clarizenError.Formatted;
+                    if (clarizenError.ErrorCode != null)
+                    {
+                        switch (clarizenError.ErrorCode)
+                        {
+                            case "EntityNotFound":
+                                if (_method == HttpMethod.Get)
+                                {
+                                    // Clarizen returns Http 500 when an entity of the given type is not found
+                                    // In the body of the response "errorCode": "EntityNotFound" is returned
+                                    // This is where we handle that case
+                                    IsCalledSuccessfully = true;
+                                }
+                                break;
+
+                            case "SessionTimeout":
+                                OnSessionTimeout(EventArgs.Empty);
+                                break;
+
+                            case "CallQuotaExceeded":
+                                OnCallQuotaExceeded(EventArgs.Empty);
+                                break;
+                        }
                     }
                 }
                 else
@@ -234,6 +266,16 @@ namespace Ekin.Clarizen
             return IsCalledSuccessfully;
 
             #endregion
+        }
+
+        protected virtual void OnSessionTimeout(EventArgs e)
+        {
+            SessionTimeout?.Invoke(this, e);
+        }
+
+        protected virtual void OnCallQuotaExceeded(EventArgs e)
+        {
+            CallQuotaExceeded?.Invoke(this, e);
         }
 
         /// <summary>

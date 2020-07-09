@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Ekin.Clarizen.Authentication;
 using Ekin.Clarizen.Interfaces;
 using Ekin.Log;
 using Newtonsoft.Json.Linq;
@@ -50,6 +51,13 @@ namespace Ekin.Clarizen
         public int? Timeout { get; set; } = 120000;
 
         #endregion Public properties
+
+        #region Events
+
+        public event EventHandler<SessionRefreshedEventArgs> SessionRefreshed;
+        public event EventHandler SessionExpired;
+
+        #endregion
 
         /// <summary>
         /// To use Clarizen API, first call API.Login("yourUserName", "yourPassword")
@@ -104,6 +112,37 @@ namespace Ekin.Clarizen
             }
         }
 
+        #region Event handlers and delegates
+
+        protected virtual void OnSessionRefreshed(SessionRefreshedEventArgs e)
+        {
+            SessionRefreshed?.Invoke(this, e);
+        }
+
+        protected virtual void OnSessionExpired(EventArgs e)
+        {
+            SessionExpired?.Invoke(this, e);
+        }
+
+        private static void Call_SessionTimeout(object sender, EventArgs e)
+        {
+            if (sender is API)
+            {
+                API ClarizenAPI = (API)sender;
+                if (ClarizenAPI.Login().Result)
+                {
+                    ClarizenAPI.OnSessionRefreshed(new SessionRefreshedEventArgs { NewSessionId = ClarizenAPI.SessionId });
+                }
+                else
+                {
+                    ClarizenAPI.Logs.AddError("API", "Call_SessionTimeout", "Session has expired but could not be refreshed.");
+                    ClarizenAPI.OnSessionExpired(EventArgs.Empty);
+                }
+            }
+        }
+
+        #endregion
+
         #region Authentication methods
 
         /// <summary>
@@ -114,10 +153,21 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public async Task<bool> Login(string username, string password)
         {
+            Username = username;
+            Password = password;
+            return await Login();
+        }
+
+        /// <summary>
+        /// Opens a new session using the credentials given for accessing Clarizen API
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> Login()
+        {
             if (string.IsNullOrWhiteSpace(ServerLocation))
             {
                 // First we get the Url where your organization API is located
-                Authentication.GetServerDefinition serverDefinition = new Authentication.GetServerDefinition(new Ekin.Clarizen.Authentication.Request.GetServerDefinition(username, password, new Ekin.Clarizen.Authentication.Request.LoginOptions()), IsSandbox);
+                Authentication.GetServerDefinition serverDefinition = new Authentication.GetServerDefinition(new Ekin.Clarizen.Authentication.Request.GetServerDefinition(Username, Password, new Ekin.Clarizen.Authentication.Request.LoginOptions()), IsSandbox);
                 bool executionResult = await serverDefinition.Execute();
                 //TotalAPICallsMadeInCurrentSession++; // Login call doesn't count towards quota (Confirmed by Yaron Perlman on 9 Nov 2016)
                 Logs.Assert(executionResult, "Ekin.Clarizen.API", "Login", "Server definition could not be retrieved", serverDefinition.Error);
@@ -130,9 +180,9 @@ namespace Ekin.Clarizen
             if (!string.IsNullOrWhiteSpace(ServerLocation))
             {
                 // Then we login to the API at the above location
-                Authentication.Login apiCall = new Authentication.Login(ServerLocation, new Ekin.Clarizen.Authentication.Request.Login(username, password, new Ekin.Clarizen.Authentication.Request.LoginOptions()));
+                Authentication.Login apiCall = new Authentication.Login(ServerLocation, new Ekin.Clarizen.Authentication.Request.Login(Username, Password, new Ekin.Clarizen.Authentication.Request.LoginOptions()));
                 bool executionResult = await apiCall.Execute();
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Login", $"Login failed for {username}", apiCall.Error);
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Login", $"Login failed for {Username}", apiCall.Error);
                 if (executionResult)
                 {
                     // Upon successful login a unique ID representing the current session is returned.
@@ -167,6 +217,7 @@ namespace Ekin.Clarizen
         public async Task<bool> SetPassword(string userId, string newPassword)
         {
             Authentication.SetPassword apiCall = new Authentication.SetPassword(new Authentication.Request.SetPassword(userId, newPassword), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             Logs.Assert(executionResult, "Ekin.Clarizen.API", "setPassword", apiCall.Error);
             return (executionResult);
@@ -201,6 +252,7 @@ namespace Ekin.Clarizen
                 ((typeNames == null && flags == null) ? new Ekin.Clarizen.Metadata.Request.DescribeMetadata() :
                                                         new Ekin.Clarizen.Metadata.Request.DescribeMetadata(typeNames, flags)),
                 CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -240,6 +292,7 @@ namespace Ekin.Clarizen
         public async Task<Metadata.ListEntities> ListEntities()
         {
             Metadata.ListEntities apiCall = new Metadata.ListEntities(CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -261,6 +314,7 @@ namespace Ekin.Clarizen
         public async Task<Metadata.DescribeEntities> DescribeEntities(string[] typeNames)
         {
             Metadata.DescribeEntities apiCall = new Metadata.DescribeEntities(new Metadata.Request.DescribeEntities(typeNames), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -282,6 +336,7 @@ namespace Ekin.Clarizen
         public async Task<Metadata.DescribeEntityRelations> DescribeEntityRelations(string[] typeNames)
         {
             Metadata.DescribeEntityRelations apiCall = new Metadata.DescribeEntityRelations(new Metadata.Request.DescribeEntityRelations(typeNames), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -317,6 +372,7 @@ namespace Ekin.Clarizen
         public async Task<Metadata.Objects_put> CreateWorkflowRule(Metadata.Request.Objects_put request)
         {
             Metadata.Objects_put apiCall = new Metadata.Objects_put(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -338,6 +394,7 @@ namespace Ekin.Clarizen
         public async Task<Metadata.Objects_delete> DeleteWorkflowRule(string id)
         {
             Metadata.Objects_delete apiCall = new Metadata.Objects_delete(new Metadata.Request.Objects_delete(id), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -359,6 +416,7 @@ namespace Ekin.Clarizen
         public async Task<Metadata.GetSystemSettingsValues> GetSystemSettingsValues(string[] settings)
         {
             Metadata.GetSystemSettingsValues apiCall = new Metadata.GetSystemSettingsValues(new Metadata.Request.GetSystemSettingsValues(settings), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -380,6 +438,7 @@ namespace Ekin.Clarizen
         public async Task<Metadata.SetSystemSettingsValues> SetSystemSettingsValues(FieldValue[] settings)
         {
             Metadata.SetSystemSettingsValues apiCall = new Metadata.SetSystemSettingsValues(new Metadata.Request.SetSystemSettingsValues(settings), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -406,6 +465,7 @@ namespace Ekin.Clarizen
         public async Task<Data.Objects_get> GetObject(string id, string[] fields)
         {
             Data.Objects_get apiCall = new Data.Objects_get(new Data.Request.Objects_get(id, fields), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -439,6 +499,7 @@ namespace Ekin.Clarizen
         {
             string[] fields = typeof(T).GetPropertyList();
             Data.Objects_get apiCall = new Data.Objects_get(new Data.Request.Objects_get(id, fields), CallSettings.GetFromAPI(this), true);
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -479,6 +540,7 @@ namespace Ekin.Clarizen
         {
             string[] fields = pocoObject.GetPropertyList();
             Data.Objects_get apiCall = new Data.Objects_get(new Data.Request.Objects_get(id, fields), CallSettings.GetFromAPI(this), true);
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -525,6 +587,7 @@ namespace Ekin.Clarizen
         public async Task<Data.Objects_put> CreateObject(string id, object obj)
         {
             Data.Objects_put apiCall = new Data.Objects_put(id, obj, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -547,6 +610,7 @@ namespace Ekin.Clarizen
         public async Task<Data.Objects_post> UpdateObject(string id, object obj)
         {
             Data.Objects_post apiCall = new Data.Objects_post(id, obj, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -568,6 +632,7 @@ namespace Ekin.Clarizen
         public async Task<Data.Objects_delete> DeleteObject(string id)
         {
             Data.Objects_delete apiCall = new Data.Objects_delete(new Ekin.Clarizen.Data.Request.Objects_delete(id), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -590,6 +655,7 @@ namespace Ekin.Clarizen
         public async Task<Data.CreateAndRetrieve> CreateAndRetrieve(object entity, string[] fields)
         {
             Data.CreateAndRetrieve apiCall = new Data.CreateAndRetrieve(new Data.Request.CreateAndRetrieve(entity, fields), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -611,6 +677,7 @@ namespace Ekin.Clarizen
         public async Task<Data.RetrieveMultiple> RetrieveMultiple(Data.Request.RetrieveMultiple request)
         {
             Data.RetrieveMultiple apiCall = new Data.RetrieveMultiple(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -661,6 +728,7 @@ namespace Ekin.Clarizen
                 if (condition != null)
                     request.Where = condition;
                 Data.EntityQuery apiCall = await EntityQuery(request);
+                apiCall.SessionTimeout += Call_SessionTimeout;
                 bool executionResult = await apiCall.Execute();
                 if (executionResult)
                 {
@@ -711,6 +779,7 @@ namespace Ekin.Clarizen
                 CallSettings callSettings = CallSettings.GetFromAPI(this);
                 callSettings.IsBulk = false;
                 Data.Query apiCall = new Data.Query(new Data.Request.Query(query.ToCZQL(), paging), callSettings);
+                apiCall.SessionTimeout += Call_SessionTimeout;
                 bool executionResult = await apiCall.Execute();
                 if (executionResult)
                 {
@@ -755,6 +824,7 @@ namespace Ekin.Clarizen
                 if (condition != null)
                     request.Where = condition;
                 Ekin.Clarizen.Data.EntityQuery apiCall = await EntityQuery(request);
+                apiCall.SessionTimeout += Call_SessionTimeout;
                 bool executionResult = await apiCall.Execute();
                 if (executionResult)
                 {
@@ -812,6 +882,7 @@ namespace Ekin.Clarizen
         public async Task<Data.CountQuery> Count(IQuery query)
         {
             Data.CountQuery apiCall = new Data.CountQuery(new Data.Request.CountQuery(query), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -833,6 +904,7 @@ namespace Ekin.Clarizen
         public async Task<Data.EntityQuery> EntityQuery(Data.Queries.EntityQuery request)
         {
             Data.EntityQuery apiCall = new Data.EntityQuery(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -852,6 +924,7 @@ namespace Ekin.Clarizen
         public async Task<Data.CrossOrgEntityQuery> CrossOrgEntityQuery(Data.Queries.CrossOrgEntityQuery request)
         {
             Data.CrossOrgEntityQuery apiCall = new Data.CrossOrgEntityQuery(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -884,6 +957,7 @@ namespace Ekin.Clarizen
         public async Task<Data.GroupsQuery> GroupsQuery(Data.Queries.GroupsQuery request)
         {
             Data.GroupsQuery apiCall = new Data.GroupsQuery(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -915,6 +989,7 @@ namespace Ekin.Clarizen
         public async Task<Data.AggregateQuery> AggregateQuery(Data.Queries.AggregateQuery request)
         {
             Data.AggregateQuery apiCall = new Data.AggregateQuery(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -936,6 +1011,7 @@ namespace Ekin.Clarizen
         public async Task<Data.RelationQuery> RelationQuery(Data.Queries.RelationQuery request)
         {
             Data.RelationQuery apiCall = new Data.RelationQuery(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -957,6 +1033,7 @@ namespace Ekin.Clarizen
         public async Task<Data.NewsFeedQuery> NewsFeedQuery(Data.Queries.NewsFeedQuery request)
         {
             Data.NewsFeedQuery apiCall = new Data.NewsFeedQuery(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1002,6 +1079,7 @@ namespace Ekin.Clarizen
         public async Task<Data.EntityFeedQuery> EntityFeedQuery(Data.Queries.EntityFeedQuery request)
         {
             Data.EntityFeedQuery apiCall = new Data.EntityFeedQuery(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1047,6 +1125,7 @@ namespace Ekin.Clarizen
         public async Task<Data.RepliesQuery> RepliesQuery(Data.Queries.RepliesQuery request)
         {
             Data.RepliesQuery apiCall = new Data.RepliesQuery(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1092,6 +1171,7 @@ namespace Ekin.Clarizen
         public async Task<Data.ExpenseQuery> ExpenseQuery(Data.Queries.ExpenseQuery request)
         {
             Data.ExpenseQuery apiCall = new Data.ExpenseQuery(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1108,6 +1188,7 @@ namespace Ekin.Clarizen
         public async Task<Data.TimesheetQuery> TimesheetQuery(Data.Queries.TimesheetQuery request)
         {
             Data.TimesheetQuery apiCall = new Data.TimesheetQuery(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1133,6 +1214,7 @@ namespace Ekin.Clarizen
         public async Task<Data.Search> Search(Data.Request.Search request)
         {
             Data.Search apiCall = new Data.Search(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1246,6 +1328,7 @@ namespace Ekin.Clarizen
         public async Task<Data.CreateDiscussion> CreateDiscussion(Data.Request.CreateDiscussion request)
         {
             Data.CreateDiscussion apiCall = new Data.CreateDiscussion(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1267,6 +1350,7 @@ namespace Ekin.Clarizen
         public async Task<Data.Lifecycle> Lifecycle(Data.Request.Lifecycle request)
         {
             Data.Lifecycle apiCall = new Data.Lifecycle(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1300,6 +1384,7 @@ namespace Ekin.Clarizen
         public async Task<Data.ChangeState> ChangeState(string[] ids, string state)
         {
             Data.ChangeState apiCall = new Data.ChangeState(new Data.Request.ChangeState(ids, state), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1321,6 +1406,7 @@ namespace Ekin.Clarizen
         public async Task<Data.ExecuteCustomAction> ExecuteCustomAction(Data.Request.ExecuteCustomAction request)
         {
             Data.ExecuteCustomAction apiCall = new Data.ExecuteCustomAction(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1354,6 +1440,7 @@ namespace Ekin.Clarizen
         public async Task<Data.GetTemplateDescriptions> GetTemplateDescriptions(string typeName)
         {
             Data.GetTemplateDescriptions apiCall = new Data.GetTemplateDescriptions(new Data.Request.GetTemplateDescriptions(typeName), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1375,6 +1462,7 @@ namespace Ekin.Clarizen
         public async Task<Data.CreateFromTemplate> CreateFromTemplate(object entity, string templateName, string parentId)
         {
             Data.CreateFromTemplate apiCall = new Data.CreateFromTemplate(new Data.Request.CreateFromTemplate(entity, templateName, parentId), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1396,6 +1484,7 @@ namespace Ekin.Clarizen
         public async Task<Data.GetCalendarInfo> GetCalendarInfo(string id)
         {
             Data.GetCalendarInfo apiCall = new Data.GetCalendarInfo(new Data.Request.GetCalendarInfo(id), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1412,6 +1501,7 @@ namespace Ekin.Clarizen
         public async Task<Data.GetCalendarExceptions> GetCalendarExceptions(string id, DateTime fromDate, DateTime toDate)
         {
             Data.GetCalendarExceptions apiCall = new Data.GetCalendarExceptions(new Data.Request.GetCalendarExceptions(id, fromDate, toDate), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1435,6 +1525,7 @@ namespace Ekin.Clarizen
         public async Task<Data.GetMissingTimesheets> GetMissingTimesheets(string user, DateTime startDate, DateTime endDate)
         {
             Data.GetMissingTimesheets apiCall = new Data.GetMissingTimesheets(new Data.Request.GetMissingTimesheets(user, startDate, endDate), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1460,6 +1551,7 @@ namespace Ekin.Clarizen
         public async Task<Data.Query> ExecuteQuery(Data.Request.Query query)
         {
             Data.Query apiCall = new Data.Query(query, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1511,6 +1603,7 @@ namespace Ekin.Clarizen
                 CallSettings callSettings = CallSettings.GetFromAPI(this);
                 callSettings.Timeout = timeout;
                 Bulk.Execute apiCall = new Bulk.Execute(new Bulk.Request.Execute(BulkRequests, transactional, batch), callSettings);
+                apiCall.SessionTimeout += Call_SessionTimeout;
                 bool executionResult = await apiCall.Execute();
                 Logs.Assert(executionResult, "Ekin.Clarizen.API", "CommitBulkService", "Bulk service error", apiCall.Error);
                 TotalAPICallsMadeInCurrentSession++;
@@ -1562,6 +1655,7 @@ namespace Ekin.Clarizen
         public async Task<Utils.AppLogin> AppLogin()
         {
             Utils.AppLogin apiCall = new Utils.AppLogin(CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1587,6 +1681,7 @@ namespace Ekin.Clarizen
         public async Task<Utils.SendEmail> SendEmail(Recipient[] recipients, string subject, string body, string relatedEntityId, Utils.Request.SendEmail.CZAccessType accessType)
         {
             Utils.SendEmail apiCall = new Utils.SendEmail(new Utils.Request.SendEmail(recipients, subject, body, relatedEntityId, accessType), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1607,6 +1702,7 @@ namespace Ekin.Clarizen
         public async Task<Applications.GetApplicationStatus> GetApplicationStatus(string applicationId)
         {
             Applications.GetApplicationStatus apiCall = new Applications.GetApplicationStatus(new Applications.Request.GetApplicationStatus(applicationId), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1623,6 +1719,7 @@ namespace Ekin.Clarizen
         public async Task<Applications.InstallApplication> InstallApplication(string applicationId, bool autoEnable)
         {
             Applications.InstallApplication apiCall = new Applications.InstallApplication(new Applications.Request.InstallApplication(applicationId, autoEnable), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1649,6 +1746,7 @@ namespace Ekin.Clarizen
         public async Task<Files.Download> Download(string documentId, bool redirect)
         {
             Files.Download apiCall = new Files.Download(new Files.Request.Download(documentId, redirect), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1669,6 +1767,7 @@ namespace Ekin.Clarizen
         public async Task<Files.GetUploadUrl> GetUploadUrl()
         {
             Files.GetUploadUrl apiCall = new Files.GetUploadUrl(CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1690,6 +1789,7 @@ namespace Ekin.Clarizen
         public async Task<Files.Upload> Upload(Files.Request.Upload request)
         {
             Files.Upload apiCall = new Files.Upload(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1734,6 +1834,7 @@ namespace Ekin.Clarizen
         public async Task<Files.UpdateImage> UpdateImage(string entityId, string uploadUrl, bool reset)
         {
             Files.UpdateImage apiCall = new Files.UpdateImage(new Files.Request.UpdateImage(entityId, uploadUrl, reset), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
             {
@@ -1748,5 +1849,10 @@ namespace Ekin.Clarizen
         }
 
         #endregion Files
+    }
+
+    public class SessionRefreshedEventArgs : EventArgs
+    {
+        public string NewSessionId { get; set; }
     }
 }

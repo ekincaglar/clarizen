@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,6 +34,8 @@ namespace Ekin.Clarizen.RestClient
                     }
                     catch (Exception ex)
                     {
+                        // TODO: Handle 429 Too Many Requests and throttle by introducing delays
+
                         if (i == retry - 1)
                         {
                             stopWatch.Stop();
@@ -40,7 +43,8 @@ namespace Ekin.Clarizen.RestClient
 
                             if ((ex is OperationCanceledException || ex is TaskCanceledException) && !cancellationToken.IsCancellationRequested)
                             {
-                                throw new TimeoutException($"Timeout error: {request.RequestUri} did not respond {requestDuration}.");
+                                string sourceOfCancellation = ex is OperationCanceledException ? "Clarizen" : "the server (task cancelled)";
+                                throw new TimeoutException($"Timeout error received from {sourceOfCancellation}: {request.RequestUri} did not respond {requestDuration}.");
                             }
                             else
                             {
