@@ -41,7 +41,7 @@ namespace Ekin.Clarizen
                     // For Fully Qualified Ids (FQIDs) in a multi-org environment, ignore the Organization part of the Id
                     if (idToOperateOn.StartsWith("/Organization/"))
                     {
-                        idToOperateOn = GetValueAfterSecondSlash(_id_value);
+                        idToOperateOn = GetValueAfterSecondSlash(idToOperateOn);
                     }
 
                     _id_value = GetValueAfterSecondSlash(idToOperateOn);
