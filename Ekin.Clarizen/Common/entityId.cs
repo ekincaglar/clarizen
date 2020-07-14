@@ -94,10 +94,10 @@ namespace Ekin.Clarizen
             int firstSlash = value.IndexOf('/');
             if (firstSlash >= 0)
             {
-                int secondSlash = _id.IndexOf('/', firstSlash + 1);
+                int secondSlash = value.IndexOf('/', firstSlash + 1);
                 if (secondSlash >= 0)
                 {
-                    return _id.Length > secondSlash + 1 ? _id.Substring(secondSlash + 1) : string.Empty;
+                    return value.Length > secondSlash + 1 ? value.Substring(secondSlash + 1) : string.Empty;
                 }
             }
 
