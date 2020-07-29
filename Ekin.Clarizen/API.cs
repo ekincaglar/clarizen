@@ -18,6 +18,8 @@ namespace Ekin.Clarizen
     {
         #region Private Properties
         internal string Requester { get; set; }
+        private BulkOperations _bulk { get; set; }
+        private FileUploadHelper _fileUpload { get; set; }
 
         #endregion
 
@@ -42,8 +44,28 @@ namespace Ekin.Clarizen
 
         public LogFactory Logs { get; set; }
 
-        public BulkOperations Bulk { get; private set; }
-        public FileUploadHelper FileUpload { get; private set; }
+        public BulkOperations Bulk
+        {
+            get
+            {
+                if (_bulk == null)
+                {
+                    _bulk = new BulkOperations(this);
+                }
+                return _bulk;
+            }
+        }
+        public FileUploadHelper FileUpload
+        {
+            get
+            {
+                if (_fileUpload == null)
+                {
+                    _fileUpload = new FileUploadHelper(this);
+                }
+                return _fileUpload;
+            }
+        }
 
         public bool IsBulk { get; private set; }
         private List<Request> BulkRequests { get; set; }
@@ -68,8 +90,6 @@ namespace Ekin.Clarizen
         {
             TotalAPICallsMadeInCurrentSession = 0;
             Logs = new LogFactory();
-            Bulk = new BulkOperations(this);
-            FileUpload = new FileUploadHelper(this);
             System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12 | System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls;
             System.Net.ServicePointManager.Expect100Continue = false;
         }
