@@ -2,7 +2,6 @@
 
 Shortcuts:
 * Clarizen API: https://api.clarizen.com/V2.0/services/
-* Clarizen's API documentation: http://usermanual.clarizen.com/rest-api-guide
 * Nuget package: https://www.nuget.org/packages/Ekin.Clarizen/
 
 Table of Contents:
