@@ -18,6 +18,7 @@ namespace Ekin.Clarizen
         public string RawRequest { get; private set; }
         public string OrganizationId { get; private set; }
         public string RuleName { get; private set; }
+        public string SessionId { get; private set; }
         public bool HasErrors { get { return Logs != null && Logs.HasErrors(); } }
 
         public OutboundProperties()
@@ -135,6 +136,12 @@ namespace Ekin.Clarizen
                 if (organizationIdElement != null)
                 {
                     OrganizationId = organizationIdElement.Value;
+                }
+
+                XElement sessionIdElement = xdoc.Descendants(ns + "SessionId")?.FirstOrDefault();
+                if (sessionIdElement != null)
+                {
+                    SessionId = sessionIdElement.Value;
                 }
 
                 XElement ruleNameElement = xdoc.Descendants(ns + "RuleName")?.FirstOrDefault();
