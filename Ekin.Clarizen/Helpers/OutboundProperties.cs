@@ -62,14 +62,13 @@ namespace Ekin.Clarizen
                 }
 
                 // Parse the XML
-                IEnumerable<XElement> EntitiesElement = xdoc.Descendants(ns + "Entities");
+                var EntitiesElement = xdoc.Descendants(ns + "Entities").FirstOrDefault();
                 if (EntitiesElement != null)
                 {
-                    foreach (XElement EntityElement in EntitiesElement)
+                    foreach (XElement BaseEntityElement in EntitiesElement.Descendants(ns + "BaseEntity"))
                     {
                         T entityObj = new T();
 
-                        XElement BaseEntityElement = EntityElement.Element(ns + "BaseEntity");
                         if (BaseEntityElement != null)
                         {
                             #region Parse the BaseEntity Id
