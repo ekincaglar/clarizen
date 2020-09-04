@@ -47,22 +47,25 @@ namespace Ekin.Clarizen
         [JsonConverter(typeof(EntityIdConverter))]
         public EntityId EventCalendar { get; set; }
 
-        #region Deprecated fields - 22 May 2020
+        #region Fields with problems on the Clarizen API
 
-        ///// <summary>
-        ///// A number between 0 and 24 representing the first working hour of the day. If the day starts at 08:30AM this number will contain 8.5
-        ///// </summary>
-        //public double startHour { get; set; }
+        // startHour, endHour and repeat were deprecated in the Clarizen API on 22 May 2020 (most probably by error)
+        // On 4 Sep 2020 we have brought them back
 
-        ///// <summary>
-        ///// A number between 0 and 24 representing the end of the working day. If the day ends at 17:15 this number will contain 17.25
-        ///// </summary>
-        //public double endHour { get; set; }
+        /// <summary>
+        /// A number between 0 and 24 representing the first working hour of the day. If the day starts at 08:30AM this number will contain 8.5
+        /// </summary>
+        public double? StartHour { get; set; }
 
-        ///// <summary>
-        ///// Recurrence definition
-        ///// </summary>
-        //public repeat repeat { get; set; }
+        /// <summary>
+        /// A number between 0 and 24 representing the end of the working day. If the day ends at 17:15 this number will contain 17.25
+        /// </summary>
+        public double? EndHour { get; set; }
+
+        /// <summary>
+        /// Recurrence definition
+        /// </summary>
+        public Repeat Repeat { get; set; }
 
         #endregion
 
