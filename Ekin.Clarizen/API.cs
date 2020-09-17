@@ -645,6 +645,29 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
+        /// Create or update an entity 
+        /// </summary>
+        /// <param name="insertEntity">The entity Id and the fields that will be used to create the entity</param>
+        /// <param name="updateEntity">The entity Id and the fields that will be used to update the entity</param>
+        /// <returns></returns>
+        public async Task<Data.Upsert> UpsertObject(IEntity insertEntity, IEntity updateEntity)
+        {
+            Data.Upsert apiCall = new Data.Upsert(new Data.Request.Upsert(insertEntity, updateEntity), CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
+            {
+                BulkRequests.Add(apiCall.BulkRequest);
+            }
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "UpsertObject", "upsert call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
+            }
+            return apiCall;
+        }
+
+        /// <summary>
         /// Delete an entity in Clarizen
         /// </summary>
         /// <param name="id">Entity Id of the object to delete</param>

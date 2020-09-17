@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Ekin.Clarizen.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace Ekin.Clarizen
 {
-    public class EntityId
+    public class EntityId: IEntity
     {
         private string _id { get; set; }
         private string _id_value { get; set; }
