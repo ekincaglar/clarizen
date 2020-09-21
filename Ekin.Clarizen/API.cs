@@ -668,6 +668,16 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
+        /// Create or update an entity 
+        /// </summary>
+        /// <param name="entity">The entity Id and the fields that will be used to create or update the entity</param>
+        /// <returns></returns>
+        public async Task<Data.Upsert> UpsertObject(IEntity entity)
+        {
+            return await UpsertObject(entity, entity);
+        }
+
+        /// <summary>
         /// Delete an entity in Clarizen
         /// </summary>
         /// <param name="id">Entity Id of the object to delete</param>
