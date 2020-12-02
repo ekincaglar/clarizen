@@ -204,7 +204,7 @@ namespace Ekin.Clarizen
                         ValB = propInfo.GetValue(val2)
                     };
                     if ((v.ValA is null ^ v.ValB is null) ||
-                        ((IncludeJsonIgnoreAttributes || propInfo.GetCustomAttribute(typeof(Newtonsoft.Json.JsonIgnoreAttribute)) != null) &&
+                        ((IncludeJsonIgnoreAttributes || propInfo.GetCustomAttribute(typeof(Newtonsoft.Json.JsonIgnoreAttribute)) == null) &&
                         (IncludeIdField || propInfo.Name.ToLower() != "id") &&
                         v.ValA != null && !v.ValA.Equals(v.ValB)))
                     {
