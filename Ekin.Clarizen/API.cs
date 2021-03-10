@@ -318,10 +318,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ListEntities", "listEntities failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ListEntities", "listEntities failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -340,10 +340,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DescribeEntities", "describeEntities failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DescribeEntities", "describeEntities failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -362,10 +362,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DescribeEntityRelations", "describeEntityRelations failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DescribeEntityRelations", "describeEntityRelations failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -398,10 +398,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateWorkflowRule", "CreateWorkflowRule call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateWorkflowRule", "CreateWorkflowRule call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -420,10 +420,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DeleteWorkflowRule", "DeleteWorkflowRule call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DeleteWorkflowRule", "DeleteWorkflowRule call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -442,10 +442,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetSystemSettingsValues", "getSystemSettingsValues failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetSystemSettingsValues", "getSystemSettingsValues failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -464,10 +464,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "SetSystemSettingsValues", "setSystemSettingsValues call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "SetSystemSettingsValues", "setSystemSettingsValues call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -491,10 +491,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -525,10 +525,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             if (executionResult)
             {
@@ -566,10 +566,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetObject", "objects_get call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             if (executionResult)
             {
@@ -613,10 +613,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateObject", "objects_put call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateObject", "objects_put call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -636,16 +636,16 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "UpdateObject", "objects_post call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "UpdateObject", "objects_post call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
 
         /// <summary>
-        /// Create or update an entity 
+        /// Create or update an entity
         /// </summary>
         /// <param name="insertEntity">The entity Id and the fields that will be used to create the entity</param>
         /// <param name="updateEntity">The entity Id and the fields that will be used to update the entity</param>
@@ -668,7 +668,7 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// Create or update an entity 
+        /// Create or update an entity
         /// </summary>
         /// <param name="entity">The entity Id and the fields that will be used to create or update the entity</param>
         /// <returns></returns>
@@ -691,10 +691,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DeleteObject", "objects_delete call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DeleteObject", "objects_delete call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -714,10 +714,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateAndRetrieve", "createAndRetrieve call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateAndRetrieve", "createAndRetrieve call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -736,10 +736,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "RetrieveMultiple", "retrieveMultiple call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "RetrieveMultiple", "retrieveMultiple call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -941,10 +941,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Count", "countQuery call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Count", "countQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -963,10 +963,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "EntityQuery", "entityQuery call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "EntityQuery", "entityQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -983,10 +983,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CrossOrgEntityQuery", "crossOrgEntityQuery call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CrossOrgEntityQuery", "crossOrgEntityQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1016,10 +1016,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GroupsQuery", "groupsQuery call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GroupsQuery", "groupsQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1048,10 +1048,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "AggregateQuery", "aggregateQuery call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "AggregateQuery", "aggregateQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1070,10 +1070,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "RelationQuery", "relationQuery call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "RelationQuery", "relationQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1092,10 +1092,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "NewsFeedQuery", "newsFeedQuery call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "NewsFeedQuery", "newsFeedQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1138,10 +1138,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "EntityFeedQuery", "entityFeedQuery call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "EntityFeedQuery", "entityFeedQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1184,10 +1184,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "RepliesQuery", "repliesQuery call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "RepliesQuery", "repliesQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1230,10 +1230,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ExpenseQuery", "expenseQuery call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ExpenseQuery", "expenseQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1247,10 +1247,27 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "TimesheetQuery", "timesheetQuery call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "TimesheetQuery", "timesheetQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
+            }
+            return apiCall;
+        }
+
+        public async Task<Data.WorkitemRecursiveQuery> WorkitemRecursiveQuery(Data.Queries.WorkitemRecursiveQuery request)
+        {
+            Data.WorkitemRecursiveQuery apiCall = new Data.WorkitemRecursiveQuery(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
+            {
+                BulkRequests.Add(apiCall.BulkRequest);
+            }
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "WorkitemRecursiveQuery", "workitemRecursiveQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1273,10 +1290,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Search", "search call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Search", "search call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1387,10 +1404,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateDiscussion", "createDiscussion call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateDiscussion", "createDiscussion call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1409,10 +1426,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Lifecycle", "lifecycle call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Lifecycle", "lifecycle call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1443,10 +1460,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ChangeState", "changeState call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ChangeState", "changeState call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1465,10 +1482,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ExecuteCustomAction", "executeCustomAction call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ExecuteCustomAction", "executeCustomAction call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1499,10 +1516,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetTemplateDescriptions", "getTemplateDescriptions call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetTemplateDescriptions", "getTemplateDescriptions call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1521,10 +1538,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateFromTemplate", "createFromTemplate call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "CreateFromTemplate", "createFromTemplate call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1543,10 +1560,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetCalendarInfo", "getCalendarInfo call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetCalendarInfo", "getCalendarInfo call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1560,10 +1577,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetCalendarExceptions", "GetCalendarExceptions call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetCalendarExceptions", "GetCalendarExceptions call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1584,10 +1601,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetMissingTimesheets", "GetMissingTimesheets call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetMissingTimesheets", "GetMissingTimesheets call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1610,10 +1627,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ExecuteQuery", "query call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ExecuteQuery", "query call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1714,10 +1731,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "AppLogin", "appLogin call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "AppLogin", "appLogin call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1740,10 +1757,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "SendEmail", "SendEmail call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "SendEmail", "SendEmail call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1761,10 +1778,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetApplicationStatus", "getApplicationStatus call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetApplicationStatus", "getApplicationStatus call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1778,10 +1795,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "InstallApplication", "installApplication call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "InstallApplication", "installApplication call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1805,10 +1822,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Download", "download call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Download", "download call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1826,10 +1843,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetUploadUrl", "getUploadUrl call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetUploadUrl", "getUploadUrl call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1848,10 +1865,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Upload", "upload call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "Upload", "upload call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
@@ -1893,10 +1910,10 @@ namespace Ekin.Clarizen
             {
                 BulkRequests.Add(apiCall.BulkRequest);
             }
-            else 
-            { 
-                Logs.Assert(executionResult, "Ekin.Clarizen.API", "UpdateImage", "updateImage call failed", apiCall.Error); 
-                TotalAPICallsMadeInCurrentSession++; 
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "UpdateImage", "updateImage call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
             }
             return apiCall;
         }
