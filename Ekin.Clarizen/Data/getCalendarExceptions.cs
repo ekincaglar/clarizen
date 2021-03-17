@@ -15,7 +15,7 @@ namespace Ekin.Clarizen.Data
 
             _request = request;
             _callSettings = callSettings;
-            _url = string.Format("{0}?{1}fromDate={2:yyyy-MM-dd}&toDate={3:yyyy-MM-dd}",
+            _url = string.Format("{0}?{1}fromDate={2:yyyy-MM-ddTHH:mm:ss}&toDate={3:yyyy-MM-ddTHH:mm:ss}",
                    (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/getCalendarExceptions?",
                    string.IsNullOrWhiteSpace(request.EntityId) ? "" : "entityId=" + request.EntityId + "&",
                    request.FromDate,

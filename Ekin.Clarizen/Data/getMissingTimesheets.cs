@@ -13,7 +13,7 @@
 
             _request = request;
             _callSettings = callSettings;
-            _url = string.Format("{0}?{1}startDate={2:yyyy-MM-dd}&endDate={3:yyyy-MM-dd}{4}",
+            _url = string.Format("{0}?{1}startDate={2:yyyy-MM-ddTHH:mm:ss}&endDate={3:yyyy-MM-ddTHH:mm:ss}{4}",
                 (callSettings.IsBulk ? string.Empty : callSettings.ServerLocation) + "/data/missingTimesheets",
                 string.IsNullOrWhiteSpace(request.User) ? "" : "user=" + request.User + "&",
                 request.StartDate,
