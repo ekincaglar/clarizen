@@ -1613,10 +1613,9 @@ namespace Ekin.Clarizen
 
         #region Data - Permissions
         /// <summary>
-        /// Create an entity in Clarizen.
+        /// Update or Create Permission on Entity
         /// </summary>
-        /// <param name="id">When creating an entity, a unique ID is generated and returned as part of the object creation process. e.g. pass /User as id. If needed, you can also set a specific ID to the entity being created as long as you can guarantee this ID is unique, e.g. /User/dc84ee38-12cc-492e-b70d-d7fd660f4ae7.</param>
-        /// <param name="obj"></param>
+        /// <param name="request">Set which entity to create or update permissions for and the roles</param>
         /// <returns></returns>
         public async Task<Data.SetPermissions> SetPermissions(Data.Request.SetPermission request)
         {
@@ -1636,9 +1635,9 @@ namespace Ekin.Clarizen
         }
 
         /// <summary>
-        /// 
+        /// Delete Permission on Entity
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="request">Set which entity to delete permissions for and the roles</param>
         /// <returns></returns>
         public async Task<Data.DeletePermissions> DeletePermissions(Data.Request.DeletePermission request)
         {
