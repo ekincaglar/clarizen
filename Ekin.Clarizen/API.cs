@@ -1611,6 +1611,53 @@ namespace Ekin.Clarizen
 
         #endregion Data - Other methods
 
+        #region Data - Permissions
+        /// <summary>
+        /// Create an entity in Clarizen.
+        /// </summary>
+        /// <param name="id">When creating an entity, a unique ID is generated and returned as part of the object creation process. e.g. pass /User as id. If needed, you can also set a specific ID to the entity being created as long as you can guarantee this ID is unique, e.g. /User/dc84ee38-12cc-492e-b70d-d7fd660f4ae7.</param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public async Task<Data.SetPermissions> SetPermissions(object obj)
+        {
+            var apiCall = new Data.SetPermissions(obj, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
+            {
+                BulkRequests.Add(apiCall.BulkRequest);
+            }
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "SetPermissions", "SetPermissions call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
+            }
+            return apiCall;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public async Task<Data.DeletePermissions> DeletePermissions(object obj)
+        {
+            var apiCall = new Data.DeletePermissions(obj, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
+            {
+                BulkRequests.Add(apiCall.BulkRequest);
+            }
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DeletePermissions", "DeletePermissions call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
+            }
+            return apiCall;
+        }
+        #endregion
+
         #region CZQL
 
         /// <summary>
