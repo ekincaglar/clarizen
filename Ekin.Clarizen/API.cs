@@ -1618,9 +1618,9 @@ namespace Ekin.Clarizen
         /// <param name="id">When creating an entity, a unique ID is generated and returned as part of the object creation process. e.g. pass /User as id. If needed, you can also set a specific ID to the entity being created as long as you can guarantee this ID is unique, e.g. /User/dc84ee38-12cc-492e-b70d-d7fd660f4ae7.</param>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public async Task<Data.SetPermissions> SetPermissions(object obj)
+        public async Task<Data.SetPermissions> SetPermissions(Data.Request.SetPermission request)
         {
-            var apiCall = new Data.SetPermissions(obj, CallSettings.GetFromAPI(this));
+            var apiCall = new Data.SetPermissions(request, CallSettings.GetFromAPI(this));
             apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)
@@ -1640,9 +1640,9 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public async Task<Data.DeletePermissions> DeletePermissions(object obj)
+        public async Task<Data.DeletePermissions> DeletePermissions(Data.Request.DeletePermission request)
         {
-            var apiCall = new Data.DeletePermissions(obj, CallSettings.GetFromAPI(this));
+            var apiCall = new Data.DeletePermissions(request, CallSettings.GetFromAPI(this));
             apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
             if (IsBulk)

@@ -4,7 +4,7 @@ namespace Ekin.Clarizen.Data
 {
     public class SetPermissions : Call<SetPermission>
     {
-        public SetPermissions(object request, CallSettings callSettings)
+        public SetPermissions(SetPermission request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;

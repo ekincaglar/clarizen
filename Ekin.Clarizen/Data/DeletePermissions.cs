@@ -4,7 +4,7 @@ namespace Ekin.Clarizen.Data
 {
     public class DeletePermissions : Call<DeletePermission>
     {
-        public DeletePermissions(object request, CallSettings callSettings)
+        public DeletePermissions(DeletePermission request, CallSettings callSettings)
         {
             _request = request;
             _callSettings = callSettings;
