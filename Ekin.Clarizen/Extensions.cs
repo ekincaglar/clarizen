@@ -19,7 +19,7 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static string[] GetPropertyList(this Type t, bool IncludeIdField = false)
+        public static string[] GetPropertyList(this Type t, bool IncludeIdField = false, bool includeComplexObject = false)
         {
             if (t == null)
                 return null;
@@ -29,9 +29,27 @@ namespace Ekin.Clarizen
             {
                 foreach (PropertyInfo propInfo in propInfos)
                 {
+                    // To enable user to specify custom propertyname using JsonProperty Attribute.
+                    JsonPropertyAttribute attr = propInfo.GetCustomAttribute<JsonPropertyAttribute>();
+                    var propName = (attr == null ? propInfo.Name : attr.PropertyName);
+
                     if ((IncludeIdField || propInfo.Name.ToLower() != "id") &&
                         propInfo.GetCustomAttribute(typeof(Newtonsoft.Json.JsonIgnoreAttribute)) == null)
-                        ret.Add(propInfo.Name);
+                    {
+                        // To enable user to query child entity properties as well.
+                        if (includeComplexObject && propInfo.PropertyType.BaseType == typeof(EntityId))
+                        {
+                            var childProperties = propInfo.PropertyType.GetPropertyList();
+                            foreach (var childProp in childProperties)
+                            {
+                                ret.Add($"{propName}.{childProp}");
+                            }
+                        }
+                        else
+                        {
+                            ret.Add(propName);
+                        }
+                    }
                 }
             }
             return ret.ToArray();
