@@ -761,7 +761,7 @@ namespace Ekin.Clarizen
         /// <param name="entityName"></param>
         /// <param name="pocoObject"></param>
         /// <returns></returns>
-        public async Task<GetAllResult> GetAll(string entityName, Type pocoObject, ICondition condition = null, int? pageSize = null, int? sleepTime = null)
+        public async Task<GetAllResult> GetAll(string entityName, Type pocoObject, ICondition condition = null, int? pageSize = null, int? sleepTime = null, bool includeComplexObject = false)
         {
             Type listType = typeof(List<>).MakeGenericType(new[] { pocoObject });
             System.Collections.IList list = (System.Collections.IList)Activator.CreateInstance(listType);
@@ -777,7 +777,7 @@ namespace Ekin.Clarizen
             while (hasMore)
             {
                 Data.Queries.EntityQuery request =
-                    new Data.Queries.EntityQuery(entityName, pocoObject.GetPropertyList(), null, null, null, false, false, paging);
+                    new Data.Queries.EntityQuery(entityName, pocoObject.GetPropertyList(includeComplexObject: includeComplexObject), null, null, null, false, false, paging);
                 if (condition != null)
                     request.Where = condition;
                 Data.EntityQuery apiCall = await EntityQuery(request);

@@ -19,7 +19,7 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static string[] GetPropertyList(this Type t, bool IncludeIdField = false)
+        public static string[] GetPropertyList(this Type t, bool IncludeIdField = false, bool includeComplexObject = false)
         {
             if (t == null)
                 return null;
@@ -37,7 +37,7 @@ namespace Ekin.Clarizen
                         propInfo.GetCustomAttribute(typeof(Newtonsoft.Json.JsonIgnoreAttribute)) == null)
                     {
                         // To enable user to query child entity properties as well.
-                        if (propInfo.PropertyType.BaseType == typeof(EntityId))
+                        if (includeComplexObject && propInfo.PropertyType.BaseType == typeof(EntityId))
                         {
                             var childProperties = propInfo.PropertyType.GetPropertyList();
                             foreach (var childProp in childProperties)
