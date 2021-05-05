@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net;
-
-namespace Ekin.Clarizen
+﻿namespace Ekin.Clarizen
 {
     public class CallSettings
     {

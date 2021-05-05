@@ -1611,6 +1611,52 @@ namespace Ekin.Clarizen
 
         #endregion Data - Other methods
 
+        #region Data - Permissions
+        /// <summary>
+        /// Update or Create Permission on Entity
+        /// </summary>
+        /// <param name="request">Set which entity to create or update permissions for and the roles</param>
+        /// <returns></returns>
+        public async Task<Data.SetPermissions> SetPermissions(Data.Request.SetPermission request)
+        {
+            var apiCall = new Data.SetPermissions(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
+            {
+                BulkRequests.Add(apiCall.BulkRequest);
+            }
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "SetPermissions", "SetPermissions call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
+            }
+            return apiCall;
+        }
+
+        /// <summary>
+        /// Delete Permission on Entity
+        /// </summary>
+        /// <param name="request">Set which entity to delete permissions for and the roles</param>
+        /// <returns></returns>
+        public async Task<Data.DeletePermissions> DeletePermissions(Data.Request.DeletePermission request)
+        {
+            var apiCall = new Data.DeletePermissions(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
+            {
+                BulkRequests.Add(apiCall.BulkRequest);
+            }
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "DeletePermissions", "DeletePermissions call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
+            }
+            return apiCall;
+        }
+        #endregion
+
         #region CZQL
 
         /// <summary>
