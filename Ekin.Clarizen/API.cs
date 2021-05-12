@@ -556,9 +556,9 @@ namespace Ekin.Clarizen
         /// <param name="id">Entity Id of the object to get</param>
         /// <param name="pocoObject">Return type of the operation</param>
         /// <returns></returns>
-        public async Task<dynamic> GetObject(string id, Type pocoObject)
+        public async Task<dynamic> GetObject(string id, Type pocoObject, bool includeComplexObject = false)
         {
-            string[] fields = pocoObject.GetPropertyList();
+            string[] fields = pocoObject.GetPropertyList(includeComplexObject: includeComplexObject);
             Data.Objects_get apiCall = new Data.Objects_get(new Data.Request.Objects_get(id, fields), CallSettings.GetFromAPI(this), true);
             apiCall.SessionTimeout += Call_SessionTimeout;
             bool executionResult = await apiCall.Execute();
