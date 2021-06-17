@@ -70,6 +70,12 @@ namespace Ekin.Clarizen
         public bool IsBulk { get; private set; }
         private List<Request> BulkRequests { get; set; }
 
+        /// <summary>
+        /// Request timeout in milliseconds
+        /// <para>
+        /// Default value is 120000ms or 120s or 2min
+        /// </para>
+        /// </summary>
         public int? Timeout { get; set; } = 120000;
 
         #endregion Public properties
