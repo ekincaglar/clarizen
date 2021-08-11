@@ -55,6 +55,10 @@ namespace Ekin.Clarizen
         public string[] Flags { get; set; }
 
         public string[] ReferencedEntities { get; set; }
+        
+        [XmlElement("restrictedFieldSetName")]
+        [JsonProperty("restrictedFieldSetName")]
+        public string RestrictedFieldSetName { get; set; }
 
         public FieldDescription() { }
     }
