@@ -10,7 +10,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Ekin.Clarizen
 {
-    public class Call<T> : ISupportBulk
+    public class Call<T> : ISupportBulk, ICall<T>
     {
         #region Local/Internal Properties
 
