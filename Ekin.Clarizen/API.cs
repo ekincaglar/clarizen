@@ -76,7 +76,7 @@ namespace Ekin.Clarizen
         /// Default value is 120000ms or 120s or 2min
         /// </para>
         /// </summary>
-        public int? Timeout { get; set; } = 120000;
+        public int? Timeout { get; set; } = (int)TimeSpan.FromMinutes(10).TotalMilliseconds;
 
         #endregion Public properties
 

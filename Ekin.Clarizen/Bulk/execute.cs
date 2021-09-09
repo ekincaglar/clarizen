@@ -1,4 +1,6 @@
-﻿namespace Ekin.Clarizen.Bulk
+﻿using System;
+
+namespace Ekin.Clarizen.Bulk
 {
     public class Execute : Call<Result.Execute>
     {
@@ -11,7 +13,7 @@
             _callSettings.IsBatch = request.Batch.GetValueOrDefault();
             if (_callSettings.Timeout == null)
             {
-                callSettings.Timeout = 120000;
+                callSettings.Timeout = (int)TimeSpan.FromMinutes(10).TotalMilliseconds;
             }
             _url = callSettings.ServerLocation + "/bulk/execute";
             _method = System.Net.Http.HttpMethod.Post;
