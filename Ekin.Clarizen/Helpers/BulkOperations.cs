@@ -31,7 +31,7 @@ namespace Ekin.Clarizen
         internal bool _isBulkTransactional = false;
         internal bool _batch = false;
         internal bool _includeRequestsInResponse = false;
-        internal int _timeout = 120000;
+        internal int _timeout = (int)TimeSpan.FromMinutes(10).TotalMilliseconds;
 
         public BulkOperations(API ClarizenAPI)
         {
@@ -153,12 +153,12 @@ namespace Ekin.Clarizen
         /// </summary>
         /// <param name="isTransactional"></param>
         /// <param name="batch"></param>
-        public void Start(bool isTransactional = false, bool batch = false, bool includeRequestsInResponse = false, int timeout = 120000)
+        public void Start(bool isTransactional = false, bool batch = false, bool includeRequestsInResponse = false, int? timeout = null)
         {
             _isBulkTransactional = isTransactional;
             _batch = batch;
             _includeRequestsInResponse = includeRequestsInResponse;
-            _timeout = timeout;
+            if(timeout != null) _timeout = timeout.Value;
             APIBulkCallCount = 0;
             ClarizenAPI.StartBulkService();
         }
