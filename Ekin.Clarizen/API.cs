@@ -1723,7 +1723,7 @@ namespace Ekin.Clarizen
             if (IsBulk)
             {
                 CallSettings callSettings = CallSettings.GetFromAPI(this);
-                callSettings.Timeout = timeout;
+                if(timeout != null) callSettings.Timeout = timeout;
                 Bulk.Execute apiCall = new Bulk.Execute(new Bulk.Request.Execute(BulkRequests, transactional, batch), callSettings);
                 apiCall.SessionTimeout += Call_SessionTimeout;
                 bool executionResult = await apiCall.Execute();
