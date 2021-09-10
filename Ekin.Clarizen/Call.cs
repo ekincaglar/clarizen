@@ -58,6 +58,9 @@ namespace Ekin.Clarizen
         public Call()
         {
             _httpClient = HttpClientExtensions.Client;
+            // We use cancellation token timeout instead of http client timeout value. Pls check: ClarizenCallHandler.SendAsync
+            // because of that cancellation token timeout value must be lower than http client timeout value.
+            _httpClient.Timeout = TimeSpan.FromHours(1);
         }
         public Call(HttpClient Client)
         {
