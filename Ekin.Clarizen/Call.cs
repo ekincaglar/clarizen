@@ -212,7 +212,15 @@ namespace Ekin.Clarizen
                             Error = HandleDeserializationError
                         });
 
-                        IsCalledSuccessfully = true;
+                        if (!string.IsNullOrWhiteSpace(Error))
+                        {
+                            Error = content;
+                            IsCalledSuccessfully = false;
+                        }
+                        else
+                        {
+                            IsCalledSuccessfully = true;
+                        }
                     }
                     catch (Exception ex)
                     {
