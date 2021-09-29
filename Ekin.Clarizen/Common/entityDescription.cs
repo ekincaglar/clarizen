@@ -13,7 +13,7 @@ namespace Ekin.Clarizen
         public string DisplayField { get; set; }
         public bool Disabled { get; set; }
         public RelationDescription[] Relations { get; set; }
-
+        public PickupDescription[] Pickups { get; set; }
         public EntityDescription() { }
 
         public void SortFields()
