@@ -791,13 +791,30 @@ namespace Ekin.Clarizen
                 bool executionResult = await apiCall.Execute();
                 if (executionResult)
                 {
-                    foreach (JObject obj in apiCall.Data.Entities)
+                    if (apiCall.Data != null && apiCall.Data.Entities != null && apiCall.Data.Paging != null)
                     {
-                        RemoveInvalidFields(obj);
-                        list.Add(obj.ToObject(pocoObject));
+                        foreach (JObject obj in apiCall.Data.Entities)
+                        {
+                            try
+                            {
+                                RemoveInvalidFields(obj);
+                                list.Add(obj.ToObject(pocoObject));
+                            }
+                            catch (Exception ex)
+                            {
+                                result.Errors.Add(new Error("", $"Results parsed by Entity Query threw an exception: {ex.ToString()}"));
+                                hasMore = false;
+                                break;
+                            }
+                        }
+                        paging = apiCall.Data.Paging;
+                        hasMore = apiCall.Data.Paging.HasMore;
                     }
-                    paging = apiCall.Data.Paging;
-                    hasMore = apiCall.Data.Paging.HasMore;
+                    else
+                    {
+                        result.Errors.Add(new Error("", $"Entity Query did not return any results. Error: {apiCall.Error ?? "n/a"}"));
+                        hasMore = false;
+                    }
                 }
                 else
                 {
@@ -842,13 +859,30 @@ namespace Ekin.Clarizen
                 bool executionResult = await apiCall.Execute();
                 if (executionResult)
                 {
-                    foreach (JObject obj in apiCall.Data.Entities)
+                    if (apiCall.Data != null && apiCall.Data.Entities != null && apiCall.Data.Paging != null)
                     {
-                        RemoveInvalidFields(obj);
-                        list.Add(obj.ToObject(pocoObject));
+                        foreach (JObject obj in apiCall.Data.Entities)
+                        {
+                            try
+                            {
+                                RemoveInvalidFields(obj);
+                                list.Add(obj.ToObject(pocoObject));
+                            }
+                            catch (Exception ex)
+                            {
+                                result.Errors.Add(new Error("", $"Results parsed by Query threw an exception: {ex.ToString()}"));
+                                hasMore = false;
+                                break;
+                            }
+                        }
+                        paging = apiCall.Data.Paging;
+                        hasMore = apiCall.Data.Paging.HasMore;
                     }
-                    paging = apiCall.Data.Paging;
-                    hasMore = apiCall.Data.Paging.HasMore;
+                    else
+                    {
+                        result.Errors.Add(new Error("", $"Query did not return any results. Error: {apiCall.Error ?? "n/a"}"));
+                        hasMore = false;
+                    }
                 }
                 else
                 {
