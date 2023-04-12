@@ -2005,6 +2005,25 @@ namespace Ekin.Clarizen
         }
 
         #endregion Files
+
+        #region ResourceLoad/Availability
+        public async Task<Data.ResourceManagementQuery> ExecuteResourceManagementQuery(Data.Queries.ResourceManagementQuery request)
+        {
+            Data.ResourceManagementQuery apiCall = new Data.ResourceManagementQuery(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
+            {
+                BulkRequests.Add(apiCall.BulkRequest);
+            }
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ResourceManagementQuery", "resourceManagementQuery call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
+            }
+            return apiCall;
+        }
+        #endregion
     }
 
     public class SessionRefreshedEventArgs : EventArgs
