@@ -255,7 +255,7 @@ namespace Ekin.Clarizen
         /// <returns></returns>
         public async Task<Authentication.GetSessionInfo> GetSessionInfo()
         {
-            Authentication.GetSessionInfo apiCall = new Authentication.GetSessionInfo(ServerLocation, SessionId);
+            Authentication.GetSessionInfo apiCall = new Authentication.GetSessionInfo(ServerLocation, SessionId, Requester);
             bool executionResult = await apiCall.Execute();
             TotalAPICallsMadeInCurrentSession++;
             Logs.Assert(executionResult, "Ekin.Clarizen.API", "GetSessionInfo", "Session info could be retrieved", apiCall.Error);
