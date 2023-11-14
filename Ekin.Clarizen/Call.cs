@@ -177,7 +177,21 @@ namespace Ekin.Clarizen
             try
             {
                 response = await _httpClient.SendAsync(requestMessage).ConfigureAwait(false);
-                content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                // content is compressed
+                if (response.Content.Headers.ContentEncoding?.Contains("gzip") == true)
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync())
+                    using (var deflateStream = new System.IO.Compression.GZipStream(responseStream, System.IO.Compression.CompressionMode.Decompress))
+                    using (var streamReader = new System.IO.StreamReader(deflateStream))
+                    {
+                        content = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+                    }
+                }
+                else
+                {
+                    content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                }
             }
             catch (TimeoutException ex)
             {
