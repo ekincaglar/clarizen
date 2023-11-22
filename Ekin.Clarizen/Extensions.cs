@@ -39,7 +39,7 @@ namespace Ekin.Clarizen
                         // To enable user to query child entity properties as well.
                         if (includeComplexObject && propInfo.PropertyType.BaseType == typeof(EntityId))
                         {
-                            var childProperties = propInfo.PropertyType.GetPropertyList();
+                            var childProperties = propInfo.PropertyType.GetPropertyList(IncludeIdField, includeComplexObject);
                             foreach (var childProp in childProperties)
                             {
                                 ret.Add($"{propName}.{childProp}");
