@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Ekin.Clarizen.Authentication;
+using Ekin.Clarizen.CreateMultiply;
 using Ekin.Clarizen.Interfaces;
 using Ekin.Log;
 using Newtonsoft.Json.Linq;
@@ -1542,6 +1543,31 @@ namespace Ekin.Clarizen
             return await ExecuteCustomAction(new Data.Request.ExecuteCustomAction(targetId, customAction, values));
         }
 
+        /// <summary>
+        /// Executes CreateMultiply
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<ExecuteCreateMultiply> ExecuteCreateMultiply(CreateMultiply.Request.ExecuteCreateMultiply request)
+        {
+            ExecuteCreateMultiply apiCall = new ExecuteCreateMultiply(request, CallSettings.GetFromAPI(this));
+            apiCall.SessionTimeout += Call_SessionTimeout;
+            bool executionResult = await apiCall.Execute();
+            if (IsBulk)
+            {
+                BulkRequests.Add(apiCall.BulkRequest);
+            }
+            else
+            {
+                Logs.Assert(executionResult, "Ekin.Clarizen.API", "ExecuteCreateMultiply", "executecreatemultiply call failed", apiCall.Error);
+                TotalAPICallsMadeInCurrentSession++;
+            }
+            return apiCall;
+        }
+        public async Task<ExecuteCreateMultiply> ExecuteCreateMultiply(object requestBody, bool transaction, bool IsMultiply, string callOptions)
+        {
+            return await ExecuteCreateMultiply(new CreateMultiply.Request.ExecuteCreateMultiply(requestBody, transaction, IsMultiply, callOptions));
+        }
         /// <summary>
         /// Returns the list of template available for a certain Entity Type
         /// </summary>

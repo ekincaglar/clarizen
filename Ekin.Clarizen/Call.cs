@@ -148,6 +148,10 @@ namespace Ekin.Clarizen
                 {
                     requestMessage.Headers.Add("CallOptions", string.Format("Batch={0}", _callSettings.IsBatch.GetValueOrDefault() ? "true" : "false"));
                 }
+                if (_callSettings.IsMultiply == true && _callSettings.CallOptions != null)
+                {
+                    requestMessage.Headers.Add("CallOptions", _callSettings.CallOptions);
+                }
                 #endregion
 
                 #region Timeout

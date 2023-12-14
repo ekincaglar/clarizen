@@ -15,6 +15,8 @@
         public string Requester { get; set; }
         public string Redirect { get; set; }
         public int? ConnectionLimit { get; set; } = null;
+        public bool IsMultiply { get; set; } = false;
+        public string CallOptions { get; set; }
 
         public CallSettings()
         {
