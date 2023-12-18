@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -144,9 +145,26 @@ namespace Ekin.Clarizen
                 {
                     requestMessage.Headers.Add("x-redirect", _callSettings.Redirect);
                 }
-                if (_callSettings.IsBatch != null)
+
+                var callOptions = new List<string>();
+                if (_callSettings.IsBatch.HasValue)
                 {
-                    requestMessage.Headers.Add("CallOptions", string.Format("Batch={0}", _callSettings.IsBatch.GetValueOrDefault() ? "true" : "false"));
+                    callOptions.Add(string.Format("Batch={0}", _callSettings.IsBatch.GetValueOrDefault() ? "true" : "false"));
+                }
+
+                if (_callSettings.DisableWorkflowRules.HasValue)
+                {
+                    callOptions.Add(string.Format("DisableWorkflowRules={0}", _callSettings.DisableWorkflowRules.GetValueOrDefault() ? "true" : "false"));
+                }
+
+                if (_callSettings.DisableValidationRules.HasValue)
+                {
+                    callOptions.Add(string.Format("DisableValidationRules={0}", _callSettings.DisableValidationRules.GetValueOrDefault() ? "true" : "false"));
+                }
+
+                if (callOptions.Count > 0)
+                {
+                    requestMessage.Headers.Add("CallOptions", string.Join(",", callOptions));
                 }
                 #endregion
 
