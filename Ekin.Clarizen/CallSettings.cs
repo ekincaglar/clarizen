@@ -15,6 +15,8 @@
         public string Requester { get; set; }
         public string Redirect { get; set; }
         public int? ConnectionLimit { get; set; } = null;
+        public bool? DisableWorkflowRules { get; set; } = null;
+        public bool? DisableValidationRules { get; set; } = null;
 
         public CallSettings()
         {

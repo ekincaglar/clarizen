@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>6.4.13</Version>
+    <Version>6.4.14</Version>
     <Authors>Ekin Caglar</Authors>
     <Description>.Net wrapper for the Clarizen API v2.0</Description>
     <Copyright>Copyright ©  2016-2021, Ekin Caglar</Copyright>
@@ -11,8 +11,8 @@
     <PackageProjectUrl>https://github.com/ekincaglar/clarizen</PackageProjectUrl>
     <PackageReleaseNotes>Please see https://github.com/ekincaglar/clarizen for product details</PackageReleaseNotes>
     <PackageTags>clarizen api ekin caglar</PackageTags>
-    <AssemblyVersion>6.3.0.3</AssemblyVersion>
-    <FileVersion>6.4.7.2</FileVersion>
+    <AssemblyVersion>6.3.0.4</AssemblyVersion>
+    <FileVersion>6.4.7.3</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
